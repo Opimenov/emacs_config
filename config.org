@@ -1,0 +1,52 @@
+* Emacs config file  
+* Terminal
+** Setting default shell to bash
+#+BEGIN_SRC emacs-lisp
+   (defvar my-term-shell "/bin/bash")
+   (defadvice ansi-term (before force-bash)
+      (interactive (list my-term-shell)))
+   (ad-activate 'ansi-term)
+#+END_SRC
+** Binding keys to launch eshell
+#+BEGIN_SRC emacs-lisp
+;;HOW TO SETUP KEY BINDING TO RUN COMMANDS
+;;customize this to use keyboard short cut to launch terminal or eshell
+(global-set-key (kbd "<C-return>") 'eshell)
+#+END_SRC
+
+* Misc
+** Prevent emacs from autosaving and cluttering source folders
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-file nil)
+(setq auto-save-default nil)
+#+END_SRC   
+** Simplify interaction 
+#+BEGIN_SRC emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** Editing convenience improvements
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+(setq ring-bell-function 'ignore)
+(when window-system (global-hl-line-mode t))
+(when window-system (global-prettify-symbols-mode t))
+;;highlight cursor line on buffer opening
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode 1))
+#+END_SRC
+** Remove toolbar, menu, scrollbar, startup screen
+#+BEGIN_SRC emacs-lisp
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(setq inhibit-startup-message t)
+#+END_SRC
+** Key bindings help display. Currently disabled.
+#+BEGIN_SRC emacs-lisp
+;;(use-package which-key
+;;  :ensure t
+;;  :init
+;;  (which-key-mode))
+#+END_SRC
