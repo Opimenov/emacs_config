@@ -1,0 +1,46 @@
+ls
+cd auto-save-list/
+ls
+ls
+pwd
+cd ..
+ls
+cd ../
+ls
+ls -l
+ls
+cd ~
+ls
+ls
+cd .emacs.d/
+ls
+git init
+git add config.org
+ls
+rm config.org~ init.el~
+ls
+git statys
+git status
+git commit -m "started config file from scratch"
+git remote add origin https:://github.com/Opimenov/emacs_config.git
+git push -u origin master
+git remote add origin https://github.com/Opimenov/emacs_config.git
+git remote -V
+git remote -v
+git remote rm origin
+git remote -v
+git remote add origin https://github.com/Opimenov/emacs_config.git
+git push -u origin master
+git config --global credential.helper cache
+git config --global credential.helper "cache --timeout=99999999"
+git status
+git add config.org
+git commit-m "org bullets"
+git commit -m "org bullets"
+git status
+git add config.org init.el 
+rm init.el~
+git log
+git commit -m "helm + helm-swoop"
+git push 
+git push 
