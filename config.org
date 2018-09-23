@@ -1,4 +1,26 @@
 * Emacs config file  
+* Helm
+** enable helm
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+  :ensure t
+  :init
+  (helm-mode 1))
+
+#+END_SRC
+** helm global key bindings
+#+BEGIN_SRC emacs-lisp
+;;bind a key to help
+(global-set-key (kbd "M-x") 'helm-M-x)
+#+END_SRC
+
+** helm-swoop
+   swoop current buffer with M-i
+#+BEGIN_SRC emacs-lisp
+;;bind a key to help-swoop
+(global-set-key (kbd "M-i") 'helm-swoop)
+#+END_SRC
+   
 * Terminal
 ** Setting default shell to bash
 #+BEGIN_SRC emacs-lisp
@@ -60,4 +82,5 @@
 ;;  :init
 ;;  (which-key-mode))
 #+END_SRC
+
 
