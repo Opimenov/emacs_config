@@ -47,3 +47,5 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
 
+(put 'erase-buffer 'disabled nil)
+(put 'downcase-region 'disabled nil)

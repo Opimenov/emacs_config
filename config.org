@@ -33,7 +33,7 @@
 #+BEGIN_SRC emacs-lisp
 ;;HOW TO SETUP KEY BINDING TO RUN COMMANDS
 ;;customize this to use keyboard short cut to launch terminal or eshell
-(global-set-key (kbd "<C-return>") 'eshell)
+(global-set-key (kbd "<C-return>") 'shell)
 #+END_SRC
 
 * Org
@@ -66,7 +66,7 @@
 (use-package beacon
   :ensure t
   :init
-  (beacon-mode 1))
+  (beacon-mode -1))
 #+END_SRC
 ** Remove toolbar, menu, scrollbar, startup screen
 #+BEGIN_SRC emacs-lisp
@@ -82,5 +82,10 @@
 ;;  :init
 ;;  (which-key-mode))
 #+END_SRC
+* Font
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :family "Consolas" :height 120)
+#+END_SRC
+
 
 

@@ -1,46 +1,128 @@
+git status
+StarBuildPush.bat
 ls
-cd auto-save-list/
+StarBuildPush.bat
+StarBuildPush.bat
+StarBuildPush.bat
+StarBuildPush.bat
+git status
+git checkout test/src/DetectionProcessor/TrackSentry/TrackSentryBlackboxTest.cpp
+StarBuildPush.bat
+StarBuildPush.bat
+..\..\..\..\..\test\src\DetectionProcessor\ForceClassify\ForceClassifyTest.cpp:82:1: error: expected declaration before '}' token
+StarBuildPush.bat
+StarBuildPush.bat
+..\..\..\..\..\test\src\DetectionProcessor\ForceClassify\ForceClassifyTest.cpp:74:34: error: 'class DetectionProcessor_n::ForceClassify_n::ForceClassificationDetectionProcessorFactory' has no member named 'SetupDetectionProcessor'
+StarBuildPush.bat
+StarBuildPush.bat
+StarBuildPush.bat
 ls
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+git status
+git add 	   src/DataRecorder/DataRecorder.cpp	   src/DetectionProcessor/DetectionProcessor.cpp	   src/PTP/PTPWrapper.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.hpp
+git add 	   src/DataRecorder/DataRecorder.cpp	   src/DetectionProcessor/DetectionProcessor.cpp	   src/PTP/PTPWrapper.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.hpp
+git status
+git commit -m "writing tests, figuring out how to create tracks"
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+git status
+git add 	   src/DetectionProcessor/DetectionProcessor.cpp	   test/src/DetectionProcessor/InputFiles/TestDataDwell52.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell53.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell54.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell55.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell56.yml	   test/src/DetectionProcessor/TrackSentry/TrackSentryBlackboxTest.cpp
+git commit -m "changed some test data in DP tests"
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+python waf_build.py ffa
+python waf_build.py -hw=lstarv3 -b=clean
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+git status
+git add 	   test/src/DetectionProcessor/InputFiles/TestDataDwell52.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell53.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell54.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell55.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell56.yml	   test/src/DetectionProcessor/TrackSentry/TrackSentryBlackboxTest.cpp
+git status
+git add 	StarTestsBuildAndPush.bat	StarTestsBuildAndPush.bat~	test/src/DetectionProcessor/ForceClassify/	test/src/DetectionProcessor/InputFiles/ForceClassify/	test/src/DetectionProcessor/TestUtilities/TestDataLoader.hpp
+git statis
+git status
+git commit -m "infrastracture for tests is ready"
+git commit -m "infrastracture for tests is ready"
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+StarTestsBuildAndPush.bat
+c:\rs\rs_common\submodules\sw_products\utils\include\utils\objectpool\ObjectPool_c.hpp: In instantiation of 'ObjectPool_c<T, sizeT, alignT>::value_type* ObjectPool_c<T, sizeT, alignT>::Allocate(bool) [with T = DetectionProcessor_n::DataModel_n::Id_c; unsigned int sizeT = 90000u; unsigned int alignT = 16u; ObjectPool_c<T, sizeT, alignT>::pointer = DetectionProcessor_n::DataModel_n::Id_c*; ObjectPool_c<T, sizeT, alignT>::value_type = DetectionProcessor_n::DataModel_n::Id_c]':
 ls
-pwd
-cd ..
+cd c:\
+ls
+cd Users/opimenov/
+ls
+cd Application\
+cd AppData/
+ls
+cd Roaming/
+ls
+ls -lsA
+cd .emacs.d/
 ls
 cd ../
 ls
-ls -l
-ls
-cd ~
-ls
-ls
+ls -lsA
+pwd
 cd .emacs.d/
+pwd
+ls -lsA
+rm -rf ./*
+ls -lsA
+pwd
 ls
-git init
-git add config.org
 ls
-rm config.org~ init.el~
 ls
-git statys
-git status
-git commit -m "started config file from scratch"
-git remote add origin https:://github.com/Opimenov/emacs_config.git
-git push -u origin master
-git remote add origin https://github.com/Opimenov/emacs_config.git
-git remote -V
-git remote -v
-git remote rm origin
-git remote -v
-git remote add origin https://github.com/Opimenov/emacs_config.git
-git push -u origin master
-git config --global credential.helper cache
-git config --global credential.helper "cache --timeout=99999999"
-git status
-git add config.org
-git commit-m "org bullets"
-git commit -m "org bullets"
-git status
-git add config.org init.el 
-rm init.el~
-git log
-git commit -m "helm + helm-swoop"
-git push 
-git push 
+ls
+cd c:/rs/rs_common/
+ls
+cd qnx/
+ls
+(+ 3 5)
