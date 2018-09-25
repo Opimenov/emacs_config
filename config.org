@@ -49,8 +49,8 @@
 * Misc
 ** Prevent emacs from autosaving and cluttering source folders
 #+BEGIN_SRC emacs-lisp
-(setq make-backup-file nil)
 (setq auto-save-default nil)
+(setq make-backup-file nil)
 #+END_SRC   
 ** Simplify interaction 
 #+BEGIN_SRC emacs-lisp
@@ -89,3 +89,7 @@
 
 
 
+* rs_common compilation errors
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
+#+END_SRC

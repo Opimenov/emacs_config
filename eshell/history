@@ -1,11 +1,3 @@
-git status
-StarBuildPush.bat
-ls
-StarBuildPush.bat
-StarBuildPush.bat
-StarBuildPush.bat
-StarBuildPush.bat
-git status
 git checkout test/src/DetectionProcessor/TrackSentry/TrackSentryBlackboxTest.cpp
 StarBuildPush.bat
 StarBuildPush.bat
@@ -126,3 +118,11 @@ ls
 cd qnx/
 ls
 (+ 3 5)
+git status
+git add -A
+git commit -m "font change and beacon disabled"
+git push
+git push
+git push
+k
+(+ 3 4)

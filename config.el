@@ -16,7 +16,7 @@
 
 ;;HOW TO SETUP KEY BINDING TO RUN COMMANDS
 ;;customize this to use keyboard short cut to launch terminal or eshell
-(global-set-key (kbd "<C-return>") 'eshell)
+(global-set-key (kbd "<C-return>") 'shell)
 
 (use-package org-bullets
    :ensure t
@@ -36,7 +36,7 @@
 (use-package beacon
   :ensure t
   :init
-  (beacon-mode 1))
+  (beacon-mode -1))
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -47,3 +47,5 @@
 ;;  :ensure t
 ;;  :init
 ;;  (which-key-mode))
+
+(set-face-attribute 'default nil :family "Consolas" :height 120)
