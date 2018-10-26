@@ -9,6 +9,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(unless (package-installed-p 'magit)
+  (package-refresh-contents)
+  (package-install 'magit))
 
 (unless (package-installed-p 'spacemacs-theme)
   (package-refresh-contents)
@@ -21,6 +24,10 @@
 (unless (package-installed-p 'helm-swoop)
   (package-refresh-contents)
   (package-install 'helm-swoop))
+
+(unless (package-installed-p 'log4j-mode)
+  (package-refresh-contents)
+  (package-install 'log4j-mode))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
@@ -39,7 +46,7 @@
  '(electric-pair-mode t)
  '(package-selected-packages
    (quote
-    (helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package)))
+    (log4j-mode magit helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

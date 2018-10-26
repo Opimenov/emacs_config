@@ -23,8 +23,8 @@
    :config
    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 
-(setq make-backup-file nil)
 (setq auto-save-default nil)
+(setq make-backup-file nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -49,3 +49,7 @@
 ;;  (which-key-mode))
 
 (set-face-attribute 'default nil :family "Consolas" :height 120)
+
+(global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
+
+(global-set-key (kbd "C-x g") 'magit-status)
