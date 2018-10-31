@@ -29,6 +29,10 @@
   (package-refresh-contents)
   (package-install 'log4j-mode))
 
+(unless (package-installed-p 'ediff)
+  (package-refresh-contents)
+  (package-install 'ediff))
+
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

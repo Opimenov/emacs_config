@@ -82,11 +82,29 @@
 ;;  :init
 ;;  (which-key-mode))
 #+END_SRC
+** enable electric pair mode by default
+#+BEGIN_SRC emacs-lisp
+(electric-pair-mode 1)
+#+END_SRC   
+** desktop save mod
+   Preserves your buffers across emacs sessions.
+#+BEGIN_SRC emacs-lisp
+(desktop-save-mode 1)
+#+END_SRC      
+* Diff
+** Ediff -  Visual interface for diff and patches
+#+BEGIN_SRC emacs-lisp
+;; add key binding if needed here
+;;   (use-package ediff
+;;      :ensure t
+;;      :config
+;;      ())))
+#+END_SRC
+
 * Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 #+END_SRC
-
 
 
 * rs_common compilation errors

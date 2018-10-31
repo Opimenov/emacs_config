@@ -48,6 +48,16 @@
 ;;  :init
 ;;  (which-key-mode))
 
+(electric-pair-mode 1)
+
+(desktop-save-mode 1)
+
+;; add key binding if needed here
+;;   (use-package ediff
+;;      :ensure t
+;;      :config
+;;      ())))
+
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 
 (global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
