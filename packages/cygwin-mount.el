@@ -134,6 +134,8 @@ If nil then the cygwin-binary-directory must be into the PATH."
   :type '(radio	(const :tag "Cygwin is into PATH" :value nil)
 		(directory :tag "Cygwin-Binary-Dir" :value "")))
 
+(setq cygwin-mount-cygwin-bin-directory "D:/Cygwin/bin")
+
 (defcustom cygwin-mount-build-mount-table-asynch nil
   "*When non-nil, `cygwin-mount-table' is built at load-time.
 If you change the value via customize you must deactivate and activate the

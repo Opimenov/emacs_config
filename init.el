@@ -36,11 +36,11 @@
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; Tell emacs where is your personal elisp lib dir
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.emacs.d/packages/")
 
 ;; load the packaged named xyz.
 ;; best not to include the ending “.el” or “.elc”
-(load "cygwin-mount") 
+(load "cygwin-mount")
 (load "setup-cygwin")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         DO NOT MODIFY BELOW

@@ -153,7 +153,7 @@ Don't forget to mention your Emacs and library versions."))
   "Return DIRECTORY if DIRECTORY is a readable directory, nil otherwise."
   (and (stringp directory)  (file-directory-p directory)  (file-readable-p directory)  directory))
 
-(defcustom cygwin-root-directory ( setcyg-dir-p "D:/Cygwin/" )
+(defcustom cygwin-root-directory (  setcyg-dir-p "D:/Cygwin/")
   "Root directory of Cygwin installation.
 It should have subdirectories `bin' and `usr/info'.
 Subdirectory `bin' should have file `bin/bash.exe'."
@@ -204,8 +204,8 @@ loaded as such.)"
 ;;; An alternative might be to use `cygpath' to change from MS Windows file names to POSIX.
 (setenv "CYGWIN" "nodosfilewarning")
 
-;;; Add Cygwin Info pages
-(add-to-list 'Info-default-directory-list (expand-file-name "usr/info" cygwin-root-directory) 'APPEND)
+;;; Add Cygwin Info pages CAN'T FIND THIS FOLDER
+;;(add-to-list 'Info-default-directory-list (expand-file-name "usr/info" cygwin-root-directory) 'APPEND)
 
 ;;; Use `bash' as the default shell in Emacs.
 (add-to-list 'exec-path (expand-file-name "bin" cygwin-root-directory))
