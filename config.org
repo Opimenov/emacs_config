@@ -1,4 +1,17 @@
-* Emacs config file  
+* Emacs config file
+* Multiple Cursors
+  No need to describe this feature. Everybody knows it.
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors
+  :ensure t
+  :init
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (define-key mc/keymap (kbd "<return>") nil))
+#+END_SRC
+  
 * Helm
 ** enable helm
 #+BEGIN_SRC emacs-lisp
@@ -6,7 +19,6 @@
   :ensure t
   :init
   (helm-mode 1))
-
 #+END_SRC
 ** helm global key bindings
 #+BEGIN_SRC emacs-lisp
@@ -51,7 +63,46 @@
 #+BEGIN_SRC emacs-lisp
 (setq auto-save-default nil)
 (setq make-backup-file nil)
-#+END_SRC   
+#+END_SRC
+** Easy selection of logical region
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :ensure t
+  :init
+  (global-set-key (kbd "C-=") 'er/expand-region))
+#+END_SRC
+** Rainbow delimeters
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (rainbow-delimiters-mode))
+#+END_SRC
+** Winner Mode
+   Winner Mode is a global minor mode. When activated, it allows you
+   to “undo” (and “redo”) changes in the window configuration with
+   the key commands ‘C-c left’ and ‘C-c right’
+#+BEGIN_SRC emacs-lisp
+(when (fboundp 'winner-mode)
+   (winner-mode 1))
+#+END_SRC
+   
+** Vertical indentation guide 
+#+BEGIN_SRC emacs-lisp
+(use-package indent-guide
+  :ensure t
+  :init
+  (indent-guide-global-mode))
+#+END_SRC
+   
+** Powerline is a better looking status bar at the bottom.
+#+BEGIN_SRC emacs-lisp
+(use-package powerline
+  :ensure t
+  :init
+  (powerline-default-theme))
+#+END_SRC
+   
 ** Simplify interaction 
 #+BEGIN_SRC emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -100,12 +151,30 @@
 ;;      :config
 ;;      ())))
 #+END_SRC
-
+* Origami - text folging support
+****  Install dependecies first
+***** string manipulation package
+#+BEGIN_SRC emacs-lisp
+(use-package s
+  :ensure t
+  :init)
+#+END_SRC
+***** list api package
+#+BEGIN_SRC emacs-lisp
+(use-package dash
+  :ensure t
+  :init)
+#+END_SRC
+***** make Emacs aware of origami package
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
+(require 'origami)
+#+END_SRC
+      
 * Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 #+END_SRC
-
 
 * rs_common compilation errors
 #+BEGIN_SRC emacs-lisp
