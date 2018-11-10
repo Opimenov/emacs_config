@@ -170,7 +170,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
 (require 'origami)
 #+END_SRC
-      
+***** TODO define key map for ease of use
 * Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Consolas" :height 120)
