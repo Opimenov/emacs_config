@@ -32,7 +32,13 @@
 ;;bind a key to help-swoop
 (global-set-key (kbd "M-i") 'helm-swoop)
 #+END_SRC
-   
+
+** helm-swoop-kill-ring
+   swoop current buffer with M-u
+#+BEGIN_SRC emacs-lisp
+;;bind a key to help-swoop
+(global-set-key (kbd "M-u") 'helm-show-kill-ring)
+#+END_SRC
 * Terminal
 ** Setting default shell to bash
 #+BEGIN_SRC emacs-lisp
