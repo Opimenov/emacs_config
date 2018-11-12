@@ -1,12 +1,12 @@
 
 (use-package multiple-cursors
   :ensure t
-  :init
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-  (define-key mc/keymap (kbd "<return>") nil))
+  :config
+     (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+     (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+     (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+     (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+     (define-key mc/keymap (kbd "<return>") nil))
 
 (use-package helm
   :ensure t
@@ -19,13 +19,14 @@
 ;;bind a key to help-swoop
 (global-set-key (kbd "M-i") 'helm-swoop)
 
+;;bind a key to help-swoop
+(global-set-key (kbd "M-u") 'helm-show-kill-ring)
+
 (defvar my-term-shell "/bin/bash")
 (defadvice ansi-term (before force-bash)
    (interactive (list my-term-shell)))
 (ad-activate 'ansi-term)
 
-;;HOW TO SETUP KEY BINDING TO RUN COMMANDS
-;;customize this to use keyboard short cut to launch terminal or eshell
 (global-set-key (kbd "<C-return>") 'shell)
 
 (use-package org-bullets
@@ -38,7 +39,7 @@
 
 (use-package expand-region
   :ensure t
-  :init
+  :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
 (use-package rainbow-delimiters
