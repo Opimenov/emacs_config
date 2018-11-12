@@ -1,3 +1,12 @@
+(use-package multiple-cursors
+  :ensure t
+  :init
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (define-key mc/keymap (kbd "<return>") nil))
+
 (use-package helm
   :ensure t
   :init
@@ -25,6 +34,29 @@
 
 (setq auto-save-default nil)
 (setq make-backup-file nil)
+
+(use-package expand-region
+  :ensure t
+  :init
+  (global-set-key (kbd "C-=") 'er/expand-region))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (rainbow-delimiters-mode))
+
+(when (fboundp 'winner-mode)
+   (winner-mode 1))
+
+(use-package indent-guide
+  :ensure t
+  :init
+  (indent-guide-global-mode))
+
+(use-package powerline
+  :ensure t
+  :init
+  (powerline-default-theme))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -57,6 +89,17 @@
 ;;      :ensure t
 ;;      :config
 ;;      ())))
+
+(use-package s
+  :ensure t
+  :init)
+
+(use-package dash
+  :ensure t
+  :init)
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
+(require 'origami)
 
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 

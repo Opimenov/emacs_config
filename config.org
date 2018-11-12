@@ -64,6 +64,10 @@
 (setq auto-save-default nil)
 (setq make-backup-file nil)
 #+END_SRC
+** No Tabs
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+END_SRC   
 ** Easy selection of logical region
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
@@ -190,3 +194,9 @@
 
 
 
+* Sr SpeedBar - makes speedbar show in current frame
+#+BEGIN_SRC emacs-lisp
+(use-package sr-speedbar
+  :ensure t
+  :init)
+#+END_SRC   
