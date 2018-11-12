@@ -40,8 +40,8 @@
 
 ;; load the packaged named xyz.
 ;; best not to include the ending “.el” or “.elc”
-(load "cygwin-mount")
-(load "setup-cygwin")
+;(load "cygwin-mount")
+;(load "setup-cygwin")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         DO NOT MODIFY BELOW
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

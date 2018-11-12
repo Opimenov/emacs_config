@@ -4,14 +4,13 @@
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :ensure t
-  :init
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-  (define-key mc/keymap (kbd "<return>") nil))
+  :config
+     (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+     (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+     (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+     (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+     (define-key mc/keymap (kbd "<return>") nil))
 #+END_SRC
-  
 * Helm
 ** enable helm
 #+BEGIN_SRC emacs-lisp
@@ -25,14 +24,18 @@
 ;;bind a key to help
 (global-set-key (kbd "M-x") 'helm-M-x)
 #+END_SRC
-
 ** helm-swoop
    swoop current buffer with M-i
 #+BEGIN_SRC emacs-lisp
 ;;bind a key to help-swoop
 (global-set-key (kbd "M-i") 'helm-swoop)
 #+END_SRC
-   
+** helm-swoop-kill-ring
+   swoop current buffer with M-u
+#+BEGIN_SRC emacs-lisp
+;;bind a key to help-swoop
+(global-set-key (kbd "M-u") 'helm-show-kill-ring)
+#+END_SRC
 * Terminal
 ** Setting default shell to bash
 #+BEGIN_SRC emacs-lisp
@@ -41,13 +44,10 @@
       (interactive (list my-term-shell)))
    (ad-activate 'ansi-term)
 #+END_SRC
-** Binding keys to launch eshell
+** Binding keys to launch shell
 #+BEGIN_SRC emacs-lisp
-;;HOW TO SETUP KEY BINDING TO RUN COMMANDS
-;;customize this to use keyboard short cut to launch terminal or eshell
 (global-set-key (kbd "<C-return>") 'shell)
 #+END_SRC
-
 * Org
 ** Org Bullets
    Better bullets in org mode
@@ -57,7 +57,6 @@
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
-* Dired
 * Misc
 ** Prevent emacs from autosaving and cluttering source folders
 #+BEGIN_SRC emacs-lisp
@@ -72,7 +71,7 @@
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
   :ensure t
-  :init
+  :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 #+END_SRC
 ** Rainbow delimeters
@@ -174,7 +173,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
 (require 'origami)
 #+END_SRC
-      
+***** TODO define key map for ease of use
 * Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Consolas" :height 120)
