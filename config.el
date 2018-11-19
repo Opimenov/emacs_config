@@ -1,3 +1,5 @@
+;; Tell emacs where is your personal elisp lib dir
+(add-to-list 'load-path "~/.emacs.d/packages/")
 
 (use-package multiple-cursors
   :ensure t
@@ -37,6 +39,8 @@
 (setq auto-save-default nil)
 (setq make-backup-file nil)
 
+(setq-default indent-tabs-mode nil)
+
 (use-package expand-region
   :ensure t
   :config
@@ -72,6 +76,12 @@
   :init
   (beacon-mode -1))
 
+;;(setq-default indent-tabs-mode nil)
+;;(setq-default tab-width 3)
+;;(setq tab-stop-list (number-sequence 3 200 3))
+;;(setq indent-line-function 'insert-tab)
+;;(global-set-key (kbd "TAB") 'self-insert-command)
+
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -86,11 +96,15 @@
 
 (desktop-save-mode 1)
 
-;; add key binding if needed here
-;;   (use-package ediff
-;;      :ensure t
-;;      :config
-;;      ())))
+;; load the packaged named xyz.
+;; best not to include the ending “.el” or “.elc”
+(load "cygwin-mount")
+(load "setup-cygwin")
+
+(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
+(setq exec-path (cons "D:/Cygwin/bin" exec-path))
+(require 'cygwin-mount)
+(cygwin-mount-activate)
 
 (use-package s
   :ensure t
@@ -107,4 +121,14 @@
 
 (global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
 
+(fset 'lstar-build-push-bash
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([7 3 134217839 46 47 83 116 97 114 tab return] 0 "%d")) arg)))
+(global-set-key (kbd "C-c s") 'lstar-build-push-bash)   
+;;(fset 'star-build
+;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
+
 (global-set-key (kbd "C-x g") 'magit-status)
+
+(use-package sr-speedbar
+  :ensure t
+  :init)

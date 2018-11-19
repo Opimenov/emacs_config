@@ -1,4 +1,14 @@
 * Emacs config file
+#+BEGIN_SRC emacs-lisp
+;; Tell emacs where is your personal elisp lib dir
+(add-to-list 'load-path "~/.emacs.d/packages/")
+;;macro for setting custom variables
+(defmacro csetq (variable value)
+  `(funcall (or (get ',variable 'custom-set)
+                'set-default)
+            ',variable ,value))
+
+#+END_SRC
 * Multiple Cursors
   No need to describe this feature. Everybody knows it.
 #+BEGIN_SRC emacs-lisp
@@ -122,6 +132,18 @@
   :init
   (beacon-mode -1))
 #+END_SRC
+
+** Use 3 spaces instead of tabs
+        this does not work for my settings, investigate
+#+BEGIN_SRC emacs-lisp   
+;;(setq-default indent-tabs-mode nil)
+;;(setq-default tab-width 3)
+;;(setq tab-stop-list (number-sequence 3 200 3))
+;;(setq indent-line-function 'insert-tab)
+;;(global-set-key (kbd "TAB") 'self-insert-command)        
+#+END_SRC
+
+
 ** Remove toolbar, menu, scrollbar, startup screen
 #+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
@@ -148,11 +170,23 @@
 * Diff
 ** Ediff -  Visual interface for diff and patches
 #+BEGIN_SRC emacs-lisp
-;; add key binding if needed here
-;;   (use-package ediff
-;;      :ensure t
-;;      :config
-;;      ())))
+;; load the packaged named xyz.
+;; best not to include the ending “.el” or “.elc”
+(load "cygwin-mount")
+(load "setup-cygwin")
+
+(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
+(setq exec-path (cons "D:/Cygwin/bin" exec-path))
+(require 'cygwin-mount)
+(cygwin-mount-activate)
+
+(csetq ediff-split-window-function 'split-window-horizontally)
+(csetq ediff-diff-options "-w")
+(csetq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+(winner-mode)
+(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+
 #+END_SRC
 * Origami - text folging support
 ****  Install dependecies first
@@ -179,9 +213,18 @@
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 #+END_SRC
 
-* rs_common compilation errors
+* rs_common
+  compilation errors
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
+#+END_SRC
+  star compile
+#+BEGIN_SRC emacs-lisp
+(fset 'build-and-push-rs
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([7 3 134217839 46 47 83 116 97 114 66 117 105 108 100 80 117 115 104 46 98 97 116] 0 "%d")) arg)))
+(global-set-key (kbd "C-c s") 'build-and-push-rs)   
+;;(fset 'star-build
+;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
 #+END_SRC
 
 * Magit
@@ -192,10 +235,11 @@
 
 
 
-
 * Sr SpeedBar - makes speedbar show in current frame
 #+BEGIN_SRC emacs-lisp
 (use-package sr-speedbar
   :ensure t
   :init)
 #+END_SRC   
+
+
