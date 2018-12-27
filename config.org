@@ -58,6 +58,10 @@
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<C-return>") 'shell)
 #+END_SRC
+* Spelling checks
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ispell :ensure t)
+#+END_SRC
 * Org
 ** Org Bullets
    Better bullets in org mode
@@ -72,6 +76,7 @@
 #+BEGIN_SRC emacs-lisp
 (setq auto-save-default nil)
 (setq make-backup-file nil)
+(setq enable-recursive-minibuffers nil)
 #+END_SRC
 ** No Tabs
 #+BEGIN_SRC emacs-lisp
@@ -143,7 +148,6 @@
 ;;(global-set-key (kbd "TAB") 'self-insert-command)        
 #+END_SRC
 
-
 ** Remove toolbar, menu, scrollbar, startup screen
 #+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
@@ -213,23 +217,20 @@
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 #+END_SRC
 
-* rs_common
-  compilation errors
+* compilation errors search
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
 #+END_SRC
-  star compile
-#+BEGIN_SRC emacs-lisp
-(fset 'build-and-push-rs
-   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([7 3 134217839 46 47 83 116 97 114 66 117 105 108 100 80 117 115 104 46 98 97 116] 0 "%d")) arg)))
-(global-set-key (kbd "C-c s") 'build-and-push-rs)   
-;;(fset 'star-build
-;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
-#+END_SRC
-
 * Magit
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x g") 'magit-status)
+#+END_SRC
+* Hungry Delete
+#+BEGIN_SRC emacs-lisp
+(require 'hungry-delete)
+(global-hungry-delete-mode)
+(global-set-key (kbd "C-c <backspace>") 'c-hungry-delete-backwards)
+(global-set-key (kbd "C-c <deletechar>") 'c-hungry-delete-forward)
 #+END_SRC
 
 
