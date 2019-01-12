@@ -1,2 +1,4 @@
-/elpa/expand-region-20180817.1134/cc-mode-expansions.el
+/elpa/*
+.mc-lists.el
 /%backup%~
+auto-save-list/*
