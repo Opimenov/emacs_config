@@ -1,4 +1,6 @@
+;;; config.org --- Emacs configuration file in org mode format. 
 * Emacs config file
+  Collection of packages and configs that I use
 #+BEGIN_SRC emacs-lisp
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/packages/")
@@ -7,11 +9,39 @@
   `(funcall (or (get ',variable 'custom-set)
                 'set-default)
             ',variable ,value))
-
+#+END_SRC
+* Set package repository
+  This needs to be in init.el Otherwise nothing works.
+#+BEGIN_SRC emacs-lisp
+;;; There are few public repositories of Emacs packages. 
+;;; I'm using melpa and you should too. I don't know why though.
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+#+END_SRC
+* Use-package package
+#+BEGIN_SRC emacs-lisp
+;; use-package is a nice package that simplifies package installation
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+END_SRC
+* Better looking theme
+#+BEGIN_SRC emacs-lisp
+;;; there is a flavor of Emacs called spacemacs, 
+;;; that uses space key instead of Ctrl. From what
+;;; I could gather it is clunky, but the theme is nice.
+(unless (package-installed-p 'spacemacs-theme)
+   (package-refresh-contents)
+   (package-install 'spacemacs-theme))
 #+END_SRC
 * Multiple Cursors
-  No need to describe this feature. Everybody knows it.
 #+BEGIN_SRC emacs-lisp
+;;No need to describe this feature. Everybody knows it. Maybe not.
+;;It allows you to have as many cursors on the screen as your 
+;; CPU+GPU+Your-Head can handle. Allows you to use Dark Magic. 
 (use-package multiple-cursors
   :ensure t
   :config
@@ -22,29 +52,23 @@
      (define-key mc/keymap (kbd "<return>") nil))
 #+END_SRC
 * Helm
-** enable helm
 #+BEGIN_SRC emacs-lisp
+;;Helm is modified help buffer. It attaches itself to a lot of actions
+;;in Emacs environment and create more functional and better looking
+;;help buffers. 
 (use-package helm
   :ensure t
   :init
   (helm-mode 1))
-#+END_SRC
-** helm global key bindings
-#+BEGIN_SRC emacs-lisp
-;;bind a key to help
-(global-set-key (kbd "M-x") 'helm-M-x)
-#+END_SRC
-** helm-swoop
-   swoop current buffer with M-i
-#+BEGIN_SRC emacs-lisp
-;;bind a key to help-swoop
-(global-set-key (kbd "M-i") 'helm-swoop)
-#+END_SRC
-** helm-swoop-kill-ring
-   swoop current buffer with M-u
-#+BEGIN_SRC emacs-lisp
-;;bind a key to help-swoop
-(global-set-key (kbd "M-u") 'helm-show-kill-ring)
+
+;;install package first
+(use-package helm-swoop
+  :ensure t
+  :config
+     (global-set-key (kbd "M-x") 'helm-M-x)
+     (global-set-key (kbd "M-i") 'helm-swoop);;helm search
+     (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
+     (global-set-key (kbd "C-c f") 'helm-locate));;find stuff quickly
 #+END_SRC
 * Terminal
 ** Setting default shell to bash
@@ -133,19 +157,9 @@
   (beacon-mode -1))
 #+END_SRC
 
-** Use 3 spaces instead of tabs
-        this does not work for my settings, investigate
-#+BEGIN_SRC emacs-lisp   
-;;(setq-default indent-tabs-mode nil)
-;;(setq-default tab-width 3)
-;;(setq tab-stop-list (number-sequence 3 200 3))
-;;(setq indent-line-function 'insert-tab)
-;;(global-set-key (kbd "TAB") 'self-insert-command)        
-#+END_SRC
-
-
 ** Remove toolbar, menu, scrollbar, startup screen
 #+BEGIN_SRC emacs-lisp
+;;clean up GUI GARBAGE
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -167,25 +181,32 @@
 #+BEGIN_SRC emacs-lisp
 (desktop-save-mode 1)
 #+END_SRC      
-* Diff
+* Diff icult to set up. 
 ** Ediff -  Visual interface for diff and patches
 #+BEGIN_SRC emacs-lisp
-;; load the packaged named xyz.
-;; best not to include the ending “.el” or “.elc”
-(load "cygwin-mount")
-(load "setup-cygwin")
+;;if you are on Linux 
+(use-package ediff
+   :ensure t
+   :init)
 
-(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
-(setq exec-path (cons "D:/Cygwin/bin" exec-path))
-(require 'cygwin-mount)
-(cygwin-mount-activate)
+;;if you are on windouzzzzz os. Good luck. 
+;; download cygwin-mount and setup-cygwin to "D:/Cygwin/bin"
+;; Do you feel lucky today? try leaving package extensions.
+;; best not to include the ending “.el” or “.elc” 
+;;(load "cygwin-mount")
+;;(load "setup-cygwin")
 
-(csetq ediff-split-window-function 'split-window-horizontally)
-(csetq ediff-diff-options "-w")
-(csetq ediff-window-setup-function 'ediff-setup-windows-plain)
+;;(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
+;;(setq exec-path (cons "D:/Cygwin/bin" exec-path))
+;;(require 'cygwin-mount)
+;;(cygwin-mount-activate)
 
-(winner-mode)
-(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+;;(csetq ediff-split-window-function 'split-window-horizontally)
+;;(csetq ediff-diff-options "-w")
+;;(csetq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;;(winner-mode)
+;;(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
 #+END_SRC
 * Origami - text folging support
@@ -213,8 +234,10 @@
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 #+END_SRC
 
-* rs_common
-  compilation errors
+* helm-swoop for compilation errors
+  one little annoyance is that buffer needs to be cleared before. Otherwise
+  you will catch previous errors too. Possible work around is to use compile
+  command or what I do is to define a macro to call Ashlee\clear and then compile
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
 #+END_SRC
@@ -227,19 +250,44 @@
 ;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
 #+END_SRC
 
-* Magit
+* Magit - nice git package
 #+BEGIN_SRC emacs-lisp
+(use-package magit
+   :ensure t
+   :init)
 (global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
-
-
-
+* Spelling correction
+  #+BEGIN_SRC emacs-lisp
+(use-package helm-flyspell
+  :ensure t
+  :config
+  (global-set-key (kbd "C-:") 'helm-flyspell-correct))
+#+END_SRC   
 
 * Sr SpeedBar - makes speedbar show in current frame
 #+BEGIN_SRC emacs-lisp
 (use-package sr-speedbar
   :ensure t
   :init)
-#+END_SRC   
-
-
+#+END_SRC
+* Pylint
+#+BEGIN_SRC emacs-lisp
+(use-package pylint
+  :ensure t
+  :init)
+(autoload 'pylint "pylint")
+(add-hook 'python-mode-hook 'pylint-add-menu-items)
+(add-hook 'python-mode-hook 'pylint-add-key-bindings)
+#+END_SRC
+* If you ever want to find nice shortcuts 
+ just type <which-key-show-keymap> 
+ then look for your mode, press Enter.
+ To keep that buffer press C-h
+ If you don't know any keyboard shortcut
+ you can enable which-key-mode to give you hints.
+ I don't like it, but you may. To do so M-x which-key-mode
+ enables the mode. Then you can press C-h to get info.
+ 
+(provide 'config)
+;;; config.org ends here
