@@ -1,5 +1,4 @@
-;;; config.org --- Emacs configuration file in org mode format. 
-* Emacs config file
+* config.org --- Emacs configuration file in org mode format. 
   Collection of packages and configs that I use
 #+BEGIN_SRC emacs-lisp
 ;; Tell emacs where is your personal elisp lib dir
@@ -10,38 +9,38 @@
                 'set-default)
             ',variable ,value))
 #+END_SRC
-* Set package repository
-  This needs to be in init.el Otherwise nothing works.
+** Set package repository
+ This needs to be in init.el Otherwise nothing works.
+ There are few public repositories of Emacs packages. 
+ I'm using melpa and you should too. I don't know why though.
 #+BEGIN_SRC emacs-lisp
-;;; There are few public repositories of Emacs packages. 
-;;; I'm using melpa and you should too. I don't know why though.
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 #+END_SRC
-* Use-package package
+** Use-package package. 
+ Nice package that simplifies package installation
 #+BEGIN_SRC emacs-lisp
-;; use-package is a nice package that simplifies package installation
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 #+END_SRC
-* Better looking theme
+** Better looking theme
+ there is a flavor of Emacs called spacemacs, 
+ that uses space key instead of Ctrl. From what
+ I could gather it is clunky, but the theme is nice.
 #+BEGIN_SRC emacs-lisp
-;;; there is a flavor of Emacs called spacemacs, 
-;;; that uses space key instead of Ctrl. From what
-;;; I could gather it is clunky, but the theme is nice.
 (unless (package-installed-p 'spacemacs-theme)
    (package-refresh-contents)
    (package-install 'spacemacs-theme))
 #+END_SRC
-* Multiple Cursors
+** Multiple Cursors
+No need to describe this feature. Everybody knows it. Maybe not.
+It allows you to have as many cursors on the screen as your 
+CPU+GPU+Your-Head can handle. Allows you to use Dark Magic. 
 #+BEGIN_SRC emacs-lisp
-;;No need to describe this feature. Everybody knows it. Maybe not.
-;;It allows you to have as many cursors on the screen as your 
-;; CPU+GPU+Your-Head can handle. Allows you to use Dark Magic. 
 (use-package multiple-cursors
   :ensure t
   :config
@@ -51,11 +50,12 @@
      (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
      (define-key mc/keymap (kbd "<return>") nil))
 #+END_SRC
-* Helm
-#+BEGIN_SRC emacs-lisp
+** Helm - better looking interactive buffer for common actions
 ;;Helm is modified help buffer. It attaches itself to a lot of actions
 ;;in Emacs environment and create more functional and better looking
 ;;help buffers. 
+
+#+BEGIN_SRC emacs-lisp
 (use-package helm
   :ensure t
   :init
@@ -70,20 +70,20 @@
      (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
      (global-set-key (kbd "C-c f") 'helm-locate));;find stuff quickly
 #+END_SRC
-* Terminal
-** Setting default shell to bash
+** Terminal
+*** Setting default shell to bash
 #+BEGIN_SRC emacs-lisp
    (defvar my-term-shell "/bin/bash")
    (defadvice ansi-term (before force-bash)
       (interactive (list my-term-shell)))
    (ad-activate 'ansi-term)
 #+END_SRC
-** Binding keys to launch shell
+*** Binding keys to launch shell
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<C-return>") 'shell)
 #+END_SRC
-* Org
-** Org Bullets
+** Org
+*** Org Bullets
    Better bullets in org mode
 #+BEGIN_SRC emacs-lisp
    (use-package org-bullets
@@ -91,36 +91,38 @@
       :config
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
-* Misc
-** Pretty unicode characters
+** Misc
+*** Pretty unicode characters
+#+BEGIN_SRC emacs-lisp
 (use-package pretty-mode
     :ensure t
     :config
     (global-pretty-mode 1))
-** Prevent emacs from autosaving and cluttering source folders
+#+END_SRC
+*** Prevent emacs from autosaving and cluttering source folders
 #+BEGIN_SRC emacs-lisp
 (setq auto-save-default nil)
 (setq make-backup-file nil)
 #+END_SRC
-** No Tabs
+*** No Tabs
 #+BEGIN_SRC emacs-lisp
 (setq-default indent-tabs-mode nil)
 #+END_SRC   
-** Easy selection of logical region
+*** Easy selection of logical region
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
   :ensure t
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 #+END_SRC
-** Rainbow delimeters
+*** Rainbow delimeters
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
   :init
   (rainbow-delimiters-mode))
 #+END_SRC
-** Winner Mode
+*** Winner Mode
    Winner Mode is a global minor mode. When activated, it allows you
    to “undo” (and “redo”) changes in the window configuration with
    the key commands ‘C-c left’ and ‘C-c right’
@@ -129,7 +131,7 @@
    (winner-mode 1))
 #+END_SRC
    
-** Vertical indentation guide 
+*** Vertical indentation guide 
 #+BEGIN_SRC emacs-lisp
 (use-package indent-guide
   :ensure t
@@ -137,7 +139,7 @@
   (indent-guide-global-mode))
 #+END_SRC
    
-** Powerline is a better looking status bar at the bottom.
+*** Powerline is a better looking status bar at the bottom.
 #+BEGIN_SRC emacs-lisp
 (use-package powerline
   :ensure t
@@ -145,11 +147,11 @@
   (powerline-default-theme))
 #+END_SRC
    
-** Simplify interaction 
+*** Simplify interaction 
 #+BEGIN_SRC emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
-** Editing convenience improvements
+*** Editing convenience improvements
 #+BEGIN_SRC emacs-lisp
 (setq scroll-conservatively 100)
 (setq ring-bell-function 'ignore)
@@ -162,7 +164,7 @@
   (beacon-mode -1))
 #+END_SRC
 
-** Remove toolbar, menu, scrollbar, startup screen
+*** Remove toolbar, menu, scrollbar, startup screen
 #+BEGIN_SRC emacs-lisp
 ;;clean up GUI GARBAGE
 (tool-bar-mode -1)
@@ -170,34 +172,41 @@
 (scroll-bar-mode -1)
 (setq inhibit-startup-message t)
 #+END_SRC
-** Key bindings help display. Currently disabled.
+*** Key bindings help display. Currently disabled.
 #+BEGIN_SRC emacs-lisp
 ;;(use-package which-key
 ;;  :ensure t
 ;;  :init
 ;;  (which-key-mode))
 #+END_SRC
-** enable electric pair mode by default
+*** enable electric pair mode by default
 #+BEGIN_SRC emacs-lisp
 (electric-pair-mode 1)
 #+END_SRC   
-** desktop save mod
+*** desktop save mod
    Preserves your buffers across emacs sessions.
 #+BEGIN_SRC emacs-lisp
 (desktop-save-mode 1)
 #+END_SRC      
-* Diff icult to set up. 
-** Ediff -  Visual interface for diff and patches
+** Diff icult to set up. 
+*** Ediff -  Visual interface for diff and patches
 #+BEGIN_SRC emacs-lisp
 ;;if you are on Linux 
 (use-package ediff
    :ensure t
    :init)
-
-;;if you are on windouzzzzz os. Good luck. 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;if you are on WINDOUZZZZZ OS. Good luck.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; download cygwin-mount and setup-cygwin to "D:/Cygwin/bin"
+;; if you don't have a D drive or want to have it some place
+;; else you'll need to replace the path. Search for the path
+;; that I have and replace it.
 ;; Do you feel lucky today? try leaving package extensions.
 ;; best not to include the ending “.el” or “.elc” 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMMENT OUT THE REST OF THE SET UP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;(load "cygwin-mount")
 ;;(load "setup-cygwin")
 
@@ -214,7 +223,7 @@
 ;;(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
 #+END_SRC
-* Origami - text folging support
+** Origami - text folging support
 ****  Install dependecies first
 ***** string manipulation package
 #+BEGIN_SRC emacs-lisp
@@ -234,12 +243,11 @@
 (require 'origami)
 #+END_SRC
 ***** TODO define key map for ease of use
-* Font
+** Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 #+END_SRC
-
-* helm-swoop for compilation errors
+** helm-swoop for compilation errors
   one little annoyance is that buffer needs to be cleared before. Otherwise
   you will catch previous errors too. Possible work around is to use compile
   command or what I do is to define a macro to call Ashlee\clear and then compile
@@ -254,29 +262,27 @@
 ;;(fset 'star-build
 ;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
 #+END_SRC
-
-* Magit - nice git package
+** Magit - nice git package
 #+BEGIN_SRC emacs-lisp
 (use-package magit
    :ensure t
    :init)
 (global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
-* Spelling correction
+** Spelling correction
   #+BEGIN_SRC emacs-lisp
 (use-package helm-flyspell
   :ensure t
   :config
   (global-set-key (kbd "C-:") 'helm-flyspell-correct))
 #+END_SRC   
-
-* Sr SpeedBar - makes speedbar show in current frame
+** Sr SpeedBar - makes speedbar show in current frame
 #+BEGIN_SRC emacs-lisp
 (use-package sr-speedbar
   :ensure t
   :init)
 #+END_SRC
-* Pylint
+** Pylint
 #+BEGIN_SRC emacs-lisp
 (use-package pylint
   :ensure t
@@ -285,8 +291,8 @@
 (add-hook 'python-mode-hook 'pylint-add-menu-items)
 (add-hook 'python-mode-hook 'pylint-add-key-bindings)
 #+END_SRC
-* Complete anything - Company mode
-** C/C++ company+irony
+** Complete anything - Company mode
+*** C/C++ company+irony
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
@@ -315,7 +321,7 @@
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb--autodetect-compile-options))
 #+END_SRC
-**  Python company+Jedi
+***  Python company+Jedi
 #+BEGIN_SRC emacs-lisp
 ;;;PYTHON
 ;;; add back end source code parser python
@@ -340,7 +346,7 @@
   (add-hook 'python-mode-hook 'company-mode))
 #+END_SRC
 
-* Projectile with helm
+** Projectile with helm
   Project manipulation package with helm GUI...NICE!!!
 #+BEGIN_SRC emacs-lisp
 (use-package helm-projectile 
@@ -351,7 +357,7 @@
    (helm-projectile-on))
 #+END_SRC
 
-* If you ever want to find nice shortcuts 
+** If you ever want to find nice shortcuts 
  just type <which-key-show-keymap> 
  then look for your mode, press Enter.
  To keep that buffer press C-h
@@ -359,6 +365,3 @@
  you can enable which-key-mode to give you hints.
  I don't like it, but you may. To do so M-x which-key-mode
  enables the mode. Then you can press C-h to get info.
- 
-(provide 'config)
-;;; config.org ends here
