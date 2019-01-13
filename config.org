@@ -92,6 +92,11 @@
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
 * Misc
+** Pretty unicode characters
+(use-package pretty-mode
+    :ensure t
+    :config
+    (global-pretty-mode 1))
 ** Prevent emacs from autosaving and cluttering source folders
 #+BEGIN_SRC emacs-lisp
 (setq auto-save-default nil)
@@ -280,6 +285,72 @@
 (add-hook 'python-mode-hook 'pylint-add-menu-items)
 (add-hook 'python-mode-hook 'pylint-add-key-bindings)
 #+END_SRC
+* Complete anything - Company mode
+** C/C++ company+irony
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :config
+   (setq company-idle-delay 0)
+   (setq company-minimum-prefix-length 3))
+;;; define a better keyboard map
+(with-eval-after-load 'company
+          ;;null default scrolling keys
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+          ;;define normal keys that we used to
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous))
+;;; add back end source code parser c++
+(use-package company-irony 
+  :ensure t
+  :config
+  (require 'company)
+  (add-to-list 'company-backends 'company-irony))
+;;;start irony when starting c/c++ modes and do auto compile options (more dragons)
+(use-package irony 
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb--autodetect-compile-options))
+#+END_SRC
+**  Python company+Jedi
+#+BEGIN_SRC emacs-lisp
+;;;PYTHON
+;;; add back end source code parser python
+(use-package jedi
+  :ensure t
+  :config
+  (add-hook 'python-mode-hook 'jedi:install-server)
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (add-hook 'python-mode-hook 'jedi-mode))
+
+(use-package company-jedi
+  :ensure t
+  :config
+  (require 'company)
+  ;;;start jedi back end on python mode start
+  (add-to-list 'company-backends 'company-jedi))
+
+;;;start company mode when starting c/c++/python modes
+(with-eval-after-load 'company
+  (add-hook 'c++-mode-hook 'company-mode)
+  (add-hook 'c-mode-hook 'company-mode)
+  (add-hook 'python-mode-hook 'company-mode))
+#+END_SRC
+
+* Projectile with helm
+  Project manipulation package with helm GUI...NICE!!!
+#+BEGIN_SRC emacs-lisp
+(use-package helm-projectile 
+  :ensure t
+  :config
+   (projectile-global-mode)
+   (setq projectile-completion-system 'helm)
+   (helm-projectile-on))
+#+END_SRC
+
 * If you ever want to find nice shortcuts 
  just type <which-key-show-keymap> 
  then look for your mode, press Enter.
