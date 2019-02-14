@@ -4,7 +4,6 @@ config.org --- Emacs configuration file in org mode format.
 #+BEGIN_SRC emacs-lisp
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/packages/")
-(add-to-list 'load-path "~/.emacs.d/packages/sidebar/")
 ;;macro for setting custom variables
 (defmacro csetq (variable value)
   `(funcall (or (get ',variable 'custom-set)
@@ -62,19 +61,22 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 ;;help buffers. 
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm
-  :ensure t
-  :init
-  (helm-mode 1))
+  (use-package helm
+    :ensure t
+    :init
+    (helm-mode 1))
 
-;;install package first
-(use-package helm-swoop
-  :ensure t
-  :config
-     (global-set-key (kbd "M-x") 'helm-M-x)
-     (global-set-key (kbd "M-i") 'helm-swoop);;helm search
-     (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
-     (global-set-key (kbd "C-x C-f") 'helm-find-files));;find stuff quickly
+  ;;install package first
+  (use-package helm-swoop
+    :ensure t
+    :config
+       (global-set-key (kbd "M-x") 'helm-M-x)
+       (global-set-key (kbd "M-i") 'helm-swoop);;helm search
+       (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
+       (global-set-key (kbd "C-x C-f") 'helm-find-files));;find stuff quickly
+       (global-set-key (kbd "C-c f f") 'helm-projectile)
+       (global-set-key (kbd "C-c g") 'helm-projectile-grep)
+       (global-set-key (kbd "C-c i") 'helm-imenu) ;;go to funstion name quickly
 #+END_SRC
 ** Terminal
 *** Setting default shell to bash
@@ -87,7 +89,8 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 *** Binding keys to launch shell
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<C-return>") 'shell)
-(eshell)
+;;startup shell on boot
+;;(eshell)
 #+END_SRC
 ** Org
 *** Common settings
@@ -150,59 +153,65 @@ add LaTeX to Emacs exec path
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-; allow for export=>beamer by placing
+  ; allow for export=>beamer by placing
 
-;; #+LaTeX_CLASS: beamer in org files
-(unless (boundp 'org-export-latex-classes)
-  (setq org-export-latex-classes nil))
-(add-to-list 'org-export-latex-classes
-  ;; beamer class, for presentations
-  '("beamer"
-     "\\documentclass[11pt]{beamer}\n
-      \\mode<{{{beamermode}}}>\n
-      \\usetheme{{{{beamertheme}}}}\n
-      \\usecolortheme{{{{beamercolortheme}}}}\n
-      \\beamertemplateballitem\n
-      \\setbeameroption{show notes}
-      \\usepackage[utf8]{inputenc}\n
-      \\usepackage[T1]{fontenc}\n
-      \\usepackage{hyperref}\n
-      \\usepackage{color}
-      \\usepackage{listings}
-      \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
-  frame=single,
-  basicstyle=\\small,
-  showspaces=false,showstringspaces=false,
-  showtabs=false,
-  keywordstyle=\\color{blue}\\bfseries,
-  commentstyle=\\color{red},
-  }\n
-      \\usepackage{verbatim}\n
-      \\institute{{{{beamerinstitute}}}}\n          
-       \\subject{{{{beamersubject}}}}\n"
-
-     ("\\section{%s}" . "\\section*{%s}")
-     
-     ("\\begin{frame}[fragile]\\frametitle{%s}"
-       "\\end{frame}"
-       "\\begin{frame}[fragile]\\frametitle{%s}"
-       "\\end{frame}")))
-
-  ;; letter class, for formal letters
-
+  ;; #+LaTeX_CLASS: beamer in org files
+  (unless (boundp 'org-export-latex-classes)
+    (setq org-export-latex-classes nil))
   (add-to-list 'org-export-latex-classes
+    ;; beamer class, for presentations
+    '("beamer"
+       "\\documentclass[11pt]{beamer}\n
+        \\mode<{{{beamermode}}}>\n
+        \\usetheme{{{{beamertheme}}}}\n
+        \\usecolortheme{{{{beamercolortheme}}}}\n
+        \\beamertemplateballitem\n
+        \\setbeameroption{show notes}
+        \\usepackage[utf8]{inputenc}\n
+        \\usepackage[T1]{fontenc}\n
+        \\usepackage{hyperref}\n
+        \\usepackage{color}
+        \\usepackage{listings}
+        \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
+    frame=single,
+    basicstyle=\\small,
+    showspaces=false,showstringspaces=false,
+    showtabs=false,
+    keywordstyle=\\color{blue}\\bfseries,
+    commentstyle=\\color{red},
+    }\n
+        \\usepackage{verbatim}\n
+        \\institute{{{{beamerinstitute}}}}\n          
+         \\subject{{{{beamersubject}}}}\n"
 
-  '("letter"
-     "\\documentclass[11pt]{letter}\n
-      \\usepackage[utf8]{inputenc}\n
-      \\usepackage[T1]{fontenc}\n
-      \\usepackage{color}"
+       ("\\section{%s}" . "\\section*{%s}")
      
-     ("\\section{%s}" . "\\section*{%s}")
-     ("\\subsection{%s}" . "\\subsection*{%s}")
-     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-     ("\\paragraph{%s}" . "\\paragraph*{%s}")
-     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+       ("\\begin{frame}[fragile]\\frametitle{%s}"
+         "\\end{frame}"
+         "\\begin{frame}[fragile]\\frametitle{%s}"
+         "\\end{frame}")))
+
+    ;; letter class, for formal letters
+
+    (add-to-list 'org-export-latex-classes
+
+    '("letter"
+       "\\documentclass[11pt]{letter}\n
+        \\usepackage[utf8]{inputenc}\n
+        \\usepackage[T1]{fontenc}\n
+        \\usepackage{color}"
+     
+       ("\\section{%s}" . "\\section*{%s}")
+       ("\\subsection{%s}" . "\\subsection*{%s}")
+       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+END_SRC
+*** python support
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
 #+END_SRC
 ** Editing convenience
 *** Pretty unicode characters
@@ -211,6 +220,11 @@ add LaTeX to Emacs exec path
     :ensure t
     :config
     (global-pretty-mode 1))
+#+END_SRC
+*** Fix tramp invalid base 64 data error
+#+BEGIN_SRC emacs-lisp
+(setq tramp-copy-size-limit nil)
+(setq tramp-inline-compress-start-size nil)
 #+END_SRC
 *** Prevent emacs from autosaving and cluttering source folders
 #+BEGIN_SRC emacs-lisp
@@ -320,25 +334,29 @@ Lets us use asynchronous processes wherever possible, pretty usefull
    
 *** Powerline is a better looking status bar at the bottom.
 #+BEGIN_SRC emacs-lisp
-      ;; (use-package spaceline
-      ;;   :ensure t
-      ;;   :config
-      ;;   (require 'spaceline-config)
-      ;;     (setq spaceline-buffer-encoding-abbrev-p nil)
-      ;;     (setq spaceline-line-column-p nil)
-      ;;     (setq spaceline-line-p nil)
-      ;;     (setq powerline-default-separator (quote arrow))
-      ;;     (spaceline-spacemacs-theme))
+  ;;do not touch
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+           (use-package spaceline
+             :ensure t
+             :config
+             (require 'spaceline-config)
+               (setq spaceline-buffer-encoding-abbrev-p nil)
+               (setq spaceline-line-column-p nil)
+               (setq spaceline-line-p nil)
+               (setq powerline-default-separator nil)
+               ;;(spaceline-spacemacs-theme)
+               (powerline-center-theme))
 
-      ;; (use-package powerline
-      ;;  :ensure t
-      ;;  :config
-      ;;  (setq powerline-default-separator nil)
-      ;;  (powerline-center-theme))
-  (use-package smart-mode-line
-       :ensure t)
-  (setq powerline-default-separator nil)
-  (sml/setup)
+          ;; (use-package powerline
+          ;;  :ensure t
+          ;;  :config
+          ;;  (setq powerline-default-separator nil)
+          ;;  (powerline-center-theme))
+    ;;  (use-package smart-mode-line
+    ;;       :ensure t)
+    ;;  (setq powerline-default-separator nil)
+    ;;  (sml/setup)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+END_SRC
    
 *** Simplify interaction 
@@ -392,8 +410,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (global-set-key (kbd "M-s") 'avy-goto-char))
 #+END_SRC
 
-** Diff icult to set up. 
-*** Ediff -  Visual interface for diff and patches
+** Diff icult to set up. Visual interface for diff and patches
 #+BEGIN_SRC emacs-lisp
   ;;if you are on Linux 
   ;;(use-package ediff
@@ -416,6 +433,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 
   (setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
   (setq exec-path (cons "D:/Cygwin/bin" exec-path))
+  (setq exec-path (cons "D:/msys64/mingw64/bin" exec-path))
   (require 'cygwin-mount)
   (cygwin-mount-activate)
 
@@ -470,8 +488,10 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+BEGIN_SRC emacs-lisp
 (use-package magit
    :ensure t
-   :init)
+   :init
+   :config
 (global-set-key (kbd "C-x g") 'magit-status)
+(magit-auto-revert-mode -1))
 #+END_SRC
 ** Spelling correction
   #+BEGIN_SRC emacs-lisp
@@ -498,12 +518,6 @@ Lets us use asynchronous processes wherever possible, pretty usefull
        (global-set-key (kbd "C-:") 'helm-flyspell-correct))
 
 #+END_SRC   
-** Sr SpeedBar - makes speedbar show in current frame
-#+BEGIN_SRC emacs-lisp
-(use-package sr-speedbar
-  :ensure t
-  :init)
-#+END_SRC
 ** If you ever want to find nice shortcuts 
  just type <which-key-show-keymap> 
  then look for your mode, press Enter.
@@ -589,79 +603,132 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+END_SRC
 ** Treemacs file explorer
 #+BEGIN_SRC emacs-lisp
-(use-package treemacs
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :config
-  (progn
-    (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
-          treemacs-deferred-git-apply-delay   0.5
-          treemacs-display-in-side-window     t
-          treemacs-file-event-delay           5000
-          treemacs-file-follow-delay          0.2
-          treemacs-follow-after-init          t
-          treemacs-follow-recenter-distance   0.1
-          treemacs-git-command-pipe           ""
-          treemacs-goto-tag-strategy          'refetch-index
-          treemacs-indentation                2
-          treemacs-indentation-string         " "
-          treemacs-is-never-other-window      nil
-          treemacs-max-git-entries            5000
-          treemacs-no-png-images              nil
-          treemacs-no-delete-other-windows    t
-          treemacs-project-follow-cleanup     nil
-          treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-recenter-after-file-follow nil
-          treemacs-recenter-after-tag-follow  nil
-          treemacs-show-cursor                nil
-          treemacs-show-hidden-files          t
-          treemacs-silent-filewatch           nil
-          treemacs-silent-refresh             nil
-          treemacs-sorting                    'alphabetic-desc
-          treemacs-space-between-root-nodes   t
-          treemacs-tag-follow-cleanup         t
-          treemacs-tag-follow-delay           1.5
-          treemacs-width                      35)
+  (use-package treemacs
+    :ensure t
+    :defer t
+    :init                               
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :config
+    (progn
+      (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
+            treemacs-deferred-git-apply-delay   0.5
+            treemacs-display-in-side-window     t
+            treemacs-file-event-delay           5000
+            treemacs-file-follow-delay          0.2
+            treemacs-follow-after-init          t
+            treemacs-follow-recenter-distance   0.1
+            treemacs-git-command-pipe           ""
+            treemacs-goto-tag-strategy          'refetch-index
+            treemacs-indentation                2
+            treemacs-indentation-string         " "
+            treemacs-is-never-other-window      nil
+            treemacs-max-git-entries            5000
+            treemacs-no-png-images              nil
+            treemacs-no-delete-other-windows    t
+            treemacs-project-follow-cleanup     nil
+            treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+            treemacs-recenter-after-file-follow nil
+            treemacs-recenter-after-tag-follow  nil
+            treemacs-show-cursor                t
+            treemacs-show-hidden-files          t
+            treemacs-silent-filewatch           nil
+            treemacs-silent-refresh             nil
+            treemacs-sorting                    'alphabetic-desc
+            treemacs-space-between-root-nodes   nil
+            treemacs-tag-follow-cleanup         t
+            treemacs-tag-follow-delay           1.5
+            treemacs-width                      35)
 
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+      ;; The default width and height of the icons is 22 pixels. If you are
+      ;;       ;; using a Hi-DPI display, uncomment this to double the icon size.
+      ;;       ;;(treemacs-resize-icons 44)
 
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null (executable-find "python3"))))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+      (treemacs-follow-mode t)
+      (treemacs-filewatch-mode t)
+      (treemacs-fringe-indicator-mode t)
+      (pcase (cons (not (null (executable-find "git")))
+                   (not (null (executable-find "python3"))))
+        (`(t . t)
+         (treemacs-git-mode 'deferred))
+        (`(t . _)
+         (treemacs-git-mode 'simple))))
+    :bind
+    (:map global-map
+          ("M-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
 
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
+  (use-package treemacs-projectile
+    :after treemacs projectile
+    :ensure t)
 
-(use-package treemacs-icons-dired
-  :after treemacs dired
-  :ensure t
-  :config (treemacs-icons-dired-mode))
+  (use-package treemacs-icons-dired
+    :after treemacs dired
+    :ensure t
+    :config (treemacs-icons-dired-mode))
 
-(use-package treemacs-magit
-  :after treemacs magit
-  :ensure t)
+  (use-package treemacs-magit
+    :after treemacs magit
+    :ensure t)
+  ;;start projectile mode when starting treemacs
+  (add-hook 'treemacs-mode-hook 'projectile-mode)
+  ;;optionally start treemacs on startup
+  ;;(treemacs)
+#+END_SRC
+** XKCD comics 
+#+BEGIN_SRC emacs-lisp
+  (use-package xkcd
+    :ensure t)
+#+END_SRC
+** Startup dashboard 
+#+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+      :ensure t
+      :config
+        (dashboard-setup-startup-hook)
+  ;;      (setq dashboard-startup-banner "C:/Users/opimenov/Desktop/presentations/dusty_pc.png")
+        (setq dashboard-items '((recents  . 5)
+                                (projects . 5)
+                                (agenda . 5)))
+        (setq dashboard-banner-logo-title ""))
 
-(treemacs)
+  ;; to update cached xkcd
+  (with-temp-buffer
+    (xkcd)
+    (xkcd-kill-buffer))
+
+  ;; setting dashboard image (png)
+  (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
+    (if (file-exists-p last-xkcd-png)
+        (setq dashboard-banner-official-png last-xkcd-png)))
+
+  ;; to get a rand comic and to set dashboard image (png)
+  ;;(let ((rand-id-xkcd nil))
+  ;;  (with-temp-buffer
+  ;;    (setq rand-id-xkcd (string-to-number (xkcd-rand)))
+  ;;    (xkcd-kill-buffer))
+  ;;  (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string rand-id-xkcd) ".png")))
+  ;;    (if (file-exists-p last-xkcd-png)
+  ;;    (setq dashboard-banner-official-png last-xkcd-png))))
+#+END_SRC
+** better dired+ 
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'dired-mode-hook
+        (lambda ()
+          (dired-hide-details-mode)
+          (dired-sort-toggle-or-edit)))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (load "dired+")                             
+  (global-dired-hide-details-mode t)          
+  (setq diredp-hide-details-initially-flag t) 
+  (setq diredp-hide-details-propagate-flag t) 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq tramp-verbose 10)
 #+END_SRC
 * Programming
 ** yasnippet
