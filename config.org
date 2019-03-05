@@ -1,5 +1,8 @@
 #+TITLE: EMACS CONFIG
+#+AUTHOR: Alex Pimenov
+[[https://github.com/Opimenov/emacs_config/blob/master/config.org][Github source]]
 config.org --- Emacs configuration file in org mode format. 
+* General setup
 ** Collection of packages and configs that I use
 #+BEGIN_SRC emacs-lisp
 ;; Tell emacs where is your personal elisp lib dir
@@ -73,10 +76,10 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
        (global-set-key (kbd "M-x") 'helm-M-x)
        (global-set-key (kbd "M-i") 'helm-swoop);;helm search
        (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
-       (global-set-key (kbd "C-x C-f") 'helm-find-files));;find stuff quickly
+       (global-set-key (kbd "C-x C-f") 'helm-find-files);;find stuff quickly
        (global-set-key (kbd "C-c f f") 'helm-projectile)
        (global-set-key (kbd "C-c g") 'helm-projectile-grep)
-       (global-set-key (kbd "C-c i") 'helm-imenu) ;;go to funstion name quickly
+       (global-set-key (kbd "C-c i") 'helm-imenu)) ;;go to function name quickly
 #+END_SRC
 ** Terminal
 *** Setting default shell to bash
@@ -88,7 +91,7 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 #+END_SRC
 *** Binding keys to launch shell
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-return>") 'shell)
+(global-set-key (kbd "<C-return>") 'eshell)
 ;;startup shell on boot
 ;;(eshell)
 #+END_SRC
@@ -220,6 +223,11 @@ add LaTeX to Emacs exec path
     :ensure t
     :config
     (global-pretty-mode 1))
+#+END_SRC
+*** Switch between left and right buffers  
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-,") 'windmove-left)
+(global-set-key (kbd "C-.") 'windmove-right)
 #+END_SRC
 *** Fix tramp invalid base 64 data error
 #+BEGIN_SRC emacs-lisp
@@ -599,85 +607,97 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'rainbow-mode)
     (diminish 'helm-mode)
     (diminish 'projectile-mode)
-    (diminish 'indent-guide-mode))
+    (diminish 'follow-mode)
+    (diminish 'yas-minor-mode)
+    (diminish 'abbrev-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'text-scale-mode)
+    (diminish 'indent-guide-mode)
+    (diminish 'follow-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'auto-complete-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'company-mode))
 #+END_SRC
 ** Treemacs file explorer
 #+BEGIN_SRC emacs-lisp
-  (use-package treemacs
-    :ensure t
-    :defer t
-    :init                               
-    (with-eval-after-load 'winum
-      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-    :config
-    (progn
-      (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
-            treemacs-deferred-git-apply-delay   0.5
-            treemacs-display-in-side-window     t
-            treemacs-file-event-delay           5000
-            treemacs-file-follow-delay          0.2
-            treemacs-follow-after-init          t
-            treemacs-follow-recenter-distance   0.1
-            treemacs-git-command-pipe           ""
-            treemacs-goto-tag-strategy          'refetch-index
-            treemacs-indentation                2
-            treemacs-indentation-string         " "
-            treemacs-is-never-other-window      nil
-            treemacs-max-git-entries            5000
-            treemacs-no-png-images              nil
-            treemacs-no-delete-other-windows    t
-            treemacs-project-follow-cleanup     nil
-            treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-            treemacs-recenter-after-file-follow nil
-            treemacs-recenter-after-tag-follow  nil
-            treemacs-show-cursor                t
-            treemacs-show-hidden-files          t
-            treemacs-silent-filewatch           nil
-            treemacs-silent-refresh             nil
-            treemacs-sorting                    'alphabetic-desc
-            treemacs-space-between-root-nodes   nil
-            treemacs-tag-follow-cleanup         t
-            treemacs-tag-follow-delay           1.5
-            treemacs-width                      35)
+  (projectile-global-mode)
+      (use-package treemacs
+        :ensure t
+        :defer t
+        :init                               
+        (with-eval-after-load 'winum
+          (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+        :config
+        (progn
+          (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
+                treemacs-deferred-git-apply-delay   0.5
+                treemacs-display-in-side-window     t
+                treemacs-file-event-delay           5000
+                treemacs-file-follow-delay          0.2
+                treemacs-follow-after-init          t
+                treemacs-follow-recenter-distance   0.1
+                treemacs-git-command-pipe           ""
+                treemacs-goto-tag-strategy          'refetch-index
+                treemacs-indentation                2
+                treemacs-indentation-string         " "
+                treemacs-is-never-other-window      nil
+                treemacs-max-git-entries            5000
+                treemacs-no-png-images              nil
+                treemacs-no-delete-other-windows    t
+                treemacs-project-follow-cleanup     nil
+                treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+                treemacs-recenter-after-file-follow nil
+                treemacs-recenter-after-tag-follow  nil
+                treemacs-show-cursor                t
+                treemacs-show-hidden-files          t
+                treemacs-silent-filewatch           nil
+                treemacs-silent-refresh             nil
+                treemacs-sorting                    'alphabetic-desc
+                treemacs-space-between-root-nodes   nil
+                treemacs-tag-follow-cleanup         t
+                treemacs-tag-follow-delay           1.5
+                treemacs-width                      35)
 
-      ;; The default width and height of the icons is 22 pixels. If you are
-      ;;       ;; using a Hi-DPI display, uncomment this to double the icon size.
-      ;;       ;;(treemacs-resize-icons 44)
+          ;; The default width and height of the icons is 22 pixels. If you are
+          ;;       ;; using a Hi-DPI display, uncomment this to double the icon size.
+          ;;       ;;(treemacs-resize-icons 44)
 
-      (treemacs-follow-mode t)
-      (treemacs-filewatch-mode t)
-      (treemacs-fringe-indicator-mode t)
-      (pcase (cons (not (null (executable-find "git")))
-                   (not (null (executable-find "python3"))))
-        (`(t . t)
-         (treemacs-git-mode 'deferred))
-        (`(t . _)
-         (treemacs-git-mode 'simple))))
-    :bind
-    (:map global-map
-          ("M-0"       . treemacs-select-window)
-          ("C-x t 1"   . treemacs-delete-other-windows)
-          ("C-x t t"   . treemacs)
-          ("C-x t B"   . treemacs-bookmark)
-          ("C-x t C-t" . treemacs-find-file)
-          ("C-x t M-t" . treemacs-find-tag)))
+          (treemacs-follow-mode t)
+          (treemacs-filewatch-mode t)
+          (treemacs-fringe-indicator-mode t)
+          (pcase (cons (not (null (executable-find "git")))
+                        (not (null (executable-find "python3"))))
+             (`(t . t)
+              (treemacs-git-mode 'deferred))
+             (`(t . _)
+              (treemacs-git-mode 'simple))))
+        :bind
+        (:map global-map
+              ("M-0"       . treemacs-select-window)
+              ("C-x t 1"   . treemacs-delete-other-windows)
+              ("C-x t t"   . treemacs)
+              ("C-x t B"   . treemacs-bookmark)
+              ("C-x t C-t" . treemacs-find-file)
+              ("C-x t M-t" . treemacs-find-tag)))
 
-  (use-package treemacs-projectile
-    :after treemacs projectile
-    :ensure t)
+      (use-package treemacs-projectile
+        :after treemacs projectile
+        :ensure t)
 
-  (use-package treemacs-icons-dired
-    :after treemacs dired
-    :ensure t
-    :config (treemacs-icons-dired-mode))
+      (use-package treemacs-icons-dired
+        :after treemacs dired
+        :ensure t
+        :config (treemacs-icons-dired-mode))
 
-  (use-package treemacs-magit
-    :after treemacs magit
-    :ensure t)
-  ;;start projectile mode when starting treemacs
-  (add-hook 'treemacs-mode-hook 'projectile-mode)
-  ;;optionally start treemacs on startup
-  ;;(treemacs)
+      (use-package treemacs-magit
+       :after treemacs magit
+       :ensure t)
+      ;;start projectile global mode when starting treemacs
+     (add-hook 'treemacs-mode-hook 'projectile-mode)
+      ;;optionally start treemacs on startup
+     (treemacs)
 #+END_SRC
 ** XKCD comics 
 #+BEGIN_SRC emacs-lisp
@@ -730,6 +750,16 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq tramp-verbose 10)
 #+END_SRC
+** Elisp evaluate and replace lisp expression
+#+BEGIN_SRC emacs-lisp
+(defun crux-eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (let ((value (eval (elisp--preceding-sexp))))
+    (backward-kill-sexp)
+    (insert (format "%S" value))))
+(global-set-key (kbd "C-x C-e") 'crux-eval-and-replace)
+#+END_SRC
 * Programming
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -739,6 +769,14 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (use-package yasnippet-snippets
       :ensure t)
     (yas-reload-all))
+#+END_SRC
+** 80 character vertical marker
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ whitespace-line-column 80
+ whitespace-style       '(face lines-tail))
+
+(add-hook 'prog-mode-hook 'whitespace-mode)
 #+END_SRC
 ** flychech
 #+BEGIN_SRC emacs-lisp
@@ -783,27 +821,4 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 
   (use-package company-c-headers
     :ensure t)
-
-     ;; Windows performance tweaks
-     ;;
-     (when (boundp 'w32-pipe-read-delay)
-       (setq w32-pipe-read-delay 0))
-     ;; Set the buffer size to 64K on Windows (from the original 4K)
-     (when (boundp 'w32-pipe-buffer-size)
-       (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
-
-  (use-package company-irony
-    :ensure t
-    :config
-    (setq company-backends '((company-c-headers
-                              company-dabbrev-code
-                              company-irony))))
-
-  (use-package irony
-    :ensure t
-    :config
-    (add-hook 'c++-mode-hook 'irony-mode)
-    (add-hook 'c-mode-hook 'irony-mode)
-    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
-

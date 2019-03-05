@@ -44,23 +44,27 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ac-ispell-fuzzy-limit 4)
- '(ac-ispell-requires 4)
- '(column-number-mode t)
+ '(ac-ispell-fuzzy-limit 3)
+ '(ac-ispell-requires 3)
  '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(debug-on-error t)
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(global-display-line-numbers-mode t)
  '(menu-bar-mode nil)
+ '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (auto-complete-exuberant-ctags dashboard smart-mode-line-powerline-theme smart-mode-line flycheck-clang-analyzer company-c-headers flycheck yasnippet-snippets yasnippet frame-local ov diminish htmlize rainbow-mode switch-window sunrise-x-modeline sunrise-x-buttons sunrise-commander spaceline ox-twbs avy ac-ispell helm-projectile jedi company-jedi pretty-mode company-irony company s expand-region rainbow-delimiters rainbow-delimeters multiple-cursors indent-guide eshell-up powerline log4j-mode magit helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package)))
+    (company-c-headers flycheck-clang-analyzer flycheck yasnippet-snippets yasnippet dashboard xkcd diminish htmlize rainbow-mode switch-window sunrise-x-modeline sunrise-x-buttons sunrise-commander spaceline ox-twbs avy ac-ispell helm-projectile jedi company-jedi pretty-mode company-irony company s expand-region rainbow-delimiters rainbow-delimeters multiple-cursors indent-guide eshell-up powerline log4j-mode magit helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package)))
+ '(python-shell-exec-path (quote ("d:/msys64/mingw64/bin/python3.exe")))
+ '(python-shell-interpreter "d:/msys64/mingw64/bin/python3.exe")
  '(send-mail-function (quote mailclient-send-it))
- '(size-indication-mode t)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(treemacs-collapse-dirs 0)
+ '(treemacs-python-executable "d:/msys64/mingw64/bin/python3.exe"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
