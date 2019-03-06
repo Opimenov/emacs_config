@@ -58,6 +58,20 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
      (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
      (define-key mc/keymap (kbd "<return>") nil))
 #+END_SRC
+** Exit using C-g only if no macro definition is going on
+#+BEGIN_SRC emacs-lisp
+(defun keyboard-quit-only-if-no-macro ()
+  (interactive)
+  (if defining-kbd-macro
+      (progn
+        (if (region-active-p)
+            (deactivate-mark)
+          (message "Macro running. Can't quit.")))
+
+    (keyboard-quit)))
+
+(define-key global-map (kbd "C-g") 'keyboard-quit-only-if-no-macro)
+#+END_SRC
 ** Helm - better looking interactive buffer for common actions
 ;;Helm is modified help buffer. It attaches itself to a lot of actions
 ;;in Emacs environment and create more functional and better looking
@@ -440,7 +454,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   (load "setup-cygwin")
 
   (setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
-  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
+;;  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
   (setq exec-path (cons "D:/msys64/mingw64/bin" exec-path))
   (require 'cygwin-mount)
   (cygwin-mount-activate)

@@ -54,6 +54,7 @@
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(global-display-line-numbers-mode t)
+ '(js-expr-indent-offset 0)
  '(menu-bar-mode nil)
  '(org-agenda-files nil)
  '(package-selected-packages
