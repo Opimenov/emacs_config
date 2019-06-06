@@ -98,10 +98,23 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 ** Terminal
 *** Setting default shell to bash
 #+BEGIN_SRC emacs-lisp
-   (defvar my-term-shell "/bin/bash")
-   (defadvice ansi-term (before force-bash)
-      (interactive (list my-term-shell)))
-   (ad-activate 'ansi-term)
+  (setq explicit-shell-file-name "D:/Cygwin/bin/bash.exe")
+  (setq shell-file-name "bash")
+  (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
+  (setenv "SHELL" shell-file-name)
+  (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+
+     (defvar my-term-shell "D:/Cygwin/bin")
+     (defadvice ansi-term (before force-bash)
+        (interactive (list my-term-shell)))
+     (ad-activate 'ansi-term)
+  ;;git bash
+  (defun git-bash () (interactive)
+    (let ((explicit-shell-file-name "c:/Users/opimenov/AppData/Local/Programs/Git/bin/bash.exe"))
+      (call-interactively 'shell)
+      (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))))
+  (prefer-coding-system 'utf-8)
+
 #+END_SRC
 *** Binding keys to launch shell
 #+BEGIN_SRC emacs-lisp
@@ -131,7 +144,7 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 Hitting tab after an “<el” in an org-mode file will create a template for elisp insertion.
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'org-structure-template-alist
-	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 #+END_SRC
 *** Export html syntax highlighting
 #+BEGIN_SRC emacs-lisp
@@ -153,7 +166,7 @@ Hitting tab after an “<el” in an org-mode file will create a template for el
 *** added WAITING state to item status
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)"))))
+      (quote ((sequence "TODO(t)" "IN_PRGRESS(p)" "WAITING(w)" "DONE(d)"))))
 (setq org-log-done t)
 #+END_SRC
 *** better html exporter, twitter bootstrap
@@ -249,9 +262,11 @@ add LaTeX to Emacs exec path
 (setq tramp-inline-compress-start-size nil)
 #+END_SRC
 *** Prevent emacs from autosaving and cluttering source folders
+Place all backup files in one folder, just in case.
 #+BEGIN_SRC emacs-lisp
-(setq auto-save-default nil)
-(setq make-backup-file nil)
+;;(setq auto-save-default nil) might not be a good idea after all.
+(setq backup-directory-alist '(("." . "~/MyEmacsBackups")))
+;;(setq make-backup-file nil)
 #+END_SRC
 *** Start emacs in fullscreen mode
 #+BEGIN_SRC emacs-lisp
@@ -310,7 +325,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c l k") 'kill-whole-line)
 #+END_SRC
-*** Vistit config file
+*** Vistit confi gfile
 #+BEGIN_SRC emacs-lisp
 (defun config-visit ()
   (interactive)
@@ -406,7 +421,9 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   (scroll-bar-mode -1)
   (global-linum-mode -1)
   (linum-mode -1)
-  (setq inhibit-startup-message t)
+  (setq inhibit-startup-screen t
+      initial-buffer-choice  nil)
+
 #+END_SRC
 *** Key bindings help display. Currently disabled.
 #+BEGIN_SRC emacs-lisp
@@ -450,14 +467,14 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMMENT OUT THE REST OF THE SET UP
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "cygwin-mount")
-  (load "setup-cygwin")
+  ;;(load "cygwin-mount")
+  ;;(load "setup-cygwin")
 
-  (setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
-;;  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
-  (setq exec-path (cons "D:/msys64/mingw64/bin" exec-path))
-  (require 'cygwin-mount)
-  (cygwin-mount-activate)
+  ;;(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
+  ;;(setq exec-path (cons "D:/Cygwin/bin" exec-path))
+  (setq exec-path (cons "C:/Users/opimenov/AppData/Local/Programs/Git/mingw64/bin" exec-path))
+  ;;(require 'cygwin-mount)
+  ;;(cygwin-mount-activate)
 
   (csetq ediff-split-window-function 'split-window-horizontally)
   (csetq ediff-diff-options "-w")
@@ -471,22 +488,24 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 ****  Install dependecies first
 ***** string manipulation package
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package s
-  ;;   :ensure t
-  ;;   :init)
+   (use-package s
+     :ensure t
+     :init)
 #+END_SRC
 ***** list api package
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package dash
-  ;;   :ensure t
-  ;;   :init)
+   (use-package dash
+     :ensure t
+     :init)
 #+END_SRC
 ***** make Emacs aware of origami package
 #+BEGIN_SRC emacs-lisp
-  ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
-  ;; (require 'origami)
+   (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
+   (require 'origami)
 #+END_SRC
 ***** TODO define key map for ease of use
+(global-set-key (kbd "C-c o o") 'origami-open-node)
+(global-set-key (kbd "C-c o c") 'origami-close-node)
 ** Font
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Consolas" :height 120)
@@ -551,10 +570,10 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 
 ** Clock
 #+BEGIN_SRC emacs-lisp
-  (setq display-time-24hr-format t)
-  (setq display-time-format "%H:%M - %d %B %Y")
+  ;;(setq display-time-24hr-format t)
+  ;;(setq display-time-format "%H:%M - %d %B %Y")
 
-  (display-time-mode 1)
+  (display-time-mode nil)
 #+END_SRC
 ** Switch windows
 #+BEGIN_SRC emacs-lisp
@@ -631,7 +650,9 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'org-indent-mode)
     (diminish 'auto-complete-mode)
     (diminish 'eldoc-mode)
-    (diminish 'whitespace-mode)
+    (diminish 'projectile-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'text-scale-mode)
     (diminish 'company-mode))
 #+END_SRC
 ** Treemacs file explorer
@@ -751,18 +772,19 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+END_SRC
 ** better dired+ 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'dired-mode-hook
-        (lambda ()
-          (dired-hide-details-mode)
-          (dired-sort-toggle-or-edit)))
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "dired+")                             
-  (global-dired-hide-details-mode t)          
-  (setq diredp-hide-details-initially-flag t) 
-  (setq diredp-hide-details-propagate-flag t) 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq tramp-verbose 10)
+    (add-hook 'dired-mode-hook
+          (lambda ()
+            (dired-sort-toggle-or-edit)
+            (dired-hide-details-mode)
+          )
+    )
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (load "dired+")                             
+    (global-dired-hide-details-mode t)          
+    (setq diredp-hide-details-initially-flag t) 
+    (setq diredp-hide-details-propagate-flag t) 
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (setq tramp-verbose 10)
 #+END_SRC
 ** Elisp evaluate and replace lisp expression
 #+BEGIN_SRC emacs-lisp
@@ -835,4 +857,13 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 
   (use-package company-c-headers
     :ensure t)
+#+END_SRC
+** YAML
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t
+  :config
+   (add-hook 'yaml-mode-hook
+    '(lambda ()
+       (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 #+END_SRC
