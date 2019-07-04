@@ -1,6 +1,5 @@
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/packages/")
-(add-to-list 'load-path "~/.emacs.d/packages/sidebar/")
 ;;macro for setting custom variables
 (defmacro csetq (variable value)
   `(funcall (or (get ',variable 'custom-set)
@@ -16,9 +15,9 @@
 ;; 			 ("SC"    . "http://joseito.republika.pl/sunrise-commander/")))
 ;; (package-initialize)
 
-;; (unless (package-installed-p 'use-package)
-;;   (package-refresh-contents)
-;;   (package-install 'use-package))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (unless (package-installed-p 'spacemacs-theme)
    (package-refresh-contents)
@@ -33,6 +32,18 @@
      (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
      (define-key mc/keymap (kbd "<return>") nil))
 
+(defun keyboard-quit-only-if-no-macro ()
+  (interactive)
+  (if defining-kbd-macro
+      (progn
+        (if (region-active-p)
+            (deactivate-mark)
+          (message "Macro running. Can't quit.")))
+
+    (keyboard-quit)))
+
+(define-key global-map (kbd "C-g") 'keyboard-quit-only-if-no-macro)
+
 (use-package helm
   :ensure t
   :init
@@ -45,15 +56,31 @@
      (global-set-key (kbd "M-x") 'helm-M-x)
      (global-set-key (kbd "M-i") 'helm-swoop);;helm search
      (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
-     (global-set-key (kbd "C-x C-f") 'helm-find-files));;find stuff quickly
+     (global-set-key (kbd "C-x C-f") 'helm-find-files);;find stuff quickly
+     (global-set-key (kbd "C-c f f") 'helm-projectile)
+     (global-set-key (kbd "C-c g") 'helm-projectile-grep)
+     (global-set-key (kbd "C-c i") 'helm-imenu)) ;;go to function name quickly
 
-(defvar my-term-shell "/bin/bash")
-(defadvice ansi-term (before force-bash)
-   (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
+(setq explicit-shell-file-name "D:/Cygwin/bin/bash.exe")
+(setq shell-file-name "bash")
+(setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
+(setenv "SHELL" shell-file-name)
+(add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 
-(global-set-key (kbd "<C-return>") 'shell)
-(eshell)
+   (defvar my-term-shell "D:/Cygwin/bin")
+   (defadvice ansi-term (before force-bash)
+      (interactive (list my-term-shell)))
+   (ad-activate 'ansi-term)
+;;git bash
+(defun git-bash () (interactive)
+  (let ((explicit-shell-file-name "c:/Users/opimenov/AppData/Local/Programs/Git/bin/bash.exe"))
+    (call-interactively 'shell)
+    (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))))
+(prefer-coding-system 'utf-8)
+
+(global-set-key (kbd "<C-return>") 'eshell)
+;;startup shell on boot
+;;(eshell)
 
 (setq org-ellipsis " ")
 (setq org-src-fontify-natively t)
@@ -69,7 +96,7 @@
 (setq org-log-done t)
 
 (add-to-list 'org-structure-template-alist
-	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 
 (use-package htmlize
   :ensure t)
@@ -82,7 +109,7 @@
 (setq org-log-done 'time)
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "|" "WAITING(w)" "DONE(d)"))))
+      (quote ((sequence "TODO(t)" "IN_PRGRESS(p)" "WAITING(w)" "DONE(d)"))))
 (setq org-log-done t)
 
 (use-package ox-twbs
@@ -123,7 +150,7 @@
        \\subject{{{{beamersubject}}}}\n"
 
      ("\\section{%s}" . "\\section*{%s}")
-     
+
      ("\\begin{frame}[fragile]\\frametitle{%s}"
        "\\end{frame}"
        "\\begin{frame}[fragile]\\frametitle{%s}"
@@ -138,20 +165,34 @@
       \\usepackage[utf8]{inputenc}\n
       \\usepackage[T1]{fontenc}\n
       \\usepackage{color}"
-     
+
      ("\\section{%s}" . "\\section*{%s}")
      ("\\subsection{%s}" . "\\subsection*{%s}")
      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
      ("\\paragraph{%s}" . "\\paragraph*{%s}")
      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
+
 (use-package pretty-mode
     :ensure t
     :config
     (global-pretty-mode 1))
 
-(setq auto-save-default nil)
-(setq make-backup-file nil)
+;; use bind-key package to override major mode key maps
+(bind-key*  "C-," 'windmove-left)
+(bind-key*  "C-." 'windmove-right)
+(bind-key*  "M-P" 'windmove-up)
+(bind-key*  "M-N" 'windmove-down)
+
+(setq tramp-copy-size-limit nil)
+(setq tramp-inline-compress-start-size nil)
+
+;;(setq auto-save-default nil) might not be a good idea after all.
+(setq backup-directory-alist '(("." . "~/MyEmacsBackups")))
+;;(setq make-backup-file nil)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -224,25 +265,29 @@
   :init
   (indent-guide-global-mode))
 
-;; (use-package spaceline
-    ;;   :ensure t
-    ;;   :config
-    ;;   (require 'spaceline-config)
-    ;;     (setq spaceline-buffer-encoding-abbrev-p nil)
-    ;;     (setq spaceline-line-column-p nil)
-    ;;     (setq spaceline-line-p nil)
-    ;;     (setq powerline-default-separator (quote arrow))
-    ;;     (spaceline-spacemacs-theme))
+;;do not touch
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+           (use-package spaceline
+             :ensure t
+             :config
+             (require 'spaceline-config)
+               (setq spaceline-buffer-encoding-abbrev-p nil)
+               (setq spaceline-line-column-p nil)
+               (setq spaceline-line-p nil)
+               (setq powerline-default-separator nil)
+               ;;(spaceline-spacemacs-theme)
+               (powerline-center-theme))
 
-    ;; (use-package powerline
-    ;;  :ensure t
-    ;;  :config
+          ;; (use-package powerline
+          ;;  :ensure t
+          ;;  :config
+          ;;  (setq powerline-default-separator nil)
+          ;;  (powerline-center-theme))
+    ;;  (use-package smart-mode-line
+    ;;       :ensure t)
     ;;  (setq powerline-default-separator nil)
-    ;;  (powerline-center-theme))
-(use-package smart-mode-line
-     :ensure t)
-(setq powerline-default-separator nil)
-(sml/setup)
+    ;;  (sml/setup)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -262,7 +307,8 @@
 (scroll-bar-mode -1)
 (global-linum-mode -1)
 (linum-mode -1)
-(setq inhibit-startup-message t)
+(setq inhibit-startup-screen t
+    initial-buffer-choice  nil)
 
 ;;(use-package which-key
 ;;  :ensure t
@@ -299,6 +345,7 @@
 
 (setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
 (setq exec-path (cons "D:/Cygwin/bin" exec-path))
+(setq exec-path (cons "C:/Users/opimenov/AppData/Local/Programs/Git/mingw64/bin" exec-path))
 (require 'cygwin-mount)
 (cygwin-mount-activate)
 
@@ -309,16 +356,16 @@
 ;; (winner-mode 1)
 ;; (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
-;; (use-package s
-;;   :ensure t
-;;   :init)
+(use-package s
+  :ensure t
+  :init)
 
-;; (use-package dash
-;;   :ensure t
-;;   :init)
+(use-package dash
+  :ensure t
+  :init)
 
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
-;; (require 'origami)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
+(require 'origami)
 
 (set-face-attribute 'default nil :family "Consolas" :height 120)
 
@@ -332,8 +379,10 @@
 
 (use-package magit
    :ensure t
-   :init)
+   :init
+   :config
 (global-set-key (kbd "C-x g") 'magit-status)
+(magit-auto-revert-mode -1))
 
 (setq ispell-alternate-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
 (setq ispell-program-name "aspell")
@@ -357,14 +406,10 @@
        :config
        (global-set-key (kbd "C-:") 'helm-flyspell-correct))
 
-(use-package sr-speedbar
-  :ensure t
-  :init)
+;;(setq display-time-24hr-format t)
+;;(setq display-time-format "%H:%M - %d %B %Y")
 
-(setq display-time-24hr-format t)
-(setq display-time-format "%H:%M - %d %B %Y")
-
-(display-time-mode 1)
+(display-time-mode nil)
 
 (use-package switch-window
   :ensure t
@@ -420,81 +465,153 @@
   (diminish 'rainbow-mode)
   (diminish 'helm-mode)
   (diminish 'projectile-mode)
-  (diminish 'indent-guide-mode))
+  (diminish 'follow-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'whitespace-mode)
+  (diminish 'text-scale-mode)
+  (diminish 'indent-guide-mode)
+  (diminish 'follow-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'auto-complete-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'projectile-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'text-scale-mode)
+  (diminish 'company-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'whitespace-mode))
 
-(use-package treemacs
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :config
-  (progn
-    (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
-          treemacs-deferred-git-apply-delay   0.5
-          treemacs-display-in-side-window     t
-          treemacs-file-event-delay           5000
-          treemacs-file-follow-delay          0.2
-          treemacs-follow-after-init          t
-          treemacs-follow-recenter-distance   0.1
-          treemacs-git-command-pipe           ""
-          treemacs-goto-tag-strategy          'refetch-index
-          treemacs-indentation                2
-          treemacs-indentation-string         " "
-          treemacs-is-never-other-window      nil
-          treemacs-max-git-entries            5000
-          treemacs-no-png-images              nil
-          treemacs-no-delete-other-windows    t
-          treemacs-project-follow-cleanup     nil
-          treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-recenter-after-file-follow nil
-          treemacs-recenter-after-tag-follow  nil
-          treemacs-show-cursor                nil
-          treemacs-show-hidden-files          t
-          treemacs-silent-filewatch           nil
-          treemacs-silent-refresh             nil
-          treemacs-sorting                    'alphabetic-desc
-          treemacs-space-between-root-nodes   t
-          treemacs-tag-follow-cleanup         t
-          treemacs-tag-follow-delay           1.5
-          treemacs-width                      35)
+(projectile-global-mode)
+    (use-package treemacs
+      :ensure t
+      :defer t
+      :init                               
+      (with-eval-after-load 'winum
+        (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+      :config
+      (progn
+        (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
+              treemacs-deferred-git-apply-delay   0.5
+              treemacs-display-in-side-window     t
+              treemacs-file-event-delay           5000
+              treemacs-file-follow-delay          0.2
+              treemacs-follow-after-init          t
+              treemacs-follow-recenter-distance   0.1
+              treemacs-git-command-pipe           ""
+              treemacs-goto-tag-strategy          'refetch-index
+              treemacs-indentation                2
+              treemacs-indentation-string         " "
+              treemacs-is-never-other-window      nil
+              treemacs-max-git-entries            5000
+              treemacs-no-png-images              nil
+              treemacs-no-delete-other-windows    t
+              treemacs-project-follow-cleanup     nil
+              treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+              treemacs-recenter-after-file-follow nil
+              treemacs-recenter-after-tag-follow  nil
+              treemacs-show-cursor                t
+              treemacs-show-hidden-files          t
+              treemacs-silent-filewatch           nil
+              treemacs-silent-refresh             nil
+              treemacs-sorting                    'alphabetic-desc
+              treemacs-space-between-root-nodes   nil
+              treemacs-tag-follow-cleanup         t
+              treemacs-tag-follow-delay           1.5
+              treemacs-width                      35)
 
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+        ;; The default width and height of the icons is 22 pixels. If you are
+        ;;       ;; using a Hi-DPI display, uncomment this to double the icon size.
+        ;;       ;;(treemacs-resize-icons 44)
 
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null (executable-find "python3"))))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+        (treemacs-follow-mode t)
+        (treemacs-filewatch-mode t)
+        (treemacs-fringe-indicator-mode t)
+        (pcase (cons (not (null (executable-find "git")))
+                      (not (null (executable-find "python3"))))
+           (`(t . t)
+            (treemacs-git-mode 'deferred))
+           (`(t . _)
+            (treemacs-git-mode 'simple))))
+      :bind
+      (:map global-map
+            ("M-0"       . treemacs-select-window)
+            ("C-x t 1"   . treemacs-delete-other-windows)
+            ("C-x t t"   . treemacs)
+            ("C-x t B"   . treemacs-bookmark)
+            ("C-x t C-t" . treemacs-find-file)
+            ("C-x t M-t" . treemacs-find-tag)))
 
-(use-package treemacs-projectile
-  :after treemacs projectile
+    (use-package treemacs-projectile
+      :after treemacs projectile
+      :ensure t)
+
+    (use-package treemacs-icons-dired
+      :after treemacs dired
+      :ensure t
+      :config (treemacs-icons-dired-mode))
+
+    (use-package treemacs-magit
+     :after treemacs magit
+     :ensure t)
+    ;;start projectile global mode when starting treemacs
+   (add-hook 'treemacs-mode-hook 'projectile-mode)
+    ;;optionally start treemacs on startup
+   (treemacs)
+
+(use-package xkcd
   :ensure t)
 
-(use-package treemacs-icons-dired
-  :after treemacs dired
-  :ensure t
-  :config (treemacs-icons-dired-mode))
+(use-package dashboard
+    :ensure t
+    :config
+      (dashboard-setup-startup-hook)
+;;      (setq dashboard-startup-banner "C:/Users/opimenov/Desktop/presentations/dusty_pc.png")
+      (setq dashboard-items '((recents  . 5)
+                              (projects . 5)
+                              (agenda . 5)))
+      (setq dashboard-banner-logo-title ""))
 
-(use-package treemacs-magit
-  :after treemacs magit
-  :ensure t)
+;; to update cached xkcd
+(with-temp-buffer
+  (xkcd)
+  (xkcd-kill-buffer))
 
-(treemacs)
+;; setting dashboard image (png)
+(let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
+  (if (file-exists-p last-xkcd-png)
+      (setq dashboard-banner-official-png last-xkcd-png)))
+
+;; to get a rand comic and to set dashboard image (png)
+;;(let ((rand-id-xkcd nil))
+;;  (with-temp-buffer
+;;    (setq rand-id-xkcd (string-to-number (xkcd-rand)))
+;;    (xkcd-kill-buffer))
+;;  (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string rand-id-xkcd) ".png")))
+;;    (if (file-exists-p last-xkcd-png)
+;;    (setq dashboard-banner-official-png last-xkcd-png))))
+
+(add-hook 'dired-mode-hook
+        (lambda ()
+          (dired-sort-toggle-or-edit)
+          (dired-hide-details-mode)
+        )
+  )
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (load "dired+")                             
+  (global-dired-hide-details-mode t)          
+  (setq diredp-hide-details-initially-flag t) 
+  (setq diredp-hide-details-propagate-flag t) 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq tramp-verbose 10)
+
+(defun crux-eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (let ((value (eval (elisp--preceding-sexp))))
+    (backward-kill-sexp)
+    (insert (format "%S" value))))
+(global-set-key (kbd "C-x C-e") 'crux-eval-and-replace)
 
 (use-package yasnippet
   :ensure t
@@ -502,6 +619,12 @@
     (use-package yasnippet-snippets
       :ensure t)
     (yas-reload-all))
+
+(setq-default
+ whitespace-line-column 80
+ whitespace-style       '(face lines-tail))
+
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 (use-package flycheck
   :ensure t)
@@ -536,24 +659,107 @@
 (use-package company-c-headers
   :ensure t)
 
-   ;; Windows performance tweaks
-   ;;
-   (when (boundp 'w32-pipe-read-delay)
-     (setq w32-pipe-read-delay 0))
-   ;; Set the buffer size to 64K on Windows (from the original 4K)
-   (when (boundp 'w32-pipe-buffer-size)
-     (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
-
-(use-package company-irony
+(use-package yaml-mode
   :ensure t
   :config
-  (setq company-backends '((company-c-headers
-                            company-dabbrev-code
-                            company-irony))))
+   (add-hook 'yaml-mode-hook
+    '(lambda ()
+       (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
-(use-package irony
-  :ensure t
-  :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+(use-package php-mode
+           :ensure t
+           :config
+       (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
+       (bind-key*  "C-," 'windmove-left)
+       (bind-key*  "C-." 'windmove-right))
+
+       (use-package ac-php-core
+         :ensure t)
+       (use-package ac-php
+         :ensure t)
+       (use-package ac-helm
+         :ensure t)
+
+       ;; (add-hook  'php-mode-hook 
+       ;;     '(lambda ()
+       ;;       ;; Enable auto-complete-mode
+       ;;       (auto-complete-mode t)
+
+       ;;       (require 'ac-php)
+       ;;       (setq ac-sources '(ac-source-php))
+
+       ;;       ;; As an example (optional)
+       ;;       (yas-global-mode 1)
+
+       ;;       ;; Enable ElDoc support (optional)
+       ;;       (ac-php-core-eldoc-setup)
+
+       ;;       ;; Jump to definition (optional)
+       ;;       (define-key php-mode-map (kbd "M-]")
+       ;;         'ac-php-find-symbol-at-point)
+
+       ;;       ;; Return back (optional)
+       ;;       (define-key php-mode-map (kbd "M-[")
+       ;;         'ac-php-location-stack-back)
+
+       ;;       (setq indent-tabs-mode nil)
+       ;;       (setq c-basic-offset 2)
+       ;;       (setq php-template-compatibility nil)
+       ;;       (subword-mode 1)))
+
+;; M-x ac-php-remake-tags-all 
+
+      (load "helm-ac-php-apropros")
+      (use-package company-php
+         :ensure t)
+
+       (add-hook 'php-mode-hook
+           '(lambda ()
+            ;; Enable company-mode
+
+            (company-mode t)
+            (add-to-list 'company-backends 'company-ac-php-backend )
+            ;; Enable ElDoc support (optional)
+            (ac-php-core-eldoc-setup)
+
+            (set (make-local-variable 'company-backends)
+             '((company-ac-php-backend company-dabbrev-code)
+               company-capf company-files))
+
+            ;; Jump to definition (optional)
+            (define-key php-mode-map (kbd "M-]")
+              'ac-php-find-symbol-at-point)
+
+            ;; Return back (optional)
+            (define-key php-mode-map (kbd "M-[")
+              'ac-php-location-stack-back)
+
+              (setq indent-tabs-mode nil)
+              (setq c-basic-offset 2)
+              (setq php-template-compatibility nil)
+              (subword-mode 1)))
+
+
+
+        (use-package web-mode
+            :ensure t)
+       (defun bs-web-mode-hook ()
+         (local-set-key '[backtab] 'indent-relative)
+         (setq indent-tabs-mode nil)
+         (setq web-mode-markup-indent-offset 2
+             web-mode-css-indent-offset 2
+             web-mode-code-indent-offset 2))
+
+      ;; (add-hook 'web-mode-hook 'bs-web-mode-hook)  
+
+       (defun toggle-php-flavor-mode ()
+       (interactive)
+       "Toggle mode between PHP & Web-Mode Helper modes"
+       (cond ((string= mode-name "PHP//lw")
+              (web-mode))
+             ((string= mode-name "Web")
+              (php-mode))))
+
+      (global-set-key [f5] 'toggle-php-flavor-mode)
+
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))

@@ -31,9 +31,9 @@ config.org --- Emacs configuration file in org mode format.
 ** Use-package package. 
  Nice package that simplifies package installation
 #+BEGIN_SRC emacs-lisp
-  ;; (unless (package-installed-p 'use-package)
-  ;;   (package-refresh-contents)
-  ;;   (package-install 'use-package))
+   (unless (package-installed-p 'use-package)
+     (package-refresh-contents)
+     (package-install 'use-package))
 #+END_SRC
 ** Better looking theme
  there is a flavor of Emacs called spacemacs, 
@@ -253,8 +253,11 @@ add LaTeX to Emacs exec path
 #+END_SRC
 *** Switch between left and right buffers  
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-,") 'windmove-left)
-(global-set-key (kbd "C-.") 'windmove-right)
+;; use bind-key package to override major mode key maps
+(bind-key*  "C-," 'windmove-left)
+(bind-key*  "C-." 'windmove-right)
+(bind-key*  "M-P" 'windmove-up)
+(bind-key*  "M-N" 'windmove-down)
 #+END_SRC
 *** Fix tramp invalid base 64 data error
 #+BEGIN_SRC emacs-lisp
@@ -467,14 +470,14 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMMENT OUT THE REST OF THE SET UP
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;(load "cygwin-mount")
-  ;;(load "setup-cygwin")
+  (load "cygwin-mount")
+  (load "setup-cygwin")
 
-  ;;(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
-  ;;(setq exec-path (cons "D:/Cygwin/bin" exec-path))
+  (setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
+  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
   (setq exec-path (cons "C:/Users/opimenov/AppData/Local/Programs/Git/mingw64/bin" exec-path))
-  ;;(require 'cygwin-mount)
-  ;;(cygwin-mount-activate)
+  (require 'cygwin-mount)
+  (cygwin-mount-activate)
 
   (csetq ediff-split-window-function 'split-window-horizontally)
   (csetq ediff-diff-options "-w")
@@ -653,7 +656,9 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'projectile-mode)
     (diminish 'org-indent-mode)
     (diminish 'text-scale-mode)
-    (diminish 'company-mode))
+    (diminish 'company-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'whitespace-mode))
 #+END_SRC
 ** Treemacs file explorer
 #+BEGIN_SRC emacs-lisp
@@ -866,4 +871,106 @@ Lets us use asynchronous processes wherever possible, pretty usefull
    (add-hook 'yaml-mode-hook
     '(lambda ()
        (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+#+END_SRC
+** PHP
+#+BEGIN_SRC emacs-lisp
+         (use-package php-mode
+             :ensure t
+             :config
+         (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
+         (bind-key*  "C-," 'windmove-left)
+         (bind-key*  "C-." 'windmove-right))
+
+         (use-package ac-php-core
+           :ensure t)
+         (use-package ac-php
+           :ensure t)
+         (use-package ac-helm
+           :ensure t)
+
+         ;; (add-hook  'php-mode-hook 
+         ;;     '(lambda ()
+         ;;       ;; Enable auto-complete-mode
+         ;;       (auto-complete-mode t)
+
+         ;;       (require 'ac-php)
+         ;;       (setq ac-sources '(ac-source-php))
+
+         ;;       ;; As an example (optional)
+         ;;       (yas-global-mode 1)
+
+         ;;       ;; Enable ElDoc support (optional)
+         ;;       (ac-php-core-eldoc-setup)
+
+         ;;       ;; Jump to definition (optional)
+         ;;       (define-key php-mode-map (kbd "M-]")
+         ;;         'ac-php-find-symbol-at-point)
+
+         ;;       ;; Return back (optional)
+         ;;       (define-key php-mode-map (kbd "M-[")
+         ;;         'ac-php-location-stack-back)
+
+         ;;       (setq indent-tabs-mode nil)
+         ;;       (setq c-basic-offset 2)
+         ;;       (setq php-template-compatibility nil)
+         ;;       (subword-mode 1)))
+
+  ;; M-x ac-php-remake-tags-all 
+        
+        (load "helm-ac-php-apropros")
+        (use-package company-php
+           :ensure t)
+
+         (add-hook 'php-mode-hook
+             '(lambda ()
+              ;; Enable company-mode
+
+              (company-mode t)
+              (add-to-list 'company-backends 'company-ac-php-backend )
+              ;; Enable ElDoc support (optional)
+              (ac-php-core-eldoc-setup)
+
+              (set (make-local-variable 'company-backends)
+               '((company-ac-php-backend company-dabbrev-code)
+                 company-capf company-files))
+
+              ;; Jump to definition (optional)
+              (define-key php-mode-map (kbd "M-]")
+                'ac-php-find-symbol-at-point)
+
+              ;; Return back (optional)
+              (define-key php-mode-map (kbd "M-[")
+                'ac-php-location-stack-back)
+
+                (setq indent-tabs-mode nil)
+                (setq c-basic-offset 2)
+                (setq php-template-compatibility nil)
+                (subword-mode 1)))
+
+
+
+          (use-package web-mode
+              :ensure t)
+         (defun bs-web-mode-hook ()
+           (local-set-key '[backtab] 'indent-relative)
+           (setq indent-tabs-mode nil)
+           (setq web-mode-markup-indent-offset 2
+               web-mode-css-indent-offset 2
+               web-mode-code-indent-offset 2))
+
+        ;; (add-hook 'web-mode-hook 'bs-web-mode-hook)  
+
+         (defun toggle-php-flavor-mode ()
+         (interactive)
+         "Toggle mode between PHP & Web-Mode Helper modes"
+         (cond ((string= mode-name "PHP//lw")
+                (web-mode))
+               ((string= mode-name "Web")
+                (php-mode))))
+
+        (global-set-key [f5] 'toggle-php-flavor-mode)
+#+END_SRC
+** MATLAB to Octave mode 
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 #+END_SRC

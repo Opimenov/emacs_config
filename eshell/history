@@ -1,128 +1,128 @@
-git add 	   src/DataRecorder/DataRecorder.cpp	   src/DetectionProcessor/DetectionProcessor.cpp	   src/PTP/PTPWrapper.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.hpp
-git add 	   src/DataRecorder/DataRecorder.cpp	   src/DetectionProcessor/DetectionProcessor.cpp	   src/PTP/PTPWrapper.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.cpp	   test/src/DetectionProcessor/TestUtilities/TestDetectionProcessorFactory.hpp
-git status
-git commit -m "writing tests, figuring out how to create tracks"
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-git status
-git add 	   src/DetectionProcessor/DetectionProcessor.cpp	   test/src/DetectionProcessor/InputFiles/TestDataDwell52.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell53.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell54.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell55.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell56.yml	   test/src/DetectionProcessor/TrackSentry/TrackSentryBlackboxTest.cpp
-git commit -m "changed some test data in DP tests"
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-python waf_build.py ffa
-python waf_build.py -hw=lstarv3 -b=clean
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-git status
-git add 	   test/src/DetectionProcessor/InputFiles/TestDataDwell52.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell53.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell54.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell55.yml	   test/src/DetectionProcessor/InputFiles/TestDataDwell56.yml	   test/src/DetectionProcessor/TrackSentry/TrackSentryBlackboxTest.cpp
-git status
-git add 	StarTestsBuildAndPush.bat	StarTestsBuildAndPush.bat~	test/src/DetectionProcessor/ForceClassify/	test/src/DetectionProcessor/InputFiles/ForceClassify/	test/src/DetectionProcessor/TestUtilities/TestDataLoader.hpp
-git statis
-git status
-git commit -m "infrastracture for tests is ready"
-git commit -m "infrastracture for tests is ready"
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-StarTestsBuildAndPush.bat
-c:\rs\rs_common\submodules\sw_products\utils\include\utils\objectpool\ObjectPool_c.hpp: In instantiation of 'ObjectPool_c<T, sizeT, alignT>::value_type* ObjectPool_c<T, sizeT, alignT>::Allocate(bool) [with T = DetectionProcessor_n::DataModel_n::Id_c; unsigned int sizeT = 90000u; unsigned int alignT = 16u; ObjectPool_c<T, sizeT, alignT>::pointer = DetectionProcessor_n::DataModel_n::Id_c*; ObjectPool_c<T, sizeT, alignT>::value_type = DetectionProcessor_n::DataModel_n::Id_c]':
 ls
-cd c:\
+cd ../..
 ls
-cd Users/opimenov/
+man tree
+tree temp
 ls
-cd Application\
-cd AppData/
 ls
-cd Roaming/
+cd ..
 ls
-ls -lsA
-cd .emacs.d/
+cd ../..
 ls
+cd d:/
+ls
+ls
+tree Classes
+git
+git clone https://github.com/tj/watch.git
+ls
+cd watch
+ls
+make install
+make install
+ls
+env 
+make install
+cd src
+ls
+gcc watch.c
+D:/MinGW/bin/gcc watch.c
+make install
+D:/MinGW/bin/gcc.exe watch.c
+ls
+cd ..
+ls
+tree
+ls
+make watch
+tree
+cat History.md
+lynx
+ls 
 cd ../
 ls
-ls -lsA
-pwd
-cd .emacs.d/
-pwd
-ls -lsA
-rm -rf ./*
-ls -lsA
-pwd
+mkdir apt-cyg
+cd apt-cyg
+git clone https://github.com/transcode-open/apt-cyg.git
 ls
+cd apt-cyg
 ls
+cd ../..
 ls
+cd ../..
 ls
-cd c:/rs/rs_common/
+cd apt-cyg
+ls
+install apt-cyg d:/MinGW/msys/1.0/bin
+apt-cyg 
+cd d:/
+cd tig
+tree
+git s
+git b
+git 
+git s
+cd d:/
+tree tig
+cd tig
+ls
+git s
+ls
+gt checkout 759b959 --./BitAnalyzerNGG/*
+git checkout 759b959 --./BitAnalyzerNGG/*
+git checkout 759b959 -- ./BitAnalyzerNGG/*
+git checkout --overlay 759b959  -- ./BitAnalyzerNGG/*
+ls
+git checkout 759b959
+git chechout master
+git co master
+git co master
+git s
+git status
+cd d:/foo
+git st
+tree .git
+watch
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+sh build_radar_sw.sh*
+cd ../..
+cd ../..
+cd ../rs/rs_common
 ls
 cd qnx/
 ls
-(+ 3 5)
+cat StarBuildPush.sh
+python waf_build.py -hw=lcmrv2
 git status
-git add -A
-git commit -m "font change and beacon disabled"
-git push
-git push
-git push
-k
-(+ 3 4)
+git lol
+python waf_build.py -hw=lcmrv2 -k
+cd D:
+plink 216.7.27.176
+cd D:/
 ls
-sudo pip install -U future
-sudo-H pip install -U future
-sudo -H pip install -U future
-python -v
-which python 
-python --version
-python3 --version
-sudo apt-get update
-sudo apt-get upgrade
-python3 --version
-sudo apt-get install python3.6
-python3 --version
-python3.6
-which python3.6 
-sudo fc-cache -fv
-git status
+rm -rf foo
 ls
+cd LDMS_p4_gui/
+ls
+git p4 clone //lcmr_common/MAIN/production_tools/win/Data Management/Loader Client/ loader_client
+git p4 clone "//lcmr_common/MAIN/production_tools/win/Data Management/Loader Client/" loader_client
+cd loader_client/
+ls
+git lol
+cd ..
+git p4 clone //lcmr_common/MAIN/production_tools/win/Data Management/Website/ website
+git p4 clone "//lcmr_common/MAIN/production_tools/win/Data Management/Website/" website
+ls
+cd ../../../..
+cd ..
+git pull
+ls
+ls -a
