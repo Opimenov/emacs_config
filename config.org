@@ -658,7 +658,11 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'text-scale-mode)
     (diminish 'company-mode)
     (diminish 'org-indent-mode)
-    (diminish 'whitespace-mode))
+    (diminish 'scroll-all-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'subword-mode)
+    (diminish 'projectile-mode)
+)
 #+END_SRC
 ** Treemacs file explorer
 #+BEGIN_SRC emacs-lisp
@@ -916,13 +920,14 @@ Lets us use asynchronous processes wherever possible, pretty usefull
          ;;       (subword-mode 1)))
 
   ;; M-x ac-php-remake-tags-all 
-        
+
         (load "helm-ac-php-apropros")
         (use-package company-php
            :ensure t)
 
          (add-hook 'php-mode-hook
              '(lambda ()
+              (ac-php-mode t)
               ;; Enable company-mode
 
               (company-mode t)
@@ -973,4 +978,9 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 ** MATLAB to Octave mode 
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+#+END_SRC
+** C#
+#+BEGIN_SRC emacs-lisp
+(use-package csharp-mode
+   :ensure t)
 #+END_SRC
