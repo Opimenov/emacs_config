@@ -450,37 +450,41 @@
 (global-set-key (kbd "C-M-S-k") 'close-all-buffers)
 
 (use-package diminish
-  :ensure t
-  :init
-  (diminish 'which-key-mode)
-  (diminish 'linum-relative-mode)
-  (diminish 'hungry-delete-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'subword-mode)
-  (diminish 'beacon-mode)
-  (diminish 'irony-mode)
-  (diminish 'page-break-lines-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'rainbow-delimiters-mode)
-  (diminish 'rainbow-mode)
-  (diminish 'helm-mode)
-  (diminish 'projectile-mode)
-  (diminish 'follow-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'abbrev-mode)
-  (diminish 'whitespace-mode)
-  (diminish 'text-scale-mode)
-  (diminish 'indent-guide-mode)
-  (diminish 'follow-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'auto-complete-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'projectile-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'text-scale-mode)
-  (diminish 'company-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'whitespace-mode))
+    :ensure t
+    :init
+    (diminish 'which-key-mode)
+    (diminish 'linum-relative-mode)
+    (diminish 'hungry-delete-mode)
+    (diminish 'visual-line-mode)
+    (diminish 'subword-mode)
+    (diminish 'beacon-mode)
+    (diminish 'irony-mode)
+    (diminish 'page-break-lines-mode)
+    (diminish 'auto-revert-mode)
+    (diminish 'rainbow-delimiters-mode)
+    (diminish 'rainbow-mode)
+    (diminish 'helm-mode)
+    (diminish 'projectile-mode)
+    (diminish 'follow-mode)
+    (diminish 'yas-minor-mode)
+    (diminish 'abbrev-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'text-scale-mode)
+    (diminish 'indent-guide-mode)
+    (diminish 'follow-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'auto-complete-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'projectile-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'text-scale-mode)
+    (diminish 'company-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'scroll-all-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'subword-mode)
+    (diminish 'projectile-mode)
+)
 
 (projectile-global-mode)
     (use-package treemacs
@@ -715,6 +719,7 @@
 
        (add-hook 'php-mode-hook
            '(lambda ()
+            (ac-php-mode t)
             ;; Enable company-mode
 
             (company-mode t)
@@ -763,3 +768,6 @@
       (global-set-key [f5] 'toggle-php-flavor-mode)
 
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+
+(use-package csharp-mode
+   :ensure t)
