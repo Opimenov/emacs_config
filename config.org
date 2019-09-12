@@ -19,14 +19,14 @@ config.org --- Emacs configuration file in org mode format.
  If you are running this from the work computer some may not work. 
  melpa will be there for sure.
 #+BEGIN_SRC emacs-lisp
-  ;; (require 'package)
-  ;; (setq package-enable-at-startup nil)
-  ;; (setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
-  ;; 			 ("gnu"   . "http://elpa.gnu.org/packages/")
-  ;; 			 ("melpa" . "https://melpa.org/packages/")
-  ;; 			 ("org"   . "https://orgmode.org/elpa/")
-  ;; 			 ("SC"    . "http://joseito.republika.pl/sunrise-commander/")))
-  ;; (package-initialize)
+   (require 'package)
+   (setq package-enable-at-startup nil)
+   (setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
+   			 ("gnu"   . "http://elpa.gnu.org/packages/")
+   			 ("melpa" . "https://melpa.org/packages/")
+   			 ("org"   . "https://orgmode.org/elpa/")
+   			 ("SC"    . "http://joseito.republika.pl/sunrise-commander/")))
+   (package-initialize)
 #+END_SRC
 ** Use-package package. 
  Nice package that simplifies package installation
@@ -104,13 +104,13 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
   (setenv "SHELL" shell-file-name)
   (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 
-     (defvar my-term-shell "D:/Cygwin/bin")
-     (defadvice ansi-term (before force-bash)
-        (interactive (list my-term-shell)))
-     (ad-activate 'ansi-term)
+  (defvar my-term-shell "D:/Cygwin/bin")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+   (ad-activate 'ansi-term)
   ;;git bash
   (defun git-bash () (interactive)
-    (let ((explicit-shell-file-name "c:/Users/opimenov/AppData/Local/Programs/Git/bin/bash.exe"))
+    (let ((explicit-shell-file-name "d:/Installed_progs/Git/bin/bash.exe"))
       (call-interactively 'shell)
       (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))))
 
@@ -142,7 +142,7 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 #+END_SRC
 *** Agenda
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files (list "C:/Users/opimenov/Desktop/TODOS.org"))
+  (setq org-agenda-files (list "C:/Users/opimenov.EDC-SP/Desktop/TODOS.org"))
   (global-set-key (kbd "C-c s l") 'org-store-link)
   (global-set-key (kbd "C-c o a") 'org-agenda)
   (setq org-log-done t)
@@ -185,8 +185,8 @@ Hitting tab after an “<el” in an org-mode file will create a template for el
 *** beamer
 add LaTeX to Emacs exec path
 #+BEGIN_SRC emacs-lisp
-(setenv "PATH" (concat (getenv "PATH") ":C:/Users/opimenov/AppData/Local/Programs/MiKTeX 2.9/"))
-    (setq exec-path (append exec-path '("C:/Users/opimenov/AppData/Local/Programs/MiKTeX 2.9/")))
+(setenv "PATH" (concat (getenv "PATH") ":D:/Installed_progs/MiKTex/"))
+    (setq exec-path (append exec-path '("D:/Installed_progs/MiKTex/")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -477,14 +477,15 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; COMMENT OUT THE REST OF THE SET UP
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "cygwin-mount")
-  (load "setup-cygwin")
+;;  (load "cygwin-mount")
+;;  (load "setup-cygwin")
 
-  (setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
-  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
-  (setq exec-path (cons "C:/Users/opimenov/AppData/Local/Programs/Git/mingw64/bin" exec-path))
-  (require 'cygwin-mount)
-  (cygwin-mount-activate)
+;;  (setenv "PATH" (concat ":D:/Cygwin/bin;" (getenv "PATH")))
+;;  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
+  (setenv "PATH" (concat ":D:/Installed_progs/Git/bin;" (getenv "PATH")))
+  (setq exec-path (cons "D:/Installed_progs/Git/bin" exec-path))
+;;  (require 'cygwin-mount)
+;;  (cygwin-mount-activate)
 
   (csetq ediff-split-window-function 'split-window-horizontally)
   (csetq ediff-diff-options "-w")
@@ -543,6 +544,8 @@ Lets us use asynchronous processes wherever possible, pretty usefull
    :config
 (global-set-key (kbd "C-x g") 'magit-status)
 (magit-auto-revert-mode -1))
+;;there are multiple git versions installed so lets point to this one 
+(setq magit-git-executable "d:/Installed_progs/Git/bin/git.exe")
 #+END_SRC
 ** Spelling correction
   #+BEGIN_SRC emacs-lisp
@@ -660,7 +663,6 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'org-indent-mode)
     (diminish 'auto-complete-mode)
     (diminish 'eldoc-mode)
-    (diminish 'projectile-mode)
     (diminish 'org-indent-mode)
     (diminish 'text-scale-mode)
     (diminish 'company-mode)
@@ -673,82 +675,82 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+END_SRC
 ** Treemacs file explorer
 #+BEGIN_SRC emacs-lisp
-  (projectile-global-mode)
-      (use-package treemacs
-        :ensure t
-        :defer t
-        :init                               
-        (with-eval-after-load 'winum
-          (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-        :config
-        (progn
-          (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
-                treemacs-deferred-git-apply-delay   0.5
-                treemacs-display-in-side-window     t
-                treemacs-file-event-delay           5000
-                treemacs-file-follow-delay          0.2
-                treemacs-follow-after-init          t
-                treemacs-follow-recenter-distance   0.1
-                treemacs-git-command-pipe           ""
-                treemacs-goto-tag-strategy          'refetch-index
-                treemacs-indentation                2
-                treemacs-indentation-string         " "
-                treemacs-is-never-other-window      nil
-                treemacs-max-git-entries            5000
-                treemacs-no-png-images              nil
-                treemacs-no-delete-other-windows    t
-                treemacs-project-follow-cleanup     nil
-                treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-                treemacs-recenter-after-file-follow nil
-                treemacs-recenter-after-tag-follow  nil
-                treemacs-show-cursor                t
-                treemacs-show-hidden-files          t
-                treemacs-silent-filewatch           nil
-                treemacs-silent-refresh             nil
-                treemacs-sorting                    'alphabetic-desc
-                treemacs-space-between-root-nodes   nil
-                treemacs-tag-follow-cleanup         t
-                treemacs-tag-follow-delay           1.5
-                treemacs-width                      35)
+  (setq treemacs-python-executable "C:/Python37/python")
+           (use-package treemacs
+             :ensure t
+             :defer t
+             :init
+             (with-eval-after-load 'winum
+               (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+             :config
+             (progn
+               (setq treemacs-collapse-dirs (if (executable-find "python") 3 0)
+                     treemacs-deferred-git-apply-delay   0.5
+                     treemacs-display-in-side-window     t
+                     treemacs-file-event-delay           5000
+                     treemacs-file-follow-delay          0.2
+                     treemacs-follow-after-init          t
+                     treemacs-follow-recenter-distance   0.1
+                     treemacs-git-command-pipe           ""
+                     treemacs-goto-tag-strategy          'refetch-index
+                     treemacs-indentation                2
+                     treemacs-indentation-string         " "
+                     treemacs-is-never-other-window      nil
+                     treemacs-max-git-entries            5000
+                     treemacs-no-png-images              nil
+                     treemacs-no-delete-other-windows    t
+                     treemacs-project-follow-cleanup     nil
+                     treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+                     treemacs-recenter-after-file-follow nil
+                     treemacs-recenter-after-tag-follow  nil
+                     treemacs-show-cursor                t
+                     treemacs-show-hidden-files          t
+                     treemacs-silent-filewatch           nil
+                     treemacs-silent-refresh             nil
+                     treemacs-sorting                    'alphabetic-desc
+                     treemacs-space-between-root-nodes   nil
+                     treemacs-tag-follow-cleanup         t
+                     treemacs-tag-follow-delay           1.5
+                     treemacs-width                      35)
 
-          ;; The default width and height of the icons is 22 pixels. If you are
-          ;;       ;; using a Hi-DPI display, uncomment this to double the icon size.
-          ;;       ;;(treemacs-resize-icons 44)
+                ;; The default width and height of the icons is 22 pixels. If you are
+                ;;        using a Hi-DPI display, uncomment this to double the icon size.
+                      (treemacs-resize-icons 44)
 
-          (treemacs-follow-mode t)
-          (treemacs-filewatch-mode t)
-          (treemacs-fringe-indicator-mode t)
-          (pcase (cons (not (null (executable-find "git")))
-                        (not (null (executable-find "python3"))))
-             (`(t . t)
-              (treemacs-git-mode 'deferred))
-             (`(t . _)
-              (treemacs-git-mode 'simple))))
-        :bind
-        (:map global-map
-              ("M-0"       . treemacs-select-window)
-              ("C-x t 1"   . treemacs-delete-other-windows)
-              ("C-x t t"   . treemacs)
-              ("C-x t B"   . treemacs-bookmark)
-              ("C-x t C-t" . treemacs-find-file)
-              ("C-x t M-t" . treemacs-find-tag)))
+               (treemacs-follow-mode t)
+               (treemacs-filewatch-mode t)
+               (treemacs-fringe-indicator-mode t)
+               (pcase (cons (not (null (executable-find "git")))
+                             (not (null (executable-find "python"))))
+                  (`(t . t)
+                   (treemacs-git-mode 'deferred))
+                  (`(t . _)
+                   (treemacs-git-mode 'simple))))
+             :bind
+             (:map global-map
+                   ("M-0"       . treemacs-select-window)
+                   ("C-x t 1"   . treemacs-delete-other-windows)
+                   ("C-x t t"   . treemacs)
+                   ("C-x t B"   . treemacs-bookmark)
+                   ("C-x t C-t" . treemacs-find-file)
+                   ("C-x t M-t" . treemacs-find-tag)))
 
-      (use-package treemacs-projectile
-        :after treemacs projectile
-        :ensure t)
+           (use-package treemacs-projectile
+             :after treemacs projectile
+             :ensure t)
 
-      (use-package treemacs-icons-dired
-        :after treemacs dired
-        :ensure t
-        :config (treemacs-icons-dired-mode))
+           (use-package treemacs-icons-dired
+             :after treemacs dired
+             :ensure t
+             :config (treemacs-icons-dired-mode))
 
-      (use-package treemacs-magit
-       :after treemacs magit
-       :ensure t)
-      ;;start projectile global mode when starting treemacs
-     (add-hook 'treemacs-mode-hook 'projectile-mode)
-      ;;optionally start treemacs on startup
-     (treemacs)
+           (use-package treemacs-magit
+            :after treemacs magit
+            :ensure t)
+          ;; start projectile global mode when starting treemacs
+          (add-hook 'treemacs-mode-hook 'projectile-mode)
+           ;;optionally start treemacs on startup
+         (treemacs)
 #+END_SRC
 ** XKCD comics 
 #+BEGIN_SRC emacs-lisp
@@ -761,7 +763,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
       :ensure t
       :config
         (dashboard-setup-startup-hook)
-  ;;      (setq dashboard-startup-banner "C:/Users/opimenov/Desktop/presentations/dusty_pc.png")
+  ;;      (setq dashboard-startup-banner "C:/Users/opimenov.EDC-SP/Desktop/presentations/dusty_pc.png")
         (setq dashboard-items '((recents  . 5)
                                 (projects . 5)
                                 (agenda . 5)))
@@ -788,17 +790,18 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+END_SRC
 ** better dired+ 
 #+BEGIN_SRC emacs-lisp
-    (add-hook 'dired-mode-hook
-          (lambda ()
-            (dired-sort-toggle-or-edit)
-            (dired-hide-details-mode)
-          )
-    )
+     ;; (add-hook 'dired-mode-hook
+     ;;       (lambda ()
+     ;;         (dired-sort-toggle-or-edit)
+     ;;         (dired-hide-details-mode)    
+     ;;       )
+     ;; )
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (load "dired+")                             
-    (global-dired-hide-details-mode t)          
-    (setq diredp-hide-details-initially-flag t) 
-    (setq diredp-hide-details-propagate-flag t) 
+    ;; stopped working at some point 
+    ;;(load "dired+")                             
+    ;;(global-dired-hide-details-mode t)          
+    ;;(setq diredp-hide-details-initially-flag t) 
+    ;;(setq diredp-hide-details-propagate-flag t) 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq tramp-verbose 10)
 #+END_SRC

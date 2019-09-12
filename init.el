@@ -55,18 +55,15 @@
  '(electric-pair-mode t)
  '(js-expr-indent-offset 0)
  '(line-number-mode nil)
- '(magit-git-executable
-   "C:/Users/opimenov/AppData/Local/Programs/Git/mingw64/bin/git.exe")
- '(org-agenda-files (quote ("C:/Users/opimenov/Desktop/TODOS.org")))
+ '(org-agenda-files (quote ("C:/Users/opimenov.EDC-SP/Desktop/TODOS.org")))
  '(package-selected-packages
    (quote
     (csharp-mode web-mode ac-helm helm-ac-php-apropos ac-php company-php php-mode yaml-mode company-c-headers flycheck-clang-analyzer flycheck yasnippet-snippets yasnippet dashboard xkcd diminish htmlize rainbow-mode switch-window sunrise-x-modeline sunrise-x-buttons sunrise-commander spaceline ox-twbs avy ac-ispell helm-projectile jedi company-jedi pretty-mode company-irony company s expand-region rainbow-delimiters rainbow-delimeters multiple-cursors indent-guide eshell-up powerline log4j-mode magit helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package)))
- '(python-shell-exec-path (quote ("d:/msys64/mingw64/bin/python3.exe")))
- '(python-shell-interpreter "d:/msys64/mingw64/bin/python3.exe")
+ '(python-shell-exec-path (quote ("C:/Python37")))
+ '(python-shell-interpreter "C:/Python37/python")
  '(send-mail-function (quote mailclient-send-it))
  '(tool-bar-mode nil)
  '(treemacs-collapse-dirs 0)
- '(treemacs-python-executable "d:/msys64/mingw64/bin/python3.exe")
  '(whitespace-style (quote (face tabs lines-tail newline empty))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
