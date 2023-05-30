@@ -1,0 +1,25 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("listMetadataRequest"
+ (filename . "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/metadata.smithy")
+ (front-context-string . "\n\n    /// Option")
+ (rear-context-string . " QueueArn,\n\n    ")
+ (position . 10128))
+("metadata_identity"
+ (filename . "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/metadata.smithy")
+ (front-context-string . "\n}\n\n/// List the")
+ (rear-context-string . "aIdentity,\n\n    ")
+ (position . 12540))
+("TaskArbiterService.cfg.erb"
+ (filename . "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceConfig/configuration-templates/brazil-config/app/TaskArbiterService.cfg.erb")
+ (front-context-string . "# Beta/Gamma/Pro")
+ (rear-context-string . "s.internal\"\n);\n\n")
+ (position . 4582))
+("org-capture-last-stored"
+ (filename . "~/.notes")
+ (front-context-string . "** TODO refactor")
+ (rear-context-string . "2021-10-20 Wed]\n")
+ (position . 4152))
+)

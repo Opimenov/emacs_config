@@ -1,128 +1,22 @@
+ll
+ll
 ls
-cd ../..
+ll
+echo $1
+echo $SHELL
+which cr
+cd ~/.toolbox/bin/
+l
 ls
-man tree
-tree temp
+which cr
+exec-path
+which cr
+exec-path
+which cr
+cd /home/pimenov/.toolbox/bin
 ls
-ls
-cd ..
-ls
-cd ../..
-ls
-cd d:/
-ls
-ls
-tree Classes
-git
-git clone https://github.com/tj/watch.git
-ls
-cd watch
-ls
-make install
-make install
-ls
-env 
-make install
-cd src
-ls
-gcc watch.c
-D:/MinGW/bin/gcc watch.c
-make install
-D:/MinGW/bin/gcc.exe watch.c
-ls
-cd ..
-ls
-tree
-ls
-make watch
-tree
-cat History.md
-lynx
-ls 
-cd ../
-ls
-mkdir apt-cyg
-cd apt-cyg
-git clone https://github.com/transcode-open/apt-cyg.git
-ls
-cd apt-cyg
-ls
-cd ../..
-ls
-cd ../..
-ls
-cd apt-cyg
-ls
-install apt-cyg d:/MinGW/msys/1.0/bin
-apt-cyg 
-cd d:/
-cd tig
-tree
-git s
-git b
-git 
-git s
-cd d:/
-tree tig
-cd tig
-ls
-git s
-ls
-gt checkout 759b959 --./BitAnalyzerNGG/*
-git checkout 759b959 --./BitAnalyzerNGG/*
-git checkout 759b959 -- ./BitAnalyzerNGG/*
-git checkout --overlay 759b959  -- ./BitAnalyzerNGG/*
-ls
-git checkout 759b959
-git chechout master
-git co master
-git co master
-git s
-git status
-cd d:/foo
-git st
-tree .git
-watch
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-sh build_radar_sw.sh*
-cd ../..
-cd ../..
-cd ../rs/rs_common
-ls
-cd qnx/
-ls
-cat StarBuildPush.sh
-python waf_build.py -hw=lcmrv2
-git status
-git lol
-python waf_build.py -hw=lcmrv2 -k
-cd D:
-plink 216.7.27.176
-cd D:/
-ls
-rm -rf foo
-ls
-cd LDMS_p4_gui/
-ls
-git p4 clone //lcmr_common/MAIN/production_tools/win/Data Management/Loader Client/ loader_client
-git p4 clone "//lcmr_common/MAIN/production_tools/win/Data Management/Loader Client/" loader_client
-cd loader_client/
-ls
-git lol
-cd ..
-git p4 clone //lcmr_common/MAIN/production_tools/win/Data Management/Website/ website
-git p4 clone "//lcmr_common/MAIN/production_tools/win/Data Management/Website/" website
-ls
-cd ../../../..
-cd ..
-git pull
-ls
-ls -a
+ls -als
+echo $PATH
+where cr
+which cr
+which rde

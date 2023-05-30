@@ -6,13 +6,15 @@
                 'set-default)
             ',variable ,value))
 
+(server-start)
+
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
    		      ("gnu"   . "http://elpa.gnu.org/packages/")
    		      ("melpa" . "https://melpa.org/packages/")
    		      ("org"   . "https://orgmode.org/elpa/")
-   		      ("SC"    . "http://joseito.republika.pl/sunrise-commander/")))
+   		      ))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -45,47 +47,35 @@
 (define-key global-map (kbd "C-g") 'keyboard-quit-only-if-no-macro)
 
 (use-package helm
-  :ensure t
-  :init
-  (helm-mode 1))
+    :ensure t
+    :init
+    (helm-mode 1))
 
-;;install package first
-(use-package helm-swoop
-  :ensure t
-  :config
-     (global-set-key (kbd "M-x") 'helm-M-x)
-     (global-set-key (kbd "M-i") 'helm-swoop);;helm search
-     (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
-     (global-set-key (kbd "C-x C-f") 'helm-find-files);;find stuff quickly
-     (global-set-key (kbd "C-c f f") 'helm-projectile)
-     (global-set-key (kbd "C-c g") 'helm-projectile-grep)
-     (global-set-key (kbd "C-c i") 'helm-imenu)) ;;go to function name quickly
+  ;;install package first
+  (use-package helm-swoop
+    :ensure t
+    :config
+       (global-set-key (kbd "M-x") 'helm-M-x)
+       (global-set-key (kbd "M-i") 'helm-swoop);;helm search FIXME
+       (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
+       (global-set-key (kbd "C-x C-f") 'helm-find-files);;find stuff quickly
+;;       (global-set-key (kbd "C-c f f") 'helm-projectile)
+;;       (global-set-key (kbd "C-c g") 'helm-projectile-grep)
+       (global-set-key (kbd "C-c i") 'helm-imenu)) ;;go to function name quickly
 
-(setq explicit-shell-file-name "D:/Cygwin/bin/bash.exe")
-(setq shell-file-name "bash")
+  (global-set-key (kbd "C-c p") 'projectile-find-file)
+
+(setq shell-file-name "/usr/bin/zsh")
 (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
 (setenv "SHELL" shell-file-name)
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 
-   (defvar my-term-shell "D:/Cygwin/bin")
-   (defadvice ansi-term (before force-bash)
-      (interactive (list my-term-shell)))
-   (ad-activate 'ansi-term)
-;;git bash
-(defun git-bash () (interactive)
-  (let ((explicit-shell-file-name "d:/Installed_progs/Git/bin/bash.exe"))
-    (call-interactively 'shell)
-    (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))))
-
-
-;;windows cmd
-(defun win-cmd () (interactive)
-  (let ((explicit-shell-file-name "c:/Windows/system32/cmd.exe"))
-    (call-interactively 'shell)))
-
+(defadvice ansi-term (before force-zshell)
+  (interactive (list my-term-shell)))
+ (ad-activate 'ansi-term)
 (prefer-coding-system 'utf-8)
 
-(global-set-key (kbd "<C-return>") 'eshell)
+;;(global-set-key (kbd "<C-x  e>") 'eshell)
 ;;startup shell on boot
 ;;(eshell)
 
@@ -97,7 +87,7 @@
 (setq org-src-window-setup 'current-window)
 (add-hook 'org-mode-hook 'org-indent-mode)
 
-(setq org-agenda-files (list "C:/Users/opimenov.EDC-SP/Desktop/TODOS.org"))
+(setq org-agenda-files (list "/home/pimenov/Desktop/notes.org"))
 (global-set-key (kbd "C-c s l") 'org-store-link)
 (global-set-key (kbd "C-c o a") 'org-agenda)
 (setq org-log-done t)
@@ -116,14 +106,14 @@
 (setq org-log-done 'time)
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "IN_PRGRESS(p)" "WAITING(w)" "DONE(d)"))))
+      (quote ((sequence "TODO(t)" "WAITING(w)" "WORKING_ON(p)" "UNDER_REVIEW(r)" "FIX_VERIFICATION(f)" "DONE(d)"))))
 (setq org-log-done t)
 
 (use-package ox-twbs
   :ensure t)
 
-(setenv "PATH" (concat (getenv "PATH") ":D:/Installed_progs/MiKTex/"))
-    (setq exec-path (append exec-path '("D:/Installed_progs/MiKTex/")))
+;; (setenv "PATH" (concat (getenv "PATH") ":D:/Installed_progs/MiKTex/"))
+;;     (setq exec-path (append exec-path '("D:/Installed_progs/MiKTex/")))
 
 ; allow for export=>beamer by placing
 
@@ -182,11 +172,6 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)))
-
-(use-package pretty-mode
-    :ensure t
-    :config
-    (global-pretty-mode 1))
 
 ;; use bind-key package to override major mode key maps
 (bind-key*  "C-," 'windmove-left)
@@ -332,36 +317,37 @@
     (global-set-key (kbd "M-s") 'avy-goto-char))
 
 ;;if you are on Linux 
-;;(use-package ediff
-;;   :ensure t
-;;   :init)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;if you are on WINDOUZZZZZ OS. Good luck.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; download cygwin-mount and setup-cygwin to "D:/Cygwin/bin"
-;; if you don't have a D drive or want to have it some place
-;; else you'll need to replace the path. Search for the path
-;; that I have and replace it.
-;; Do you feel lucky today? try leaving package extensions.
-;; best not to include the ending “.el” or “.elc” 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; COMMENT OUT THE REST OF THE SET UP
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load "cygwin-mount")
-(load "setup-cygwin")
+  (use-package ediff
+     :ensure t
+     :init)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;if you are on WINDOUZZZZZ OS. Good luck.
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; download cygwin-mount and setup-cygwin to "D:/Cygwin/bin"
+  ;; if you don't have a D drive or want to have it some place
+  ;; else you'll need to replace the path. Search for the path
+  ;; that I have and replace it.
+  ;; Do you feel lucky today? try leaving package extensions.
+  ;; best not to include the ending “.el” or “.elc” 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; COMMENT OUT THE REST OF THE SET UP
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  (load "cygwin-mount")
+;;  (load "setup-cygwin")
 
-(setenv "PATH" (concat "D:/Cygwin/bin;" (getenv "PATH")))
-(setq exec-path (cons "D:/Cygwin/bin" exec-path))
-(setq exec-path (cons "D:/Installed_progs/Git/bin" exec-path))
-(require 'cygwin-mount)
-(cygwin-mount-activate)
+;;  (setenv "PATH" (concat ":D:/Cygwin/bin;" (getenv "PATH")))
+;;  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
+;;  (setenv "PATH" (concat ":D:/Installed_progs/Git/bin;" (getenv "PATH")))
+;;  (setq exec-path (cons "D:/Installed_progs/Git/bin" exec-path))
+;;  (require 'cygwin-mount)
+;;  (cygwin-mount-activate)
 
-(csetq ediff-split-window-function 'split-window-horizontally)
-(csetq ediff-diff-options "-w")
-(csetq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (csetq ediff-split-window-function 'split-window-horizontally)
+  (csetq ediff-diff-options "-w")
+  (csetq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-;; (winner-mode 1)
-;; (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+  (winner-mode 1)
+  (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
 (use-package s
   :ensure t
@@ -374,15 +360,11 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
 (require 'origami)
 
-(set-face-attribute 'default nil :family "Consolas" :height 120)
+(use-package mines
+  :ensure t)
 
-(global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
-
-;; (fset 'build-and-push-rs
-;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([7 3 134217839 46 47 83 116 97 114 66 117 105 108 100 80 117 115 104 46 98 97 116] 0 "%d")) arg)))
-;; (global-set-key (kbd "C-c s") 'build-and-push-rs)   
-;;(fset 'star-build
-;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
+;; Set default font
+;;(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 100)
 
 (use-package magit
    :ensure t
@@ -390,24 +372,31 @@
    :config
 (global-set-key (kbd "C-x g") 'magit-status)
 (magit-auto-revert-mode -1))
+;;there are multiple git versions installed so lets point to this one 
+;;(setq magit-git-executable "d:/Installed_progs/Git/bin/git.exe")
 
-(setq ispell-alternate-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
-(setq ispell-program-name "aspell")
-(use-package ac-ispell
-   :ensure t
-   :init)
-  ;; Completion words longer than 4 characters
-    (custom-set-variables
-      '(ac-ispell-requires 3)
-      '(ac-ispell-fuzzy-limit 3))
+(require 'smithy-mode)
+(add-to-list 'auto-mode-alist
+             '("\\.smithy\\'" . (lambda ()
+                                  (smithy-mode))))
 
-    (eval-after-load "auto-complete"
-      '(progn
-          (ac-ispell-setup)))
+;;(setq ispell-alternate-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
+;;(setq ispell-program-name "aspell")
+;;(use-package ac-ispell
+;;   :ensure t
+;;   :init)
+;; Completion words longer than 4 characters
+    ;; (custom-set-variables
+    ;;   '(ac-ispell-requires 3)
+    ;;   '(ac-ispell-fuzzy-limit 3))
 
-    (add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
-    (add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
-    (add-hook 'org-mode-hook 'ac-ispell-ac-setup)
+    ;; (eval-after-load "auto-complete"
+    ;;   '(progn
+    ;;       (ac-ispell-setup)))
+
+    ;; (add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
+    ;; (add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
+    ;; (add-hook 'org-mode-hook 'ac-ispell-ac-setup)
      (use-package helm-flyspell
        :ensure t
        :config
@@ -471,7 +460,6 @@
     (diminish 'rainbow-delimiters-mode)
     (diminish 'rainbow-mode)
     (diminish 'helm-mode)
-    (diminish 'projectile-mode)
     (diminish 'follow-mode)
     (diminish 'yas-minor-mode)
     (diminish 'abbrev-mode)
@@ -482,119 +470,40 @@
     (diminish 'org-indent-mode)
     (diminish 'auto-complete-mode)
     (diminish 'eldoc-mode)
-    (diminish 'projectile-mode)
     (diminish 'org-indent-mode)
     (diminish 'text-scale-mode)
     (diminish 'company-mode)
     (diminish 'org-indent-mode)
     (diminish 'scroll-all-mode)
-    (diminish 'whitespace-mode)
     (diminish 'subword-mode)
     (diminish 'projectile-mode)
 )
 
-(setq treemacs-python-executable "D:/Installed_progs/Python37/python.exe")
-    (projectile-global-mode)
-        (use-package treemacs
-          :ensure t
-          :defer t
-          :init                               
-          (with-eval-after-load 'winum
-            (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-          :config
-          (progn
-            (setq treemacs-collapse-dirs              t ;;(if (executable-find "python") 3 0)
-                  treemacs-deferred-git-apply-delay   0.5
-                  treemacs-display-in-side-window     t
-                  treemacs-file-event-delay           5000
-                  treemacs-file-follow-delay          0.2
-                  treemacs-follow-after-init          t
-                  treemacs-follow-recenter-distance   0.1
-                  treemacs-git-command-pipe           ""
-                  treemacs-goto-tag-strategy          'refetch-index
-                  treemacs-indentation                2
-                  treemacs-indentation-string         " "
-                  treemacs-is-never-other-window      nil
-                  treemacs-max-git-entries            5000
-                  treemacs-no-png-images              nil
-                  treemacs-no-delete-other-windows    t
-                  treemacs-project-follow-cleanup     nil
-                  treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-                  treemacs-recenter-after-file-follow nil
-                  treemacs-recenter-after-tag-follow  nil
-                  treemacs-show-cursor                t
-                  treemacs-show-hidden-files          t
-                  treemacs-silent-filewatch           nil
-                  treemacs-silent-refresh             nil
-                  treemacs-sorting                    'alphabetic-desc
-                  treemacs-space-between-root-nodes   nil
-                  treemacs-tag-follow-cleanup         t
-                  treemacs-tag-follow-delay           1.5
-                  treemacs-width                      35)
-
-            ;; The default width and height of the icons is 22 pixels. If you are
-            ;;       ;; using a Hi-DPI display, uncomment this to double the icon size.
-            ;;       ;;(treemacs-resize-icons 44)
-
-            (treemacs-follow-mode t)
-            (treemacs-filewatch-mode t)
-            (treemacs-fringe-indicator-mode t)
-            (pcase (cons (not (null (executable-find "git")))
-                          (not (null (executable-find "python3"))))
-               (`(t . t)
-                (treemacs-git-mode 'deferred))
-               (`(t . _)
-                (treemacs-git-mode 'simple))))
-          :bind
-          (:map global-map
-                ("M-0"       . treemacs-select-window)
-                ("C-x t 1"   . treemacs-delete-other-windows)
-                ("C-x t t"   . treemacs)
-                ("C-x t B"   . treemacs-bookmark)
-                ("C-x t C-t" . treemacs-find-file)
-                ("C-x t M-t" . treemacs-find-tag)))
-
-        (use-package treemacs-projectile
-          :after treemacs projectile
-          :ensure t)
-
-        (use-package treemacs-icons-dired
-          :after treemacs dired
-          :ensure t
-          :config (treemacs-icons-dired-mode))
-
-        (use-package treemacs-magit
-         :after treemacs magit
-         :ensure t)
-        ;;start projectile global mode when starting treemacs
-       (add-hook 'treemacs-mode-hook 'projectile-mode)
-        ;;optionally start treemacs on startup
-       (treemacs)
-
 (use-package xkcd
   :ensure t)
 
-(use-package dashboard
-    :ensure t
-    :config
-      (dashboard-setup-startup-hook)
-;;      (setq dashboard-startup-banner "C:/Users/opimenov.EDC-SP/Desktop/presentations/dusty_pc.png")
-      (setq dashboard-items '((recents  . 5)
-                              (projects . 5)
-                              (agenda . 5)))
-      (setq dashboard-banner-logo-title ""))
+;;   (use-package dashboard
+;;     :ensure t
+;;     :config
+;;       (dashboard-setup-startup-hook)
+;; ;;      (setq dashboard-startup-banner "C:/Users/opimenov.EDC-SP/Desktop/presentations/dusty_pc.png")
+;;       (setq dashboard-items '((recents  . 5)
+;;                               (projects . 5)
+;;                               (agenda . 5)))
+;;       (setq dashboard-banner-logo-title ""))
 
-;; to update cached xkcd
-(with-temp-buffer
-  (xkcd)
-  (xkcd-kill-buffer))
+;; ;; to update cached xkcd
+;; (with-temp-buffer
+;;   (xkcd)
+;;   (xkcd-kill-buffer))
 
-;; setting dashboard image (png)
-(let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
-  (if (file-exists-p last-xkcd-png)
-      (setq dashboard-banner-official-png last-xkcd-png)))
+;; ;; setting dashboard image (png)
+;; (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
+;;   (if (file-exists-p last-xkcd-png)
+;;       (setq dashboard-banner-official-png last-xkcd-png)))
 
-;; to get a rand comic and to set dashboard image (png)
+;; ;; to get a rand comic and to set
+;;dashboard image (png)
 ;;(let ((rand-id-xkcd nil))
 ;;  (with-temp-buffer
 ;;    (setq rand-id-xkcd (string-to-number (xkcd-rand)))
@@ -603,19 +512,26 @@
 ;;    (if (file-exists-p last-xkcd-png)
 ;;    (setq dashboard-banner-official-png last-xkcd-png))))
 
-(add-hook 'dired-mode-hook
-        (lambda ()
-          (dired-sort-toggle-or-edit)
-          (dired-hide-details-mode)
-        )
-  )
+;; (add-hook 'dired-mode-hook
+   ;;       (lambda ()
+   ;;         (dired-sort-toggle-or-edit)
+   ;;         (dired-hide-details-mode)    
+   ;;       )
+   ;; )
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "dired+")                             
-  (global-dired-hide-details-mode t)          
-  (setq diredp-hide-details-initially-flag t) 
-  (setq diredp-hide-details-propagate-flag t) 
+  ;; stopped working at some point 
+  ;;(load "dired+")                             
+  ;;(global-dired-hide-details-mode t)          
+  ;;(setq diredp-hide-details-initially-flag t) 
+  ;;(setq diredp-hide-details-propagate-flag t) 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq tramp-verbose 10)
+
+(use-package format-all
+  :ensure t)
+
+(fset 'indent_after_70_chars
+   (kmacro-lambda-form [?\C-u ?7 ?0 ?\C-f ?\M-f return ?\C-d] 0 "%d"))
 
 (defun crux-eval-and-replace ()
   "Replace the preceding sexp with its value."
@@ -636,7 +552,7 @@
  whitespace-line-column 80
  whitespace-style       '(face lines-tail))
 
-(add-hook 'prog-mode-hook 'whitespace-mode)
+;;(add-hook 'prog-mode-hook 'whitespace-mode)
 
 (use-package flycheck
   :ensure t)
@@ -678,104 +594,14 @@
     '(lambda ()
        (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
-(use-package php-mode
-           :ensure t
-           :config
-       (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-       (bind-key*  "C-," 'windmove-left)
-       (bind-key*  "C-." 'windmove-right))
+(use-package typescript-mode
+  :ensure t)
 
-       (use-package ac-php-core
-         :ensure t)
-       (use-package ac-php
-         :ensure t)
-       (use-package ac-helm
-         :ensure t)
-
-       ;; (add-hook  'php-mode-hook 
-       ;;     '(lambda ()
-       ;;       ;; Enable auto-complete-mode
-       ;;       (auto-complete-mode t)
-
-       ;;       (require 'ac-php)
-       ;;       (setq ac-sources '(ac-source-php))
-
-       ;;       ;; As an example (optional)
-       ;;       (yas-global-mode 1)
-
-       ;;       ;; Enable ElDoc support (optional)
-       ;;       (ac-php-core-eldoc-setup)
-
-       ;;       ;; Jump to definition (optional)
-       ;;       (define-key php-mode-map (kbd "M-]")
-       ;;         'ac-php-find-symbol-at-point)
-
-       ;;       ;; Return back (optional)
-       ;;       (define-key php-mode-map (kbd "M-[")
-       ;;         'ac-php-location-stack-back)
-
-       ;;       (setq indent-tabs-mode nil)
-       ;;       (setq c-basic-offset 2)
-       ;;       (setq php-template-compatibility nil)
-       ;;       (subword-mode 1)))
-
-;; M-x ac-php-remake-tags-all 
-
-      (load "helm-ac-php-apropros")
-      (use-package company-php
-         :ensure t)
-
-       (add-hook 'php-mode-hook
-           '(lambda ()
-            (ac-php-mode t)
-            ;; Enable company-mode
-
-            (company-mode t)
-            (add-to-list 'company-backends 'company-ac-php-backend )
-            ;; Enable ElDoc support (optional)
-            (ac-php-core-eldoc-setup)
-
-            (set (make-local-variable 'company-backends)
-             '((company-ac-php-backend company-dabbrev-code)
-               company-capf company-files))
-
-            ;; Jump to definition (optional)
-            (define-key php-mode-map (kbd "M-]")
-              'ac-php-find-symbol-at-point)
-
-            ;; Return back (optional)
-            (define-key php-mode-map (kbd "M-[")
-              'ac-php-location-stack-back)
-
-              (setq indent-tabs-mode nil)
-              (setq c-basic-offset 2)
-              (setq php-template-compatibility nil)
-              (subword-mode 1)))
-
-
-
-        (use-package web-mode
-            :ensure t)
-       (defun bs-web-mode-hook ()
-         (local-set-key '[backtab] 'indent-relative)
-         (setq indent-tabs-mode nil)
-         (setq web-mode-markup-indent-offset 2
-             web-mode-css-indent-offset 2
-             web-mode-code-indent-offset 2))
-
-      ;; (add-hook 'web-mode-hook 'bs-web-mode-hook)  
-
-       (defun toggle-php-flavor-mode ()
-       (interactive)
-       "Toggle mode between PHP & Web-Mode Helper modes"
-       (cond ((string= mode-name "PHP//lw")
-              (web-mode))
-             ((string= mode-name "Web")
-              (php-mode))))
-
-      (global-set-key [f5] 'toggle-php-flavor-mode)
-
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-
-(use-package csharp-mode
-   :ensure t)
+(setenv "PATH" (concat (getenv "PATH") ":/home/pimenov/.toolbox/bin"))
+    (setq exec-path (append exec-path '("/home/pimenov/.toolbox/bin")))
+    (use-package amz-common
+      :ensure t)
+    (use-package amz-crisp
+      :ensure t)
+  (define-key amz-crisp-mode-map (kbd "C-c x") 'amz-crisp)
+  (setq amz-crisp-use-comint t)

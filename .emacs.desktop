@@ -1,43 +1,535 @@
-;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Wed Sep 11 13:26:16 2019
+;; Created Tue May 30 15:44:25 2023
 ;; Desktop file format version 208
-;; Emacs version 26.1
+;; Emacs version 27.2
 
 ;; Global section:
-(setq desktop-saved-frameset [frameset 1 (23929 11832 818594 0) (desktop . "208") "opimenov@PC-OPIMENOV" nil nil ((((minibuffer . t) (undecorated) (skip-taskbar) (font-backend uniscribe gdi) (font . "-outline-Consolas-normal-normal-normal-mono-16-*-*-*-c-*-iso8859-1") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#b2b2b2") (background-color . "#292b2e") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-focus-on-map) (no-accept-focus) (no-special-glyphs) (alpha) (menu-bar-lines . 0) (tool-bar-lines . 0) (height . 74) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (scroll-bar-height . 0) (fullscreen . maximized) (z-group) (visibility . t) (display-type . color) (background-mode . dark) (cursor-color . "#e3dedd") (environment) (powerline-cache) (frameset--id . "C052-2EA2-9127-C48A") (frameset--mini t . t) (width . 282) (modeline . t) (unsplittable) (left + -3848) (top + -8) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 67) (min-height-ignore . 3) (min-width-ignore . 12) (min-height-safe . 1) (min-width-safe . 6) (min-pixel-height . 76) (min-pixel-width . 603) (min-pixel-height-ignore . 57) (min-pixel-width-ignore . 108) (min-pixel-height-safe . 19) (min-pixel-width-safe . 54)) hc (pixel-width . 2560) (pixel-height . 1398) (total-width . 284) (total-height . 74) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 423) (pixel-height . 1398) (total-width . 47) (total-height . 74) (normal-height . 1.0) (normal-width . 0.16601562499999997) (parameters (window-side . left) (window-slot . 0)) (buffer " *Treemacs-Framebuffer-1*" (selected) (hscroll . 0) (fringes 8 8 nil) (margins nil) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated . t) (point . 2) (start . 1))) (hc (last . t) (pixel-width . 2137) (pixel-height . 1398) (total-width . 237) (total-height . 74) (normal-height . 1.0) (normal-width . 0.833984375) (combination-limit) (leaf (pixel-width . 1066) (pixel-height . 1398) (total-width . 118) (total-height . 74) (normal-height . 1.0) (normal-width . 0.5) (buffer "win_cmd" (selected . t) (hscroll . 0) (fringes 8 8 nil) (margins nil) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 314) (start . 1))) (leaf (last . t) (pixel-width . 1071) (pixel-height . 1398) (total-width . 119) (total-height . 74) (normal-height . 1.0) (normal-width . 0.5) (buffer "win_cmd" (selected) (hscroll . 0) (fringes 8 8 nil) (margins nil) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 314) (start . 1))))))])
+(setq desktop-saved-frameset [frameset 1 (25718 6617 606767 918000) (desktop . "208") "pimenov@dev-dsk-pimenov-1d-16222767.us-east-1.amazon.com" nil nil ((((minibuffer . t) (undecorated) (override-redirect) (font . "-PfEd-DejaVu Sans Mono-normal-normal-normal-*-16-*-*-*-m-0-iso10646-1") (font-parameter) (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#b2b2b2") (background-color . "#292b2e") (mouse-color . "#2c2c2c") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-special-glyphs) (scroll-bar-foreground . "#2c2c2c") (scroll-bar-background . "#d4d4d4") (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 50) (tool-bar-lines . 0) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha) (no-focus-on-map) (no-accept-focus) (fullscreen . maximized) (visibility . t) (skip-taskbar) (z-group) (display-type . color) (background-mode . dark) (cursor-color . "#e3dedd") (sticky) (environment) (powerline-cache) (last-focus-update) (frameset--id . "8DFF-FF33-3352-FA22") (frameset--mini t . t) (fullscreen-restore . maximized) (modeline . t) (unsplittable) (icon-name) (display . ":0") (explicit-name) (width . 190) (left . 0) (top . 27)) ((min-height . 4) (min-width . 20) (min-height-ignore . 3) (min-width-ignore . 8) (min-height-safe . 1) (min-width-safe . 4) (min-pixel-height . 76) (min-pixel-width . 200) (min-pixel-height-ignore . 57) (min-pixel-width-ignore . 80) (min-pixel-height-safe . 19) (min-pixel-width-safe . 40)) hc (pixel-width . 1920) (pixel-height . 932) (total-width . 192) (total-height . 49) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 960) (pixel-height . 932) (total-width . 96) (total-height . 49) (normal-height . 1.0) (normal-width . 0.5) (buffer ".emacs.d" (selected) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 1611) (start . 1)) (prev-buffers ("daily.org" 82730 83746) ("GapAnalysis.org" 6649 27947))) (leaf (last . t) (pixel-width . 960) (pixel-height . 932) (total-width . 96) (total-height . 49) (normal-height . 1.0) (normal-width . 0.5) (buffer "TA_shell" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 2433) (start . 526)) (prev-buffers (".emacs.d" 1 1611)))))])
 (setq desktop-missing-file-warning nil)
 (setq tags-file-name nil)
 (setq tags-table-list nil)
-(setq search-ring '("full" "helm-ac" "dired" "treema" "python" "g" "git" "git-bash"))
-(setq regexp-search-ring nil)
+(setq search-ring '(#("Call: attach" 0 12 (isearch-case-fold-search nil isearch-regexp-function nil)) #("===" 0 3 (isearch-case-fold-search t isearch-regexp-function nil)) #("=====" 0 5 (isearch-case-fold-search t isearch-regexp-function nil)) #("ij" 0 2 (isearch-case-fold-search t isearch-regexp-function nil)) #("--tests" 0 7 (isearch-case-fold-search t isearch-regexp-function nil)) #("Pazuzu" 0 6 (isearch-regexp-function nil isearch-case-fold-search nil)) #("mark" 0 4 (isearch-regexp-function nil isearch-case-fold-search t)) #("specific" 0 8 (isearch-regexp-function nil isearch-case-fold-search t)) #("f1" 0 2 (isearch-regexp-function nil isearch-case-fold-search t)) #("Return" 0 6 (isearch-case-fold-search nil isearch-regexp-function nil)) #("$la" 0 3 (isearch-case-fold-search t isearch-regexp-function nil)) #("BaseT" 0 5 (isearch-case-fold-search nil isearch-regexp-function nil)) #("browser.win" 0 11 (isearch-case-fold-search t isearch-regexp-function nil)) #("status" 0 6 (isearch-regexp-function nil isearch-case-fold-search t)) #("us" 0 2 (isearch-regexp-function nil isearch-case-fold-search t)) #("custom" 0 6 (isearch-regexp-function nil isearch-case-fold-search t))))
+(setq regexp-search-ring '(#("sour" 0 4 (isearch-case-fold-search t)) #("cr" 0 2 (isearch-case-fold-search t)) #("rde" 0 3 (isearch-case-fold-search t)) #("eval" 0 4 (isearch-case-fold-search t)) #("ex" 0 2 (isearch-case-fold-search t)) #("77" 0 2 (isearch-case-fold-search t)) #("su" 0 2 (isearch-case-fold-search t)) #("doc" 0 3 (isearch-case-fold-search t)) #("ful" 0 3 (isearch-case-fold-search t)) #("fu" 0 2 (isearch-case-fold-search t)) #("rd" 0 2 (isearch-case-fold-search t)) #("cr " 0 3 (isearch-case-fold-search t)) #("gk" 0 2 (isearch-case-fold-search t)) #("-i" 0 2 (isearch-case-fold-search t)) #("-p" 0 2 (isearch-case-fold-search t)) #("test" 0 4 (isearch-case-fold-search t))))
 (setq register-alist nil)
-(setq file-name-history '("~/.emacs.d/init.el" "~/.emacs.d/config.el" "~/.emacs.d/config.org" "d:/Installed_progs/Git/bin/bash.exe"))
+(setq file-name-history '("~/.zshrc" "~/IJ_ULTIMATE_HOME/idea-IU-212.5080.55/plugins/terminal/.zshrc" "~/IJ_ULTIMATE_HOME/idea-IU-212.5080.55/plugins/terminal/zsh/.zshrc" "~/Notes/daily.org" "~/Notes/highlights.org" "~/Notes/PaperCutsCatalog.org" "~/Notes/tickets/EC2MVPDev-6445.org" "/workplace/pimenov/pazuzu/src/Pazuzu/brazil-config/global/Pazuzu.cfg" "~/Notes/tickets/EC2MVPDev-6359.org" "~/Notes/tickets/EC2MVPDev-5845.org" "~/Notes/TODOs.org" "~/Notes/tickets/EC2MVPDev-5967.org" "~/.bashrc" "~/workplace/AB/ApprovalBouncerTools/src/ApprovalBouncerTools/bin/pull_dashboard.py" "~/Notes/tickets/EC2MVPDev-5366.org" "~/Notes/GovCloudOnCall.org" "~/Notes/GapAnalysis.org" "~/workplace/AB/ApprovalBouncerTools/src/ApprovalBouncerTools/bin/generate_wiki_dashboards.py" "~/Notes/tickets/EC2MVPDev-5855.org" "~/.aws/credentials~" "~/.aws/credentials_backup" "~/Notes/tickets/EC2MVPDev-5610/check_kms_keys.py" "~/Notes/tickets/EC2MVPDev-5610/get_key_descr.sh" "~/Notes/tickets/EC2MVPDev-5610/del_sched.sh" "~/Notes/tickets/EC2MVPDev-6035.org" "~/Notes/tickets/EC2MVPDev-6032.org" "~/Notes/tickets/EC2MVPDev-5610.org" "~/Notes/tickets/EC2MVPDev-6033.org" "~/Notes/notes.org" "/apollo/env/envImprovement/dotfiles/zshrc" "/apollo/env/envImprovement/var/zshrc" "~/GovCloudOnCall/11-21-2022/D63735206/StrongholdCanary/src/StrongholdCanary/resources/iam-policies/stronghold/cloudwatch-cross-account-sharing-trust-policy.json" "~/GovCloudOnCall/11-21-2022/D63735206/StrongholdCanary/src/StrongholdCanary/configuration/scripts/cli/cli-configure-account.sh" "~/.config/cr/preferences" "~/GovCloudOnCall/11-21-2022/D63735206/StrongholdCanary/src/StrongholdCanary/configuration/configs/stronghold/govcloud/account.json" "~/.config/rde/config.yml" "~/workplace/EMACS/EmacsAmazonLibs/src/Crisp/lisp/amz-crisp.el" "~/workplace/EMACS/EmacsAmazonLibs/src/Crisp/build/amz-crisp-20220927185903.tar" "~/workplace/EMACS/EmacsAmazonLibs/build/EmacsAmazonLibs/EmacsAmazonLibs-1.0/AL2_x86_64/DEV.STD.PTHREAD/build/emacs-amazon-libs-20220923000114.tar" "~/.oh-my-zsh/themes/fino.zsh-theme" "~/.oh-my-zsh/themes/pimenov.zsh-theme" "~/.oh-my-zsh/themes/robbyrussell.zsh-theme" "~/.config/fish/config.fish" "~/.bash_completion" "~/workplace/AB/PreApprovalInitiator/src/TaskArbiterPreApprovalInitiator/.rde/config.yaml" "~/workplace/AB/PreApprovalInitiator/src/TaskArbiterPreApprovalInitiator/definition.yaml" "~/workplace/AB/PreApprovalInitiator/src/TaskArbiterPreApprovalInitiatorTests/build.gradle" "~/workplace/AB/PreApprovalInitiator/src/TaskArbiterPreApprovalInitiatorTests/gradle.properties" "~/.gradle/gradle.properties" "~/GovCloudOnCall/11-15-2022/FOO/src/CMDBDumpsOpsTools/bin/read_access_logs.rb" "~/Notes/tickets/EC2MVPDev-5724.org" "~/Notes/tickets/EC2MVPDev-5894.org" "~/Notes/tickets/EC2MVPDev-5886.org" "~/workplace/AB/TaskArbiterService/src/TaskArbiterService/foo.patch" "~/workplace/AB/TaskArbiterService/src/TaskArbiterService/0001-Implement-DiodeReader.patch" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/task.smithy" "~/Notes/tickets/EC2MVPDev-5824.org" "~/Notes/tickets/EC2MVPDev-5713.org" "~/Notes/tickets/EC2MVPDev-5508.org" "~/Notes/tickets/EC2MVPDev-5468.org" "~/.aws/config" "~/workplace/PAI/src/TaskArbiterPreApprovalInitiatorCDK/Config" "~/workplace/PAI/src/TaskArbiterPreApprovalInitiatorCDK/package.json" "~/.gradle/init.gradle" "~/Desktop/H2L/reqid_53_pipeline_deployment_job.xsd" "~/Desktop/H2L/simpleSchema.xsd" "~/Desktop/H2L/generated/ObjectFactory.java" "~/Desktop/H2L/com/amazon/owt/pipelinev1/ObjectFactory.java" "~/Desktop/H2L/com/amazon/owt/pipelinev1/JobType.java" "~/Desktop/H2L/reqid_53_pipeline_deployment_job-12345.xml" "~/workplace/AB/TaskArbiterService/src/TaskArbiterService/Config" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceInternalModel/model/replicationevents.smithy" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceTests/src/main/java/com/amazon/taskarbiter/integtest/activities/TaskTest.java" "~/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/test/java/com/amazon/taskarbiter/meta/CheckImports.java" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/common.smithy" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/queue.smithy" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/metadata.smithy" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceInternalModel/model/main.smithy" "~/workplace/AB2FE/workspace.code-workspace" "~/GovCloudOnCall/6-6-2022/emissarylpt/src/EC2EmissaryCmdbRegionalLpt/lib/amazon/lpt/ec2emissary_lpt/iam.rb" "~/cr-description-template.txt" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/errors.smithy" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/validation.smithy" "~/GovCloudOnCall/2-16-2022/D39382509/application_definition.json" "~/workplace/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/main.smithy" "/workplace/pimenov/AB/TaskArbiterService/build/TaskArbiterService/TaskArbiterService-1.0/AL2_x86_64/DEV.STD.PTHREAD/build/private/generated/src/main/com/amazon/taskarbiter/metadata/store/ddb/AutoValue_MetadataIdentityRecord.java" "~/GovCloudOnCall/2-3-2022/D38664543/application_definition.json" "~/GovCloudOnCall/1-31-2022/D38448696/cancel_reservations_pdt.sh" "~/GovCloudOnCall/1-31-2022/D38448696/release_hosts_pdt.sh" "~/workplace/AB/TaskArbiterService/src/TaskArbiterService/.rde/config.yaml" "~/.npm/_logs/2022-01-12T21_18_47_357Z-debug.log" "~/.emacs.d/packages/smithy-mode.el" "/tmp/gk-qmle2z7w/report-CharybdisServiceLambda-1.0.txt" "/tmp/gk-rnitzuq9/report-CharybdisServiceLambdaTests-1.0.txt" "~/workplace/CHRBD/src/CharybdisServiceLambdaTests/Config" "~/workplace/CHRBD/build/CharybdisServiceLambda/CharybdisServiceLambda-1.0/AL2_x86_64/DEV.STD.PTHREAD/build/private/brazilpython-logs/5d1edbfe71bdd-18687/brazilpython-debug.log" "/workplace/pimenov/AB/TaskArbiterService/.rde/TaskArbiterService/logs/text/1636405166866219190.log" "~/.emacs.d/init.el" "~/Notes/LPIC-1.org"))
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
 (desktop-create-buffer 208
-  "c:/Users/opimenov.EDC-SP/Desktop/TODOS.org"
-  "TODOS.org"
-  'org-mode
-  '(helm-mode override-global-mode dired-async-mode indent-guide-mode auto-complete-mode projectile-mode org-indent-mode)
-  1
-  '(nil nil)
   nil
-  nil
-  '((indent-tabs-mode) (buffer-display-time) (buffer-file-coding-system . undecided-dos) (truncate-lines . t))
+  ".emacs.d"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode)
+  1611
+  '(1611 nil)
+  t
+  '("/home/pimenov/.emacs.d/")
+  '((buffer-display-time 25718 6586 348551 248000))
   '((mark-ring nil)))
 
 (desktop-create-buffer 208
-  "c:/Users/opimenov.EDC-SP/AppData/Roaming/.emacs.d/ac-comphist.dat"
-  "ac-comphist.dat"
+  "/home/pimenov/Notes/daily.org"
+  "daily.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  83746
+  '(79068 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25718 5831 984998 486000) (buffer-file-coding-system . undecided-unix) (truncate-lines . t))
+  '((mark-ring (79154 81070 80192 83202 83120 83109 83015 81181 81181 81181 81181 81181 81181 81181 81181 83746))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/GapAnalysis.org"
+  "GapAnalysis.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  27947
+  '(26493 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25718 5784 456547 500000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (22553 22484 22424 20459 12277 12195 11973 10259 10324 10520 8033 8101 12457 12457 22621 27947))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/notes.org"
+  "notes.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  96365
+  '(87189 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25694 35896 484196 486000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (93371 93033 92768 96365 1 96365 96332 87258 87174 92968 93519 92448 92902 96365 93121 93121))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/highlights.org"
+  "highlights.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  5372
+  '(5329 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25668 8353 510134 585000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (5617 5375 5677 5549 5435 5372 5329 5226 5714 5714 5714 5380 5714))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/MK_oncall/dairy.org"
+  "dairy.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  1
+  '(733 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25689 12677 896950 412000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (598 175 597 486 408 596 383 37 225 13 3 20 195 174 670))))
+
+(desktop-create-buffer 208
+  nil
+  "PaperCutsCatalogSigned"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  450
+  '(nil nil)
+  t
+  '("/home/pimenov/workplace/PaperCutsCatalog/src/PaperCutsCatalogSigned/")
+  '((buffer-display-time 25687 39188 457959 29000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "TaskArbiterService"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  2423
+  '(430 nil)
+  t
+  '("/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/")
+  '((buffer-display-time 25687 35690 293327 676000))
+  '((mark-ring (1 2423))))
+
+(desktop-create-buffer 208
+  nil
+  "ApprovalBouncerFrontendMonorepo"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  1539
+  '(1539 nil)
+  t
+  '("/home/pimenov/workplace/AB2FE/src/ApprovalBouncerFrontendMonorepo/")
+  '((buffer-display-time 25679 47828 558968 977000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "Notes"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode)
+  773
+  '(1 nil)
+  t
+  '("/home/pimenov/Notes/")
+  '((buffer-display-time 25672 7444 299756 222000))
+  '((mark-ring (1))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Desktop/PaperCutsCatalogToSign/demo_script.org"
+  "demo_script.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode flyspell-mode org-indent-mode)
+  1924
+  '(2872 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25672 7444 498889 90000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (2116 688 2024 1609 1573 1608 1417 903 96 1 32 95 96 161 234 1924))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/PaperCutsCatalog/src/PaperCutsCatalog/package.json"
+  "package.json"
+  'json-mode
+  '(helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  429
+  '(429 nil)
+  nil
+  nil
+  '((buffer-display-time 25657 27235 761224 849000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/workplace/pimenov/PaperCutsCatalog/src/EC2MVPGreasemonkey/README.md"
+  "README.md"
   'fundamental-mode
-  '(helm-mode override-global-mode dired-async-mode indent-guide-mode projectile-mode)
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode amz-package-mode amz-crisp-mode)
   1
   '(nil nil)
   nil
   nil
-  '((buffer-display-time) (buffer-file-coding-system . undecided-unix))
+  '((buffer-display-time 25646 23979 670254 106000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/PaperCutsCatalog.org"
+  "PaperCutsCatalog.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  3705
+  '(3702 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25654 23522 973458 101000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (2835 3649 2471 3602 574 445 301 442 188 261 115 85 160 3805 3805 1442))))
+
+(desktop-create-buffer 208
+  nil
+  "EC2MVPGreasemonkey"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  1213
+  '(1 nil)
+  t
+  '("/workplace/pimenov/PaperCutsCatalog/src/EC2MVPGreasemonkey/")
+  '((buffer-display-time 25646 44762 416195 763000))
+  '((mark-ring (1 1 1 1 1 1 1))))
+
+(desktop-create-buffer 208
+  "/workplace/pimenov/PaperCutsCatalog/src/EC2MVPGreasemonkey/Config"
+  "Config"
+  'perl-mode
+  '(helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode amz-package-mode amz-crisp-mode)
+  696
+  '(1004 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25646 24037 392958 460000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring (1188))))
+
+(desktop-create-buffer 208
+  nil
+  "EC2MVPGreasemonkey"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  264
+  '(nil nil)
+  t
+  '("/home/pimenov/workplace/PaperCutsCatalog/src/EC2MVPGreasemonkey/")
+  '((buffer-display-time 25642 38530 3897 378000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/MK_oncall/howto.org"
+  "howto.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  1977
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25636 7106 258496 885000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (953 3080 25 289 670 670 670 1054 1133 1209 1385 1386 1509 3394 903 1977))))
+
+(desktop-create-buffer 208
+  nil
+  "MK_oncall"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode)
+  227
+  '(nil nil)
+  t
+  '("/home/pimenov/MK_oncall/")
+  '((buffer-display-time 25633 10140 561412 676000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "pimenov"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode)
+  3566
+  '(nil nil)
+  t
+  '("/home/pimenov/")
+  '((buffer-display-time 25633 9962 20373 56000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "PaperCutsCatalogCDK"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  904
+  '(1 nil)
+  t
+  '("/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogCDK/")
+  '((buffer-display-time 25633 10149 398218 556000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "PaperCutsCatalogSigned"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  2800
+  '(1 nil)
+  t
+  '("/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/private/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/private/tmp/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/private/tmp/brazil-path/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/private/tmp/brazil-path/path-cache/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/version/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/build/version/1.0/" "/workplace/pimenov/PaperCutsCatalog/src/PaperCutsCatalogSigned/configuration/")
+  '((buffer-display-time 25628 21124 637508 552000))
+  '((mark-ring (1 1 1 1 1 1 1 1))))
+
+(desktop-create-buffer 208
+  nil
+  "Desktop"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode)
+  456
+  '(nil nil)
+  t
+  '("/home/pimenov/Desktop/")
+  '((buffer-display-time 25628 19312 654821 591000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/tickets/EC2MVPDev-5610/EC2MVPDev-5610.org"
+  "EC2MVPDev-5610.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  24109
+  '(24121 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25624 37091 824761 67000) (buffer-file-coding-system . undecided-unix) (truncate-lines . t))
+  '((mark-ring (38))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/tickets/EC2MVPDev-5610/get_key_descr.sh"
+  "get_key_descr.sh"
+  'sh-mode
+  '(helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode)
+  360
+  '(1 nil)
+  nil
+  nil
+  '((buffer-display-time 25610 55763 97160 357000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "EC2MVPDev-5610"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode)
+  1072
+  '(nil nil)
+  t
+  '("/home/pimenov/Notes/tickets/EC2MVPDev-5610/")
+  '((buffer-display-time 25610 55582 274666 619000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/tickets/EC2MVPDev-5366.org"
+  "EC2MVPDev-5366.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  3446
+  '(2673 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25608 9948 791657 122000) (buffer-file-coding-system . undecided-unix) (truncate-lines . t))
+  '((mark-ring (3403 3487 3325 3231 2642 3210 1 3486 3486))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/tickets/EC2MVPDev-5845.org"
+  "EC2MVPDev-5845.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  457
+  '(458 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25600 43201 454319 476000) (buffer-file-coding-system . undecided-unix) (truncate-lines . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  nil
+  "TaskArbiterCDK"
+  'dired-mode
+  '(helm-mode override-global-mode dired-async-mode amz-package-mode amz-crisp-mode)
+  259
+  '(nil nil)
+  t
+  '("/workplace/pimenov/TAS_CDK/src/TaskArbiterCDK/")
+  '((buffer-display-time 25598 64944 717267 720000))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/tickets/EC2MVPDev-6032.org"
+  "EC2MVPDev-6032.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  7184
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25596 33929 662465 970000) (buffer-file-coding-system . undecided-unix) (truncate-lines . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/TODOs.org"
+  "TODOs.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  15
+  '(15 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25591 2521 318875 658000) (buffer-file-coding-system . undecided-unix) (truncate-lines . t))
+  '((mark-ring (585 1049 582 520 473 429 87 15 15 1050 15 1051 1 1051 1051 1051))))
+
+(desktop-create-buffer 208
+  "/workplace/pimenov/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/task.smithy"
+  "task.smithy"
+  'smithy-mode
+  '(helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode amz-package-mode amz-crisp-mode)
+  3250
+  '(3259 nil)
+  nil
+  nil
+  '((buffer-display-time 25589 64771 258549 974000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/workplace/pimenov/AB/TaskArbiterService/src/TaskArbiterServiceModel/model/resources/queue.smithy"
+  "queue.smithy"
+  'smithy-mode
+  '(helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode amz-package-mode amz-crisp-mode)
+  1
+  '(837 nil)
+  nil
+  nil
+  '((buffer-display-time 25589 64771 384751 48000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring (739 813 952))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/Notes/tickets/EC2MVPDev-6359.org"
+  "EC2MVPDev-6359.org"
+  'org-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode org-indent-mode)
+  635
+  '(73 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25589 288 983373 27000) (buffer-file-coding-system . utf-8-unix) (truncate-lines . t))
+  '((mark-ring (633 1 40 59 634 635 541 603 632 635))))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/test/java/com/amazon/taskarbiter/metadata/interactor/UpdateApplicabilityDetectorTest.java"
+  "UpdateApplicabilityDetectorTest.java"
+  'java-mode
+  '(abbrev-mode helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode amz-package-mode amz-crisp-mode)
+  7514
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25657 23211 854587 995000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/main/java/com/amazon/taskarbiter/metadata/store/ddb/MetadataKeyComposer.java"
+  "MetadataKeyComposer.java"
+  'java-mode
+  '(abbrev-mode helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  16344
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25657 23212 29205 428000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/main/java/com/amazon/taskarbiter/metadata/interactor/MetadataStore.java"
+  "MetadataStore.java"
+  'java-mode
+  '(abbrev-mode helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  11847
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25657 23212 151311 16000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/test/java/com/amazon/taskarbiter/adapter/coral/activity/MetadataActivityWithRealStoreTest.java"
+  "MetadataActivityWithRealStoreTest.java"
+  'java-mode
+  '(abbrev-mode helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  97662
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25657 23212 414577 754000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/test/java/com/amazon/taskarbiter/workers/tasksweeper/TaskSweeperModuleTest.java"
+  "TaskSweeperModuleTest.java"
+  'java-mode
+  '(abbrev-mode helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  1277
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25657 23212 559177 400000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/PaperCutsCatalog/src/PaperCutsCatalog/src/table-row-component.tsx"
+  "table-row-component.tsx"
+  'fundamental-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode amz-package-mode amz-crisp-mode)
+  1909
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 25677 21712 342444 355000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/PaperCutsCatalog/src/PaperCutsCatalog/src/App.tsx"
+  "App.tsx"
+  'fundamental-mode
+  '(helm-mode override-global-mode dired-async-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  6896
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 25677 21712 461298 471000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/PaperCutsCatalog/src/PaperCutsCatalog/config/dca/config.json"
+  "config.json"
+  'json-mode
+  '(helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  261
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 25677 21712 609474 515000) (buffer-file-coding-system . undecided-unix))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/pimenov/workplace/AB/TaskArbiterService/src/TaskArbiterService/src/main/java/com/amazon/taskarbiter/metadata/store/ddb/DetachOperation.java"
+  "DetachOperation.java"
+  'java-mode
+  '(abbrev-mode helm-mode override-global-mode dired-async-mode rainbow-mode indent-guide-mode smerge-mode amz-package-mode amz-crisp-mode)
+  7993
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 25690 42202 70507 375000) (buffer-file-coding-system . undecided-unix))
   '((mark-ring nil)))
 

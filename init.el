@@ -46,31 +46,34 @@
  ;; If there is more than one, they won't work right.
  '(ac-ispell-fuzzy-limit 3)
  '(ac-ispell-requires 3)
- '(custom-enabled-themes (quote (spacemacs-dark)))
+ '(custom-enabled-themes '(spacemacs-dark))
  '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(debug-on-error t)
  '(display-time-mode t)
  '(electric-pair-mode t)
+ '(find-name-arg "-name")
  '(js-expr-indent-offset 0)
  '(line-number-mode nil)
- '(org-agenda-files (quote ("C:/Users/opimenov.EDC-SP/Desktop/TODOS.org")))
+ '(magit-log-section-commit-count 20)
+ '(menu-bar-mode nil)
+ '(org-agenda-files nil)
  '(package-selected-packages
-   (quote
-    (csharp-mode web-mode ac-helm helm-ac-php-apropos ac-php company-php php-mode yaml-mode company-c-headers flycheck-clang-analyzer flycheck yasnippet-snippets yasnippet dashboard xkcd diminish htmlize rainbow-mode switch-window sunrise-x-modeline sunrise-x-buttons sunrise-commander spaceline ox-twbs avy ac-ispell helm-projectile jedi company-jedi pretty-mode company-irony company s expand-region rainbow-delimiters rainbow-delimeters multiple-cursors indent-guide eshell-up powerline log4j-mode magit helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package)))
- '(python-shell-exec-path (quote ("C:/Python37")))
+   '(mines minesweeper amz-common amz-crisp straight emacs-amazon-libs color-theme-buffer-local format-all "/home/pimenov/workplace/EMACS/EmacsAmazonLibs/src/EmacsAmazonLibs/build/emacs-amazon-libs-20220223131255.tar" json-mode typescript-mode treemacs-projectile treemacs-icons-dired treemacs-all-the-icons treemacs speedbar-git-respect jtags meghanada java-imports nameframe-projectile projectile csharp-mode web-mode ac-helm helm-ac-php-apropos ac-php company-php php-mode yaml-mode company-c-headers flycheck-clang-analyzer flycheck yasnippet-snippets yasnippet dashboard xkcd diminish htmlize rainbow-mode switch-window sunrise-x-modeline sunrise-x-buttons sunrise-commander spaceline ox-twbs avy ac-ispell helm-projectile jedi company-jedi pretty-mode company-irony company s expand-region rainbow-delimiters rainbow-delimeters multiple-cursors indent-guide eshell-up powerline log4j-mode magit helm-config helm-swoop helm dired-sidebar org-bullets beacon spacemacs-theme dracula-theme which-key use-package))
+ '(python-shell-exec-path '("C:/Python37"))
  '(python-shell-interpreter "C:/Python37/python")
- '(send-mail-function (quote mailclient-send-it))
+ '(send-mail-function 'mailclient-send-it)
  '(tool-bar-mode nil)
  '(treemacs-collapse-dirs 0)
- '(whitespace-style (quote (face tabs lines-tail newline empty))))
+ '(whitespace-style
+   '(face trailing tabs spaces lines-tail newline empty indentation::tab big-indent space-mark) t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "Consolas")))))
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "PfEd" :family "DejaVu Sans Mono")))))
 
 (put 'erase-buffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)

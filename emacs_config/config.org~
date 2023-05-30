@@ -1,0 +1,996 @@
+#+TITLE: EMACS CONFIG
+#+AUTHOR: Alex Pimenov
+[[https://github.com/Opimenov/emacs_config/blob/master/config.org][Github source]]
+config.org --- Emacs configuration file in org mode format. 
+* General setup
+** Collection of packages and configs that I use
+#+BEGIN_SRC emacs-lisp
+;; Tell emacs where is your personal elisp lib dir
+(add-to-list 'load-path "~/.emacs.d/packages/")
+;;macro for setting custom variables
+(defmacro csetq (variable value)
+  `(funcall (or (get ',variable 'custom-set)
+                'set-default)
+            ',variable ,value))
+#+END_SRC
+** Set package repository
+ This needs to be in init.el Otherwise nothing works.
+ There are few public repositories of Emacs packages.
+ If you are running this from the work computer some may not work. 
+ melpa will be there for sure.
+#+BEGIN_SRC emacs-lisp
+   (require 'package)
+   (setq package-enable-at-startup nil)
+   (setq package-archives '(("ELPA"  . "http://tromey.com/elpa/")
+   			 ("gnu"   . "http://elpa.gnu.org/packages/")
+   			 ("melpa" . "https://melpa.org/packages/")
+   			 ("org"   . "https://orgmode.org/elpa/")
+   			 ("SC"    . "http://joseito.republika.pl/sunrise-commander/")))
+   (package-initialize)
+#+END_SRC
+** Use-package package. 
+ Nice package that simplifies package installation
+#+BEGIN_SRC emacs-lisp
+   (unless (package-installed-p 'use-package)
+     (package-refresh-contents)
+     (package-install 'use-package))
+#+END_SRC
+** Better looking theme
+ there is a flavor of Emacs called spacemacs, 
+ that uses space key instead of Ctrl. From what
+ I could gather it is clunky, but the theme is nice.
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'spacemacs-theme)
+   (package-refresh-contents)
+   (package-install 'spacemacs-theme))
+#+END_SRC
+** Multiple Cursors
+No need to describe this feature. Everybody knows it. Maybe not.
+It allows you to have as many cursors on the screen as your 
+CPU+GPU+Your-Head can handle. Allows you to use Dark Magic. 
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors
+  :ensure t
+  :config
+     (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+     (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+     (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+     (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+     (define-key mc/keymap (kbd "<return>") nil))
+#+END_SRC
+** Exit using C-g only if no macro definition is going on
+#+BEGIN_SRC emacs-lisp
+(defun keyboard-quit-only-if-no-macro ()
+  (interactive)
+  (if defining-kbd-macro
+      (progn
+        (if (region-active-p)
+            (deactivate-mark)
+          (message "Macro running. Can't quit.")))
+
+    (keyboard-quit)))
+
+(define-key global-map (kbd "C-g") 'keyboard-quit-only-if-no-macro)
+#+END_SRC
+** Helm - better looking interactive buffer for common actions
+;;Helm is modified help buffer. It attaches itself to a lot of actions
+;;in Emacs environment and create more functional and better looking
+;;help buffers. 
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :init
+    (helm-mode 1))
+
+  ;;install package first
+  (use-package helm-swoop
+    :ensure t
+    :config
+       (global-set-key (kbd "M-x") 'helm-M-x)
+       (global-set-key (kbd "M-i") 'helm-swoop);;helm search
+       (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
+       (global-set-key (kbd "C-x C-f") 'helm-find-files);;find stuff quickly
+       (global-set-key (kbd "C-c f f") 'helm-projectile)
+       (global-set-key (kbd "C-c g") 'helm-projectile-grep)
+       (global-set-key (kbd "C-c i") 'helm-imenu)) ;;go to function name quickly
+#+END_SRC
+** Terminal
+*** Setting default shell to bash
+#+BEGIN_SRC emacs-lisp
+  (setq explicit-shell-file-name "D:/Cygwin/bin/bash.exe")
+  (setq shell-file-name "bash")
+  (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
+  (setenv "SHELL" shell-file-name)
+  (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
+
+  (defvar my-term-shell "D:/Cygwin/bin")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+   (ad-activate 'ansi-term)
+  ;;git bash
+  (defun git-bash () (interactive)
+    (let ((explicit-shell-file-name "d:/Installed_progs/Git/bin/bash.exe"))
+      (call-interactively 'shell)
+      (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))))
+
+
+  ;;windows cmd
+  (defun win-cmd () (interactive)
+    (let ((explicit-shell-file-name "c:/Windows/system32/cmd.exe"))
+      (call-interactively 'shell)))
+
+  (prefer-coding-system 'utf-8)
+
+#+END_SRC
+*** Binding keys to launch shell
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<C-return>") 'eshell)
+;;startup shell on boot
+;;(eshell)
+#+END_SRC
+** Org
+*** Common settings
+#+BEGIN_SRC emacs-lisp
+(setq org-ellipsis " ")
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-confirm-babel-evaluate nil)
+(setq org-export-with-smart-quotes t)
+(setq org-src-window-setup 'current-window)
+(add-hook 'org-mode-hook 'org-indent-mode)
+#+END_SRC
+*** Agenda
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files (list "C:/Users/opimenov.EDC-SP/Desktop/TODOS.org"))
+  (global-set-key (kbd "C-c s l") 'org-store-link)
+  (global-set-key (kbd "C-c o a") 'org-agenda)
+  (setq org-log-done t)
+#+END_SRC
+*** Easy to add emacs list template
+Hitting tab after an “<el” in an org-mode file will create a template for elisp insertion.
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-structure-template-alist
+       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+#+END_SRC
+*** Export html syntax highlighting
+#+BEGIN_SRC emacs-lisp
+(use-package htmlize
+  :ensure t)
+#+END_SRC
+*** Org Bullets
+   Better bullets in org mode
+#+BEGIN_SRC emacs-lisp
+   (use-package org-bullets
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+*** auto  timestamp insertion on DONE
+#+BEGIN_SRC emacs-lisp
+ (setq org-log-done 'time)
+#+END_SRC
+*** added WAITING state to item status
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+      (quote ((sequence "TODO(t)" "IN_PRGRESS(p)" "WAITING(w)" "DONE(d)"))))
+(setq org-log-done t)
+#+END_SRC
+*** better html exporter, twitter bootstrap
+#+BEGIN_SRC emacs-lisp
+(use-package ox-twbs
+  :ensure t)
+#+END_SRC
+
+*** beamer
+add LaTeX to Emacs exec path
+#+BEGIN_SRC emacs-lisp
+(setenv "PATH" (concat (getenv "PATH") ":D:/Installed_progs/MiKTex/"))
+    (setq exec-path (append exec-path '("D:/Installed_progs/MiKTex/")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ; allow for export=>beamer by placing
+
+  ;; #+LaTeX_CLASS: beamer in org files
+  (unless (boundp 'org-export-latex-classes)
+    (setq org-export-latex-classes nil))
+  (add-to-list 'org-export-latex-classes
+    ;; beamer class, for presentations
+    '("beamer"
+       "\\documentclass[11pt]{beamer}\n
+        \\mode<{{{beamermode}}}>\n
+        \\usetheme{{{{beamertheme}}}}\n
+        \\usecolortheme{{{{beamercolortheme}}}}\n
+        \\beamertemplateballitem\n
+        \\setbeameroption{show notes}
+        \\usepackage[utf8]{inputenc}\n
+        \\usepackage[T1]{fontenc}\n
+        \\usepackage{hyperref}\n
+        \\usepackage{color}
+        \\usepackage{listings}
+        \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
+    frame=single,
+    basicstyle=\\small,
+    showspaces=false,showstringspaces=false,
+    showtabs=false,
+    keywordstyle=\\color{blue}\\bfseries,
+    commentstyle=\\color{red},
+    }\n
+        \\usepackage{verbatim}\n
+        \\institute{{{{beamerinstitute}}}}\n          
+         \\subject{{{{beamersubject}}}}\n"
+
+       ("\\section{%s}" . "\\section*{%s}")
+     
+       ("\\begin{frame}[fragile]\\frametitle{%s}"
+         "\\end{frame}"
+         "\\begin{frame}[fragile]\\frametitle{%s}"
+         "\\end{frame}")))
+
+    ;; letter class, for formal letters
+
+    (add-to-list 'org-export-latex-classes
+
+    '("letter"
+       "\\documentclass[11pt]{letter}\n
+        \\usepackage[utf8]{inputenc}\n
+        \\usepackage[T1]{fontenc}\n
+        \\usepackage{color}"
+     
+       ("\\section{%s}" . "\\section*{%s}")
+       ("\\subsection{%s}" . "\\subsection*{%s}")
+       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+END_SRC
+*** python support
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
+#+END_SRC
+** Editing convenience
+*** Pretty unicode characters
+#+BEGIN_SRC emacs-lisp
+(use-package pretty-mode
+    :ensure t
+    :config
+    (global-pretty-mode 1))
+#+END_SRC
+*** Switch between left and right buffers  
+#+BEGIN_SRC emacs-lisp
+;; use bind-key package to override major mode key maps
+(bind-key*  "C-," 'windmove-left)
+(bind-key*  "C-." 'windmove-right)
+(bind-key*  "M-P" 'windmove-up)
+(bind-key*  "M-N" 'windmove-down)
+#+END_SRC
+*** Fix tramp invalid base 64 data error
+#+BEGIN_SRC emacs-lisp
+(setq tramp-copy-size-limit nil)
+(setq tramp-inline-compress-start-size nil)
+#+END_SRC
+*** Prevent emacs from autosaving and cluttering source folders
+Place all backup files in one folder, just in case.
+#+BEGIN_SRC emacs-lisp
+;;(setq auto-save-default nil) might not be a good idea after all.
+(setq backup-directory-alist '(("." . "~/MyEmacsBackups")))
+;;(setq make-backup-file nil)
+#+END_SRC
+*** Start emacs in fullscreen mode
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+END_SRC
+*** Async
+Lets us use asynchronous processes wherever possible, pretty usefull
+#+BEGIN_SRC emacs-lisp
+(use-package async
+ :ensure t
+ :init (dired-async-mode 1))
+#+END_SRC
+*** No Tabs
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+END_SRC   
+*** Easy selection of logical region and kill entire word
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
+
+(defun alex_commands_to_kill_this_word ()
+  "Kills the entire word your cursor is in."
+  (interactive)
+  (forward-char 1)
+  (backward-word)
+  (kill-word 1))
+(global-set-key (kbd "C-c w k") 'alex_commands_to_kill_this_word)
+#+END_SRC
+*** Copy a word
+#+BEGIN_SRC emacs-lisp
+(defun alex_commads_to_copy_whole_word ()
+  (interactive)
+  (save-excursion 
+    (forward-char 1)
+    (backward-word)
+    (kill-word 1)
+    (yank)))
+(global-set-key (kbd "C-c w c") 'alex_commads_to_copy_whole_word)
+#+END_SRC
+*** Copy a line
+#+BEGIN_SRC emacs-lisp
+(defun daedreth/copy-whole-line ()
+  "Copies a line without regard for cursor position."
+  (interactive)
+  (save-excursion
+    (kill-new
+     (buffer-substring
+      (point-at-bol)
+      (point-at-eol)))))
+(global-set-key (kbd "C-c l c") 'daedreth/copy-whole-line)
+#+END_SRC
+*** Kill a line
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c l k") 'kill-whole-line)
+#+END_SRC
+*** Vistit confi gfile
+#+BEGIN_SRC emacs-lisp
+(defun config-visit ()
+  (interactive)
+  (find-file "~/.emacs.d/config.org"))
+(global-set-key (kbd "C-c e") 'config-visit)
+#+END_SRC
+*** Reload configuration file
+#+BEGIN_SRC emacs-lisp
+(defun config-reload ()
+  "Reloads ~/.emacs.d/config.org at runtime"
+  (interactive)
+  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+(global-set-key (kbd "C-c r") 'config-reload) 
+#+END_SRC
+*** Rainbow delimeters
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (rainbow-delimiters-mode 1))
+
+(use-package rainbow-mode
+  :ensure t
+  :init
+    (add-hook 'prog-mode-hook 'rainbow-mode))
+#+END_SRC
+*** Winner Mode
+   Winner Mode is a global minor mode. When activated, it allows you
+   to “undo” (and “redo”) changes in the window configuration with
+   the key commands ‘C-c left’ and ‘C-c right’
+#+BEGIN_SRC emacs-lisp
+(when (fboundp 'winner-mode)
+   (winner-mode 1))
+#+END_SRC
+   
+*** Vertical indentation guide 
+#+BEGIN_SRC emacs-lisp
+(use-package indent-guide
+  :ensure t
+  :init
+  (indent-guide-global-mode))
+#+END_SRC
+   
+*** Powerline is a better looking status bar at the bottom.
+#+BEGIN_SRC emacs-lisp
+  ;;do not touch
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+           (use-package spaceline
+             :ensure t
+             :config
+             (require 'spaceline-config)
+               (setq spaceline-buffer-encoding-abbrev-p nil)
+               (setq spaceline-line-column-p nil)
+               (setq spaceline-line-p nil)
+               (setq powerline-default-separator nil)
+               ;;(spaceline-spacemacs-theme)
+               (powerline-center-theme))
+
+          ;; (use-package powerline
+          ;;  :ensure t
+          ;;  :config
+          ;;  (setq powerline-default-separator nil)
+          ;;  (powerline-center-theme))
+    ;;  (use-package smart-mode-line
+    ;;       :ensure t)
+    ;;  (setq powerline-default-separator nil)
+    ;;  (sml/setup)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#+END_SRC
+   
+*** Simplify interaction 
+#+BEGIN_SRC emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+*** Editing convenience improvements
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+(setq ring-bell-function 'ignore)
+(when window-system (global-hl-line-mode t))
+(when window-system (global-prettify-symbols-mode t))
+;;highlight cursor line on buffer opening
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode -1))
+#+END_SRC
+
+*** Remove toolbar, menu, scrollbar, startup screen, line numbers
+#+BEGIN_SRC emacs-lisp
+  ;;clean up GUI GARBAGE
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-linum-mode -1)
+  (linum-mode -1)
+  (setq inhibit-startup-screen t
+      initial-buffer-choice  nil)
+
+#+END_SRC
+*** Key bindings help display. Currently disabled.
+#+BEGIN_SRC emacs-lisp
+;;(use-package which-key
+;;  :ensure t
+;;  :init
+;;  (which-key-mode))
+#+END_SRC
+*** enable electric pair mode by default
+#+BEGIN_SRC emacs-lisp
+(electric-pair-mode 1)
+#+END_SRC   
+*** desktop save mod
+   Preserves your buffers across emacs sessions.
+#+BEGIN_SRC emacs-lisp
+(desktop-save-mode 1)
+#+END_SRC      
+*** jump to visible quickly
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+   :ensure t
+   :config
+    (global-set-key (kbd "M-s") 'avy-goto-char))
+#+END_SRC
+
+** Diff icult to set up. Visual interface for diff and patches
+#+BEGIN_SRC emacs-lisp
+  ;;if you are on Linux 
+  ;;(use-package ediff
+  ;;   :ensure t
+  ;;   :init)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;if you are on WINDOUZZZZZ OS. Good luck.
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; download cygwin-mount and setup-cygwin to "D:/Cygwin/bin"
+  ;; if you don't have a D drive or want to have it some place
+  ;; else you'll need to replace the path. Search for the path
+  ;; that I have and replace it.
+  ;; Do you feel lucky today? try leaving package extensions.
+  ;; best not to include the ending “.el” or “.elc” 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; COMMENT OUT THE REST OF THE SET UP
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  (load "cygwin-mount")
+;;  (load "setup-cygwin")
+
+;;  (setenv "PATH" (concat ":D:/Cygwin/bin;" (getenv "PATH")))
+;;  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
+  (setenv "PATH" (concat ":D:/Installed_progs/Git/bin;" (getenv "PATH")))
+  (setq exec-path (cons "D:/Installed_progs/Git/bin" exec-path))
+;;  (require 'cygwin-mount)
+;;  (cygwin-mount-activate)
+
+  (csetq ediff-split-window-function 'split-window-horizontally)
+  (csetq ediff-diff-options "-w")
+  (csetq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+  ;; (winner-mode 1)
+  ;; (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+
+#+END_SRC
+** Origami - text folging support
+****  Install dependecies first
+***** string manipulation package
+#+BEGIN_SRC emacs-lisp
+   (use-package s
+     :ensure t
+     :init)
+#+END_SRC
+***** list api package
+#+BEGIN_SRC emacs-lisp
+   (use-package dash
+     :ensure t
+     :init)
+#+END_SRC
+***** make Emacs aware of origami package
+#+BEGIN_SRC emacs-lisp
+   (add-to-list 'load-path (expand-file-name "~/.emacs.d/packages/"))
+   (require 'origami)
+#+END_SRC
+***** TODO define key map for ease of use
+(global-set-key (kbd "C-c o o") 'origami-open-node)
+(global-set-key (kbd "C-c o c") 'origami-close-node)
+** Font
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :family "Consolas" :height 120)
+#+END_SRC
+** helm-swoop for compilation errors
+  one little annoyance is that buffer needs to be cleared before. Otherwise
+  you will catch previous errors too. Possible work around is to use compile
+  command or what I do is to define a macro to call Ashlee\clear and then compile
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
+#+END_SRC
+  star compile
+#+BEGIN_SRC emacs-lisp
+  ;; (fset 'build-and-push-rs
+  ;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([7 3 134217839 46 47 83 116 97 114 66 117 105 108 100 80 117 115 104 46 98 97 116] 0 "%d")) arg)))
+  ;; (global-set-key (kbd "C-c s") 'build-and-push-rs)   
+  ;;(fset 'star-build
+  ;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
+#+END_SRC
+** Magit - nice git package
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+   :ensure t
+   :init
+   :config
+(global-set-key (kbd "C-x g") 'magit-status)
+(magit-auto-revert-mode -1))
+;;there are multiple git versions installed so lets point to this one 
+(setq magit-git-executable "d:/Installed_progs/Git/bin/git.exe")
+#+END_SRC
+** Spelling correction
+  #+BEGIN_SRC emacs-lisp
+(setq ispell-alternate-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
+(setq ispell-program-name "aspell")
+(use-package ac-ispell
+   :ensure t
+   :init)
+  ;; Completion words longer than 4 characters
+    (custom-set-variables
+      '(ac-ispell-requires 3)
+      '(ac-ispell-fuzzy-limit 3))
+
+    (eval-after-load "auto-complete"
+      '(progn
+          (ac-ispell-setup)))
+
+    (add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
+    (add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
+    (add-hook 'org-mode-hook 'ac-ispell-ac-setup)
+     (use-package helm-flyspell
+       :ensure t
+       :config
+       (global-set-key (kbd "C-:") 'helm-flyspell-correct))
+
+#+END_SRC   
+** If you ever want to find nice shortcuts 
+ just type <which-key-show-keymap> 
+ then look for your mode, press Enter.
+ To keep that buffer press C-h
+ If you don't know any keyboard shortcut
+ you can enable which-key-mode to give you hints.
+ I don't like it, but you may. To do so M-x which-key-mode
+ enables the mode. Then you can press C-h to get info.
+
+** Clock
+#+BEGIN_SRC emacs-lisp
+  ;;(setq display-time-24hr-format t)
+  ;;(setq display-time-format "%H:%M - %d %B %Y")
+
+  (display-time-mode nil)
+#+END_SRC
+** Switch windows
+#+BEGIN_SRC emacs-lisp
+(use-package switch-window
+  :ensure t
+  :config
+    (setq switch-window-input-style 'minibuffer)
+    (setq switch-window-increase 4)
+    (setq switch-window-threshold 2)
+    (setq switch-window-shortcut-style 'qwerty)
+    (setq switch-window-qwerty-shortcuts
+        '("a" "s" "d" "f" "j" "k" "l" "i" "o"))
+  :bind
+    ([remap other-window] . switch-window))
+#+END_SRC
+** Following window splits
+#+BEGIN_SRC emacs-lisp
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
+** Always kill current buffer
+#+BEGIN_SRC emacs-lisp
+(defun kill-current-buffer ()
+  "Kills the current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
+(global-set-key (kbd "C-c k k") 'kill-current-buffer)
+#+END_SRC
+** Kill all buffers, the danger zone
+#+BEGIN_SRC emacs-lisp
+(defun close-all-buffers ()
+  "Kill all buffers without regard for their origin."
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+(global-set-key (kbd "C-M-S-k") 'close-all-buffers)
+#+END_SRC
+** Diminishing Modes
+ Prevents minor modes from showing up in poweline
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t
+    :init
+    (diminish 'which-key-mode)
+    (diminish 'linum-relative-mode)
+    (diminish 'hungry-delete-mode)
+    (diminish 'visual-line-mode)
+    (diminish 'subword-mode)
+    (diminish 'beacon-mode)
+    (diminish 'irony-mode)
+    (diminish 'page-break-lines-mode)
+    (diminish 'auto-revert-mode)
+    (diminish 'rainbow-delimiters-mode)
+    (diminish 'rainbow-mode)
+    (diminish 'helm-mode)
+    (diminish 'projectile-mode)
+    (diminish 'follow-mode)
+    (diminish 'yas-minor-mode)
+    (diminish 'abbrev-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'text-scale-mode)
+    (diminish 'indent-guide-mode)
+    (diminish 'follow-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'auto-complete-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'text-scale-mode)
+    (diminish 'company-mode)
+    (diminish 'org-indent-mode)
+    (diminish 'scroll-all-mode)
+    (diminish 'whitespace-mode)
+    (diminish 'subword-mode)
+    (diminish 'projectile-mode)
+)
+#+END_SRC
+** Treemacs file explorer
+#+BEGIN_SRC emacs-lisp
+  (setq treemacs-python-executable "C:/Python37/python")
+           (use-package treemacs
+             :ensure t
+             :defer t
+             :init
+             (with-eval-after-load 'winum
+               (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+             :config
+             (progn
+               (setq treemacs-collapse-dirs (if (executable-find "python") 3 0)
+                     treemacs-deferred-git-apply-delay   0.5
+                     treemacs-display-in-side-window     t
+                     treemacs-file-event-delay           5000
+                     treemacs-file-follow-delay          0.2
+                     treemacs-follow-after-init          t
+                     treemacs-follow-recenter-distance   0.1
+                     treemacs-git-command-pipe           ""
+                     treemacs-goto-tag-strategy          'refetch-index
+                     treemacs-indentation                2
+                     treemacs-indentation-string         " "
+                     treemacs-is-never-other-window      nil
+                     treemacs-max-git-entries            5000
+                     treemacs-no-png-images              nil
+                     treemacs-no-delete-other-windows    t
+                     treemacs-project-follow-cleanup     nil
+                     treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+                     treemacs-recenter-after-file-follow nil
+                     treemacs-recenter-after-tag-follow  nil
+                     treemacs-show-cursor                t
+                     treemacs-show-hidden-files          t
+                     treemacs-silent-filewatch           nil
+                     treemacs-silent-refresh             nil
+                     treemacs-sorting                    'alphabetic-desc
+                     treemacs-space-between-root-nodes   nil
+                     treemacs-tag-follow-cleanup         t
+                     treemacs-tag-follow-delay           1.5
+                     treemacs-width                      35)
+
+                ;; The default width and height of the icons is 22 pixels. If you are
+                ;;        using a Hi-DPI display, uncomment this to double the icon size.
+                      (treemacs-resize-icons 44)
+
+               (treemacs-follow-mode t)
+               (treemacs-filewatch-mode t)
+               (treemacs-fringe-indicator-mode t)
+               (pcase (cons (not (null (executable-find "git")))
+                             (not (null (executable-find "python"))))
+                  (`(t . t)
+                   (treemacs-git-mode 'deferred))
+                  (`(t . _)
+                   (treemacs-git-mode 'simple))))
+             :bind
+             (:map global-map
+                   ("M-0"       . treemacs-select-window)
+                   ("C-x t 1"   . treemacs-delete-other-windows)
+                   ("C-x t t"   . treemacs)
+                   ("C-x t B"   . treemacs-bookmark)
+                   ("C-x t C-t" . treemacs-find-file)
+                   ("C-x t M-t" . treemacs-find-tag)))
+
+           (use-package treemacs-projectile
+             :after treemacs projectile
+             :ensure t)
+
+           (use-package treemacs-icons-dired
+             :after treemacs dired
+             :ensure t
+             :config (treemacs-icons-dired-mode))
+
+           (use-package treemacs-magit
+            :after treemacs magit
+            :ensure t)
+          ;; start projectile global mode when starting treemacs
+          (add-hook 'treemacs-mode-hook 'projectile-mode)
+           ;;optionally start treemacs on startup
+         (treemacs)
+#+END_SRC
+** XKCD comics 
+#+BEGIN_SRC emacs-lisp
+  (use-package xkcd
+    :ensure t)
+#+END_SRC
+** Startup dashboard 
+#+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+      :ensure t
+      :config
+        (dashboard-setup-startup-hook)
+  ;;      (setq dashboard-startup-banner "C:/Users/opimenov.EDC-SP/Desktop/presentations/dusty_pc.png")
+        (setq dashboard-items '((recents  . 5)
+                                (projects . 5)
+                                (agenda . 5)))
+        (setq dashboard-banner-logo-title ""))
+
+  ;; to update cached xkcd
+  (with-temp-buffer
+    (xkcd)
+    (xkcd-kill-buffer))
+
+  ;; setting dashboard image (png)
+  (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
+    (if (file-exists-p last-xkcd-png)
+        (setq dashboard-banner-official-png last-xkcd-png)))
+
+  ;; to get a rand comic and to set dashboard image (png)
+  ;;(let ((rand-id-xkcd nil))
+  ;;  (with-temp-buffer
+  ;;    (setq rand-id-xkcd (string-to-number (xkcd-rand)))
+  ;;    (xkcd-kill-buffer))
+  ;;  (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string rand-id-xkcd) ".png")))
+  ;;    (if (file-exists-p last-xkcd-png)
+  ;;    (setq dashboard-banner-official-png last-xkcd-png))))
+#+END_SRC
+** better dired+ 
+#+BEGIN_SRC emacs-lisp
+     ;; (add-hook 'dired-mode-hook
+     ;;       (lambda ()
+     ;;         (dired-sort-toggle-or-edit)
+     ;;         (dired-hide-details-mode)    
+     ;;       )
+     ;; )
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; stopped working at some point 
+    ;;(load "dired+")                             
+    ;;(global-dired-hide-details-mode t)          
+    ;;(setq diredp-hide-details-initially-flag t) 
+    ;;(setq diredp-hide-details-propagate-flag t) 
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (setq tramp-verbose 10)
+#+END_SRC
+** Elisp evaluate and replace lisp expression
+#+BEGIN_SRC emacs-lisp
+(defun crux-eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (let ((value (eval (elisp--preceding-sexp))))
+    (backward-kill-sexp)
+    (insert (format "%S" value))))
+(global-set-key (kbd "C-x C-e") 'crux-eval-and-replace)
+#+END_SRC
+* Programming
+** yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :config
+    (use-package yasnippet-snippets
+      :ensure t)
+    (yas-reload-all))
+#+END_SRC
+** 80 character vertical marker
+#+BEGIN_SRC emacs-lisp
+(setq-default
+ whitespace-line-column 80
+ whitespace-style       '(face lines-tail))
+
+(add-hook 'prog-mode-hook 'whitespace-mode)
+#+END_SRC
+** flychech
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t)
+#+END_SRC
+** company - compite anything
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :config
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 3))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  (define-key company-active-map (kbd "SPC") #'company-abort))
+#+END_SRC
+** C++
+*** yasnippet
+#+BEGIN_SRC emacs-lisp
+(add-hook 'c++-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
+#+END_SRC
+*** flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-clang-analyzer
+  :ensure t
+  :config
+  (with-eval-after-load 'flycheck
+    (require 'flycheck-clang-analyzer)
+     (flycheck-clang-analyzer-setup)))
+#+END_SRC
+*** company
+#+BEGIN_SRC emacs-lisp
+  (with-eval-after-load 'company
+    (add-hook 'c++-mode-hook 'company-mode)
+    (add-hook 'c-mode-hook 'company-mode))
+
+  (use-package company-c-headers
+    :ensure t)
+#+END_SRC
+** YAML
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t
+  :config
+   (add-hook 'yaml-mode-hook
+    '(lambda ()
+       (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+#+END_SRC
+** PHP
+#+BEGIN_SRC emacs-lisp
+         (use-package php-mode
+             :ensure t
+             :config
+         (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
+         (bind-key*  "C-," 'windmove-left)
+         (bind-key*  "C-." 'windmove-right))
+
+         (use-package ac-php-core
+           :ensure t)
+         (use-package ac-php
+           :ensure t)
+         (use-package ac-helm
+           :ensure t)
+
+         ;; (add-hook  'php-mode-hook 
+         ;;     '(lambda ()
+         ;;       ;; Enable auto-complete-mode
+         ;;       (auto-complete-mode t)
+
+         ;;       (require 'ac-php)
+         ;;       (setq ac-sources '(ac-source-php))
+
+         ;;       ;; As an example (optional)
+         ;;       (yas-global-mode 1)
+
+         ;;       ;; Enable ElDoc support (optional)
+         ;;       (ac-php-core-eldoc-setup)
+
+         ;;       ;; Jump to definition (optional)
+         ;;       (define-key php-mode-map (kbd "M-]")
+         ;;         'ac-php-find-symbol-at-point)
+
+         ;;       ;; Return back (optional)
+         ;;       (define-key php-mode-map (kbd "M-[")
+         ;;         'ac-php-location-stack-back)
+
+         ;;       (setq indent-tabs-mode nil)
+         ;;       (setq c-basic-offset 2)
+         ;;       (setq php-template-compatibility nil)
+         ;;       (subword-mode 1)))
+
+  ;; M-x ac-php-remake-tags-all 
+
+        (load "helm-ac-php-apropros")
+        (use-package company-php
+           :ensure t)
+
+         (add-hook 'php-mode-hook
+             '(lambda ()
+              (ac-php-mode t)
+              ;; Enable company-mode
+
+              (company-mode t)
+              (add-to-list 'company-backends 'company-ac-php-backend )
+              ;; Enable ElDoc support (optional)
+              (ac-php-core-eldoc-setup)
+
+              (set (make-local-variable 'company-backends)
+               '((company-ac-php-backend company-dabbrev-code)
+                 company-capf company-files))
+
+              ;; Jump to definition (optional)
+              (define-key php-mode-map (kbd "M-]")
+                'ac-php-find-symbol-at-point)
+
+              ;; Return back (optional)
+              (define-key php-mode-map (kbd "M-[")
+                'ac-php-location-stack-back)
+
+                (setq indent-tabs-mode nil)
+                (setq c-basic-offset 2)
+                (setq php-template-compatibility nil)
+                (subword-mode 1)))
+
+
+
+          (use-package web-mode
+              :ensure t)
+         (defun bs-web-mode-hook ()
+           (local-set-key '[backtab] 'indent-relative)
+           (setq indent-tabs-mode nil)
+           (setq web-mode-markup-indent-offset 2
+               web-mode-css-indent-offset 2
+               web-mode-code-indent-offset 2))
+
+        ;; (add-hook 'web-mode-hook 'bs-web-mode-hook)  
+
+         (defun toggle-php-flavor-mode ()
+         (interactive)
+         "Toggle mode between PHP & Web-Mode Helper modes"
+         (cond ((string= mode-name "PHP//lw")
+                (web-mode))
+               ((string= mode-name "Web")
+                (php-mode))))
+
+        (global-set-key [f5] 'toggle-php-flavor-mode)
+#+END_SRC
+** MATLAB to Octave mode 
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+#+END_SRC
+** C#
+#+BEGIN_SRC emacs-lisp
+(use-package csharp-mode
+   :ensure t)
+#+END_SRC

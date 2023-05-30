@@ -1,0 +1,12 @@
+/elpa/*
+.mc-lists.el
+/%backup%~
+auto-save-list/*
+irony/*
+url/*
+*.el~
+ac-comphist.dat
+.python-environments/*
+projectile-bookmarks.eld
+recentf
+*.el

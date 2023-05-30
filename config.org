@@ -13,6 +13,10 @@ config.org --- Emacs configuration file in org mode format.
                 'set-default)
             ',variable ,value))
 #+END_SRC
+** Start emacs server
+#+BEGIN_SRC emacs-lisp
+(server-start)
+#+END_SRC
 ** Set package repository
  This needs to be in init.el Otherwise nothing works.
  There are few public repositories of Emacs packages.
@@ -25,7 +29,7 @@ config.org --- Emacs configuration file in org mode format.
    			 ("gnu"   . "http://elpa.gnu.org/packages/")
    			 ("melpa" . "https://melpa.org/packages/")
    			 ("org"   . "https://orgmode.org/elpa/")
-   			 ("SC"    . "http://joseito.republika.pl/sunrise-commander/")))
+   			 ))
    (package-initialize)
 #+END_SRC
 ** Use-package package. 
@@ -88,44 +92,32 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
     :ensure t
     :config
        (global-set-key (kbd "M-x") 'helm-M-x)
-       (global-set-key (kbd "M-i") 'helm-swoop);;helm search
+       (global-set-key (kbd "M-i") 'helm-swoop);;helm search FIXME
        (global-set-key (kbd "M-u") 'helm-show-kill-ring);;BEST FEATURE EVER
        (global-set-key (kbd "C-x C-f") 'helm-find-files);;find stuff quickly
-       (global-set-key (kbd "C-c f f") 'helm-projectile)
-       (global-set-key (kbd "C-c g") 'helm-projectile-grep)
+;;       (global-set-key (kbd "C-c f f") 'helm-projectile)
+;;       (global-set-key (kbd "C-c g") 'helm-projectile-grep)
        (global-set-key (kbd "C-c i") 'helm-imenu)) ;;go to function name quickly
+
+  (global-set-key (kbd "C-c p") 'projectile-find-file)
 #+END_SRC
 ** Terminal
-*** Setting default shell to bash
+*** Setting default shell to zshell
 #+BEGIN_SRC emacs-lisp
-  (setq explicit-shell-file-name "D:/Cygwin/bin/bash.exe")
-  (setq shell-file-name "bash")
+  (setq shell-file-name "/usr/bin/zsh")
   (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
   (setenv "SHELL" shell-file-name)
   (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 
-  (defvar my-term-shell "D:/Cygwin/bin")
-  (defadvice ansi-term (before force-bash)
+  (defadvice ansi-term (before force-zshell)
     (interactive (list my-term-shell)))
    (ad-activate 'ansi-term)
-  ;;git bash
-  (defun git-bash () (interactive)
-    (let ((explicit-shell-file-name "d:/Installed_progs/Git/bin/bash.exe"))
-      (call-interactively 'shell)
-      (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))))
-
-
-  ;;windows cmd
-  (defun win-cmd () (interactive)
-    (let ((explicit-shell-file-name "c:/Windows/system32/cmd.exe"))
-      (call-interactively 'shell)))
-
   (prefer-coding-system 'utf-8)
 
 #+END_SRC
 *** Binding keys to launch shell
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-return>") 'eshell)
+;;(global-set-key (kbd "<C-x  e>") 'eshell)
 ;;startup shell on boot
 ;;(eshell)
 #+END_SRC
@@ -142,7 +134,7 @@ CPU+GPU+Your-Head can handle. Allows you to use Dark Magic.
 #+END_SRC
 *** Agenda
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files (list "C:/Users/opimenov.EDC-SP/Desktop/TODOS.org"))
+  (setq org-agenda-files (list "/home/pimenov/Desktop/notes.org"))
   (global-set-key (kbd "C-c s l") 'org-store-link)
   (global-set-key (kbd "C-c o a") 'org-agenda)
   (setq org-log-done t)
@@ -173,7 +165,7 @@ Hitting tab after an “<el” in an org-mode file will create a template for el
 *** added WAITING state to item status
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "IN_PRGRESS(p)" "WAITING(w)" "DONE(d)"))))
+      (quote ((sequence "TODO(t)" "WAITING(w)" "WORKING_ON(p)" "UNDER_REVIEW(r)" "FIX_VERIFICATION(f)" "DONE(d)"))))
 (setq org-log-done t)
 #+END_SRC
 *** better html exporter, twitter bootstrap
@@ -185,8 +177,8 @@ Hitting tab after an “<el” in an org-mode file will create a template for el
 *** beamer
 add LaTeX to Emacs exec path
 #+BEGIN_SRC emacs-lisp
-(setenv "PATH" (concat (getenv "PATH") ":D:/Installed_progs/MiKTex/"))
-    (setq exec-path (append exec-path '("D:/Installed_progs/MiKTex/")))
+  ;; (setenv "PATH" (concat (getenv "PATH") ":D:/Installed_progs/MiKTex/"))
+  ;;     (setq exec-path (append exec-path '("D:/Installed_progs/MiKTex/")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -251,13 +243,6 @@ add LaTeX to Emacs exec path
  '((python . t)))
 #+END_SRC
 ** Editing convenience
-*** Pretty unicode characters
-#+BEGIN_SRC emacs-lisp
-(use-package pretty-mode
-    :ensure t
-    :config
-    (global-pretty-mode 1))
-#+END_SRC
 *** Switch between left and right buffers  
 #+BEGIN_SRC emacs-lisp
 ;; use bind-key package to override major mode key maps
@@ -335,7 +320,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c l k") 'kill-whole-line)
 #+END_SRC
-*** Vistit confi gfile
+*** Vistit config file
 #+BEGIN_SRC emacs-lisp
 (defun config-visit ()
   (interactive)
@@ -462,9 +447,9 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 ** Diff icult to set up. Visual interface for diff and patches
 #+BEGIN_SRC emacs-lisp
   ;;if you are on Linux 
-  ;;(use-package ediff
-  ;;   :ensure t
-  ;;   :init)
+  (use-package ediff
+     :ensure t
+     :init)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;if you are on WINDOUZZZZZ OS. Good luck.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -482,8 +467,8 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 
 ;;  (setenv "PATH" (concat ":D:/Cygwin/bin;" (getenv "PATH")))
 ;;  (setq exec-path (cons "D:/Cygwin/bin" exec-path))
-  (setenv "PATH" (concat ":D:/Installed_progs/Git/bin;" (getenv "PATH")))
-  (setq exec-path (cons "D:/Installed_progs/Git/bin" exec-path))
+;;  (setenv "PATH" (concat ":D:/Installed_progs/Git/bin;" (getenv "PATH")))
+;;  (setq exec-path (cons "D:/Installed_progs/Git/bin" exec-path))
 ;;  (require 'cygwin-mount)
 ;;  (cygwin-mount-activate)
 
@@ -491,8 +476,8 @@ Lets us use asynchronous processes wherever possible, pretty usefull
   (csetq ediff-diff-options "-w")
   (csetq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-  ;; (winner-mode 1)
-  ;; (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+  (winner-mode 1)
+  (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
 #+END_SRC
 ** Origami - text folging support
@@ -517,24 +502,15 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 ***** TODO define key map for ease of use
 (global-set-key (kbd "C-c o o") 'origami-open-node)
 (global-set-key (kbd "C-c o c") 'origami-close-node)
-** Font
+** mine sweeper
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :family "Consolas" :height 120)
+(use-package mines
+  :ensure t)
 #+END_SRC
-** helm-swoop for compilation errors
-  one little annoyance is that buffer needs to be cleared before. Otherwise
-  you will catch previous errors too. Possible work around is to use compile
-  command or what I do is to define a macro to call Ashlee\clear and then compile
+** Font - just use system font
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x C-r") (lambda () (interactive) (helm-swoop :$query "error:")))
-#+END_SRC
-  star compile
-#+BEGIN_SRC emacs-lisp
-  ;; (fset 'build-and-push-rs
-  ;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([7 3 134217839 46 47 83 116 97 114 66 117 105 108 100 80 117 115 104 46 98 97 116] 0 "%d")) arg)))
-  ;; (global-set-key (kbd "C-c s") 'build-and-push-rs)   
-  ;;(fset 'star-build
-  ;;   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([3 134217839 83 116 97 114 tab return] 0 "%d")) arg)))
+;; Set default font
+;;(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 100)
 #+END_SRC
 ** Magit - nice git package
 #+BEGIN_SRC emacs-lisp
@@ -545,31 +521,38 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 (global-set-key (kbd "C-x g") 'magit-status)
 (magit-auto-revert-mode -1))
 ;;there are multiple git versions installed so lets point to this one 
-(setq magit-git-executable "d:/Installed_progs/Git/bin/git.exe")
+;;(setq magit-git-executable "d:/Installed_progs/Git/bin/git.exe")
+#+END_SRC
+** Smithy
+#+BEGIN_SRC emacs-lisp
+  (require 'smithy-mode)
+  (add-to-list 'auto-mode-alist
+               '("\\.smithy\\'" . (lambda ()
+                                    (smithy-mode))))
 #+END_SRC
 ** Spelling correction
   #+BEGIN_SRC emacs-lisp
-(setq ispell-alternate-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
-(setq ispell-program-name "aspell")
-(use-package ac-ispell
-   :ensure t
-   :init)
-  ;; Completion words longer than 4 characters
-    (custom-set-variables
-      '(ac-ispell-requires 3)
-      '(ac-ispell-fuzzy-limit 3))
+    ;;(setq ispell-alternate-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
+    ;;(setq ispell-program-name "aspell")
+    ;;(use-package ac-ispell
+    ;;   :ensure t
+    ;;   :init)
+    ;; Completion words longer than 4 characters
+        ;; (custom-set-variables
+        ;;   '(ac-ispell-requires 3)
+        ;;   '(ac-ispell-fuzzy-limit 3))
 
-    (eval-after-load "auto-complete"
-      '(progn
-          (ac-ispell-setup)))
+        ;; (eval-after-load "auto-complete"
+        ;;   '(progn
+        ;;       (ac-ispell-setup)))
 
-    (add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
-    (add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
-    (add-hook 'org-mode-hook 'ac-ispell-ac-setup)
-     (use-package helm-flyspell
-       :ensure t
-       :config
-       (global-set-key (kbd "C-:") 'helm-flyspell-correct))
+        ;; (add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
+        ;; (add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
+        ;; (add-hook 'org-mode-hook 'ac-ispell-ac-setup)
+         (use-package helm-flyspell
+           :ensure t
+           :config
+           (global-set-key (kbd "C-:") 'helm-flyspell-correct))
 
 #+END_SRC   
 ** If you ever want to find nice shortcuts 
@@ -652,7 +635,6 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'rainbow-delimiters-mode)
     (diminish 'rainbow-mode)
     (diminish 'helm-mode)
-    (diminish 'projectile-mode)
     (diminish 'follow-mode)
     (diminish 'yas-minor-mode)
     (diminish 'abbrev-mode)
@@ -668,90 +650,13 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     (diminish 'company-mode)
     (diminish 'org-indent-mode)
     (diminish 'scroll-all-mode)
-    (diminish 'whitespace-mode)
     (diminish 'subword-mode)
     (diminish 'projectile-mode)
 )
 #+END_SRC
-** Treemacs file explorer
-#+BEGIN_SRC emacs-lisp
-  (setq treemacs-python-executable "C:/Python37/python")
-           (use-package treemacs
-             :ensure t
-             :defer t
-             :init
-             (with-eval-after-load 'winum
-               (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-             :config
-             (progn
-               (setq treemacs-collapse-dirs (if (executable-find "python") 3 0)
-                     treemacs-deferred-git-apply-delay   0.5
-                     treemacs-display-in-side-window     t
-                     treemacs-file-event-delay           5000
-                     treemacs-file-follow-delay          0.2
-                     treemacs-follow-after-init          t
-                     treemacs-follow-recenter-distance   0.1
-                     treemacs-git-command-pipe           ""
-                     treemacs-goto-tag-strategy          'refetch-index
-                     treemacs-indentation                2
-                     treemacs-indentation-string         " "
-                     treemacs-is-never-other-window      nil
-                     treemacs-max-git-entries            5000
-                     treemacs-no-png-images              nil
-                     treemacs-no-delete-other-windows    t
-                     treemacs-project-follow-cleanup     nil
-                     treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-                     treemacs-recenter-after-file-follow nil
-                     treemacs-recenter-after-tag-follow  nil
-                     treemacs-show-cursor                t
-                     treemacs-show-hidden-files          t
-                     treemacs-silent-filewatch           nil
-                     treemacs-silent-refresh             nil
-                     treemacs-sorting                    'alphabetic-desc
-                     treemacs-space-between-root-nodes   nil
-                     treemacs-tag-follow-cleanup         t
-                     treemacs-tag-follow-delay           1.5
-                     treemacs-width                      35)
 
-                ;; The default width and height of the icons is 22 pixels. If you are
-                ;;        using a Hi-DPI display, uncomment this to double the icon size.
-                      (treemacs-resize-icons 44)
+#+RESULTS:
 
-               (treemacs-follow-mode t)
-               (treemacs-filewatch-mode t)
-               (treemacs-fringe-indicator-mode t)
-               (pcase (cons (not (null (executable-find "git")))
-                             (not (null (executable-find "python"))))
-                  (`(t . t)
-                   (treemacs-git-mode 'deferred))
-                  (`(t . _)
-                   (treemacs-git-mode 'simple))))
-             :bind
-             (:map global-map
-                   ("M-0"       . treemacs-select-window)
-                   ("C-x t 1"   . treemacs-delete-other-windows)
-                   ("C-x t t"   . treemacs)
-                   ("C-x t B"   . treemacs-bookmark)
-                   ("C-x t C-t" . treemacs-find-file)
-                   ("C-x t M-t" . treemacs-find-tag)))
-
-           (use-package treemacs-projectile
-             :after treemacs projectile
-             :ensure t)
-
-           (use-package treemacs-icons-dired
-             :after treemacs dired
-             :ensure t
-             :config (treemacs-icons-dired-mode))
-
-           (use-package treemacs-magit
-            :after treemacs magit
-            :ensure t)
-          ;; start projectile global mode when starting treemacs
-          (add-hook 'treemacs-mode-hook 'projectile-mode)
-           ;;optionally start treemacs on startup
-         (treemacs)
-#+END_SRC
 ** XKCD comics 
 #+BEGIN_SRC emacs-lisp
   (use-package xkcd
@@ -759,27 +664,28 @@ Lets us use asynchronous processes wherever possible, pretty usefull
 #+END_SRC
 ** Startup dashboard 
 #+BEGIN_SRC emacs-lisp
-    (use-package dashboard
-      :ensure t
-      :config
-        (dashboard-setup-startup-hook)
-  ;;      (setq dashboard-startup-banner "C:/Users/opimenov.EDC-SP/Desktop/presentations/dusty_pc.png")
-        (setq dashboard-items '((recents  . 5)
-                                (projects . 5)
-                                (agenda . 5)))
-        (setq dashboard-banner-logo-title ""))
+  ;;   (use-package dashboard
+  ;;     :ensure t
+  ;;     :config
+  ;;       (dashboard-setup-startup-hook)
+  ;; ;;      (setq dashboard-startup-banner "C:/Users/opimenov.EDC-SP/Desktop/presentations/dusty_pc.png")
+  ;;       (setq dashboard-items '((recents  . 5)
+  ;;                               (projects . 5)
+  ;;                               (agenda . 5)))
+  ;;       (setq dashboard-banner-logo-title ""))
 
-  ;; to update cached xkcd
-  (with-temp-buffer
-    (xkcd)
-    (xkcd-kill-buffer))
+  ;; ;; to update cached xkcd
+  ;; (with-temp-buffer
+  ;;   (xkcd)
+  ;;   (xkcd-kill-buffer))
 
-  ;; setting dashboard image (png)
-  (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
-    (if (file-exists-p last-xkcd-png)
-        (setq dashboard-banner-official-png last-xkcd-png)))
+  ;; ;; setting dashboard image (png)
+  ;; (let ((last-xkcd-png (concat xkcd-cache-dir (number-to-string xkcd-latest) ".png")))
+  ;;   (if (file-exists-p last-xkcd-png)
+  ;;       (setq dashboard-banner-official-png last-xkcd-png)))
 
-  ;; to get a rand comic and to set dashboard image (png)
+  ;; ;; to get a rand comic and to set
+  ;;dashboard image (png)
   ;;(let ((rand-id-xkcd nil))
   ;;  (with-temp-buffer
   ;;    (setq rand-id-xkcd (string-to-number (xkcd-rand)))
@@ -804,6 +710,16 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     ;;(setq diredp-hide-details-propagate-flag t) 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq tramp-verbose 10)
+#+END_SRC
+** formatter
+#+BEGIN_SRC emacs-lisp
+  (use-package format-all
+    :ensure t)
+#+END_SRC
+** Named Macros
+#+BEGIN_SRC emacs-lisp
+(fset 'indent_after_70_chars
+   (kmacro-lambda-form [?\C-u ?7 ?0 ?\C-f ?\M-f return ?\C-d] 0 "%d"))
 #+END_SRC
 ** Elisp evaluate and replace lisp expression
 #+BEGIN_SRC emacs-lisp
@@ -831,7 +747,7 @@ Lets us use asynchronous processes wherever possible, pretty usefull
  whitespace-line-column 80
  whitespace-style       '(face lines-tail))
 
-(add-hook 'prog-mode-hook 'whitespace-mode)
+;;(add-hook 'prog-mode-hook 'whitespace-mode)
 #+END_SRC
 ** flychech
 #+BEGIN_SRC emacs-lisp
@@ -886,111 +802,19 @@ Lets us use asynchronous processes wherever possible, pretty usefull
     '(lambda ()
        (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 #+END_SRC
-** PHP
+** typescript
 #+BEGIN_SRC emacs-lisp
-         (use-package php-mode
-             :ensure t
-             :config
-         (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-         (bind-key*  "C-," 'windmove-left)
-         (bind-key*  "C-." 'windmove-right))
-
-         (use-package ac-php-core
-           :ensure t)
-         (use-package ac-php
-           :ensure t)
-         (use-package ac-helm
-           :ensure t)
-
-         ;; (add-hook  'php-mode-hook 
-         ;;     '(lambda ()
-         ;;       ;; Enable auto-complete-mode
-         ;;       (auto-complete-mode t)
-
-         ;;       (require 'ac-php)
-         ;;       (setq ac-sources '(ac-source-php))
-
-         ;;       ;; As an example (optional)
-         ;;       (yas-global-mode 1)
-
-         ;;       ;; Enable ElDoc support (optional)
-         ;;       (ac-php-core-eldoc-setup)
-
-         ;;       ;; Jump to definition (optional)
-         ;;       (define-key php-mode-map (kbd "M-]")
-         ;;         'ac-php-find-symbol-at-point)
-
-         ;;       ;; Return back (optional)
-         ;;       (define-key php-mode-map (kbd "M-[")
-         ;;         'ac-php-location-stack-back)
-
-         ;;       (setq indent-tabs-mode nil)
-         ;;       (setq c-basic-offset 2)
-         ;;       (setq php-template-compatibility nil)
-         ;;       (subword-mode 1)))
-
-  ;; M-x ac-php-remake-tags-all 
-
-        (load "helm-ac-php-apropros")
-        (use-package company-php
-           :ensure t)
-
-         (add-hook 'php-mode-hook
-             '(lambda ()
-              (ac-php-mode t)
-              ;; Enable company-mode
-
-              (company-mode t)
-              (add-to-list 'company-backends 'company-ac-php-backend )
-              ;; Enable ElDoc support (optional)
-              (ac-php-core-eldoc-setup)
-
-              (set (make-local-variable 'company-backends)
-               '((company-ac-php-backend company-dabbrev-code)
-                 company-capf company-files))
-
-              ;; Jump to definition (optional)
-              (define-key php-mode-map (kbd "M-]")
-                'ac-php-find-symbol-at-point)
-
-              ;; Return back (optional)
-              (define-key php-mode-map (kbd "M-[")
-                'ac-php-location-stack-back)
-
-                (setq indent-tabs-mode nil)
-                (setq c-basic-offset 2)
-                (setq php-template-compatibility nil)
-                (subword-mode 1)))
-
-
-
-          (use-package web-mode
-              :ensure t)
-         (defun bs-web-mode-hook ()
-           (local-set-key '[backtab] 'indent-relative)
-           (setq indent-tabs-mode nil)
-           (setq web-mode-markup-indent-offset 2
-               web-mode-css-indent-offset 2
-               web-mode-code-indent-offset 2))
-
-        ;; (add-hook 'web-mode-hook 'bs-web-mode-hook)  
-
-         (defun toggle-php-flavor-mode ()
-         (interactive)
-         "Toggle mode between PHP & Web-Mode Helper modes"
-         (cond ((string= mode-name "PHP//lw")
-                (web-mode))
-               ((string= mode-name "Web")
-                (php-mode))))
-
-        (global-set-key [f5] 'toggle-php-flavor-mode)
+  (use-package typescript-mode
+    :ensure t)
 #+END_SRC
-** MATLAB to Octave mode 
+* Amazon
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-#+END_SRC
-** C#
-#+BEGIN_SRC emacs-lisp
-(use-package csharp-mode
-   :ensure t)
+  (setenv "PATH" (concat (getenv "PATH") ":/home/pimenov/.toolbox/bin"))
+      (setq exec-path (append exec-path '("/home/pimenov/.toolbox/bin")))
+      (use-package amz-common
+        :ensure t)
+      (use-package amz-crisp
+        :ensure t)
+    (define-key amz-crisp-mode-map (kbd "C-c x") 'amz-crisp)
+    (setq amz-crisp-use-comint t)
 #+END_SRC
